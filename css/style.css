@@ -1,0 +1,243 @@
+
+body {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+}
+
+#container {
+    background: url(../images/ui/background.jpg);
+    width:1280px;
+    height:720px;
+    position:relative;
+    overflow:hidden;
+}
+#background {
+    margin-left:3px;
+    padding-left:0px;
+    margin-top:0px;
+    padding-top:0px;
+    margin-bottom:3px;
+    padding-bottom:0px;
+}
+.image-list {
+    /*border:2px solid red;*/
+    display:inline-block;
+    padding:0px;
+    margin:0px;
+    padding-top:15px;
+}
+.image-list td, th {
+    padding:1px;
+    padding-top:0px;
+    padding-bottom:0px;
+    margin:0px;
+    /*border:4px solid white;*/
+}
+.image-list tr {
+    text-align: center;
+    /*border: 1px solid red;*/
+    padding:0px;
+    margin:0px;
+}
+.image-list img {
+    width: 208px;
+    height: 70px;
+    padding:0px;
+    margin:0px;
+}
+#workspaceCanvas {
+    border: 2px solid #000;
+    margin-top:64px;
+    margin-bottom:64px;
+    margin-left:20px;
+    margin-right:20px:
+    /*background: url("https://i.gyazo.com/702730022c8553ec6ba91f46d795e549.png");*/
+    padding:0px;
+    display:inline-block;
+}
+#toolbar {
+    display:inline-block;
+    margin-top:64px;
+    vertical-align:top;
+    margin-bottom:64px;
+    padding:0px;
+    margin-right:28px;
+}
+#toolbar td {
+    border: 2px solid white;
+}
+#nameToolbar {
+    width:200px;
+    height:200px;
+}
+#nameToolbar td {
+    border: 2px solid white;
+}
+#statsToolbar {
+    width:200px;
+    height:200px;
+}
+#statsToolbar td {
+    border: 2px solid white;
+}
+#leftToolbar {
+    display:inline-block;
+    margin-top:64px;
+    vertical-align:top;
+    margin-bottom:64px;
+    padding:0px;
+    margin-left:20px;
+    margin-right:20px;
+    width:64;
+    height:200px;
+    width:200px;
+}
+p {
+    text-align:center;
+}
+nav {
+    text-align:center;
+}
+#leftDoor {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0px;
+    z-index:10;
+}
+#rightDoor {
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0px;
+    z-index:10;
+}
+.ui-tabs .ui-tabs-nav li {
+    width:14%;
+    text-align:center;
+    margin-left:2.5px;
+    margin-top:10px;
+    margin-right:0px;
+}
+.ui-tabs .ui-tabs-nav li:first-child {
+    width:17%;
+    margin-left:75px;
+}
+.ui-tabs .ui-tabs-nav li:last-child {
+    width:14%;
+    margin-right:50px;
+}
+.ui-tabs .ui-tabs-nav li a {
+    display: inline-block;
+    float: none;
+    padding: 0px;
+    text-decoration: none;
+    width: 90%;
+    background:black;
+}
+#tabs, #nav, #nav li {
+    border: none;
+    font-size:1.2em;
+    background:transparent;
+}
+#nav {
+    background:url("../images/ui/navbar.jpg");
+    width:100%;
+    padding:0px;
+    margin:0px;
+    height:75px;
+    /*margin-top:10px;*/
+}
+#tabs div {
+    color: white;
+}
+#tabs {
+    padding:0px;
+}
+/* THIS IS WHERE CHANGE COLOR AND STUFF OF NAV BAR */
+ #nav li a {
+    color:#aaa;
+    padding:0px;
+    margin:0px;
+    background:#363941;
+    padding:5px;
+    margin-top:7px;
+    /*border-right:1px solid white;
+    border-left:1px solid white;*/
+    /* bevel */
+    /*-moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
+    -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);*/
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    /* round corners */
+    border-radius:5px;
+    /* font stuff */
+    /* emboss? */
+    /*text-shadow: 1px 1px 0 rgb(223, 227, 229), 4px 4px 0 rgba(0, 0, 0, 0.25);*/
+    font-family:Verdana;
+    /* black outline */
+    text-shadow: 0 0 0 #000, 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 30px #fff, 0 0 40px #000;
+    height:40px;
+}
+#nav li:last-child a {
+    /*border-right:none;*/
+}
+#nav li.ui-tabs-active a {
+    color: #eee;
+}
+#nav li a:hover {
+    color: orange;
+    /* crazy glow */
+    text-shadow: 0 0 0 #000, 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 30px #fe0, 0 0 40px #000;
+}
+/*hide outline */
+ *:focus {
+    outline:0;
+}
+/* name fonts */
+ .font1 {
+    font-family:Helvetica;
+    font-size:24px;
+}
+.font2 {
+    font-family:Impact;
+    font-size:24px;
+}
+.font3 {
+    font-family:Comic-Sans;
+    font-size:24px;
+}
+.full-spectrum .sp-palette {
+    max-width: 200px;
+}
+#name-list {
+}
+#name-list td {
+    width: 208px;
+    height: 70px;
+    border: 2px solid white;
+}
+#extras-list td {
+    width: 208px;
+    height: 70px;
+    /*border: 2px solid white;*/
+}
+#extras-list img {
+    width:55%;
+    height:55%;
+}
+#stats-list img {
+    width:36px;
+    height:36px;
+}
+
+#weapon-list img {
+    width:200px;
+    height:65px;
+}
