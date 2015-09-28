@@ -186,6 +186,8 @@ $.fn.extend({
                     fontFamily: $(span).css("font-family"),
                     text: username,
                     name: "usernameText",
+
+                   
                     mousedown: function (layer) {
                         var previouslySelectedLayer = $canvas.data("selectedLayer");
                         console.log(previouslySelectedLayer);
@@ -227,18 +229,27 @@ $.fn.extend({
                     y: mytext.y,
                     width: origWidth,
                     height: origHeight,
+                    
                     handle: {
                         type: 'arc',
                         strokeStyle: '#c33',
                         strokeWidth: 2,
                         radius: 5
                     },
+                    handlePlacement: 'corners&rotational',
                     handlemove: function (layer) {
                         $canvas.setLayer(mytext, {
                             scaleX: layer.width / origWidth,
                             scaleY: layer.height / origHeight
                         });
+                        
+                        
+                        $canvas.setLayer(mytext, {
+                             rotate: layer.rotate
+                        });
+                        
                         $canvas.drawLayers();
+                        
                     },
                     drag: function (layer) {
                         $canvas.setLayer(mytext, {
@@ -333,6 +344,7 @@ $.fn.extend({
                 y: 100,
                 width: myIcon.width + mytext.width,
                 height: myIcon.height,
+                handlePlacement: 'corners&rotational',
                 handle: {
                     type: 'arc',
                     strokeStyle: '#c33',
