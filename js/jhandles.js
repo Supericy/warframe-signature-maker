@@ -192,8 +192,11 @@ function addRotationHandle( $canvas, parent, px, py) {
 
 	cursor = 'rotate-right';
 	
-	
-	prevDy = 0;
+/*
+	var prevx = parent.x + ( px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
+	var prevy = parent.y + ( py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+	var prevangle = 0;
+	*/
 
 	handle = $.extend( {
 		// Set cursors for handle
@@ -210,6 +213,11 @@ function addRotationHandle( $canvas, parent, px, py) {
 		_px: px,
 		_py: py,
 		fromCenter: true,
+		isRotateHandle:true,
+		prevx:parent.x + ( px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) ),
+		prevy:parent.y + ( py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) ),
+		prevangle: 0,
+		strokeStyle:"orange",
 		dragstart: function ( layer ) {
 			$( this ).triggerLayerEvent( layer._parent, 'handlestart' );
 		},
@@ -217,23 +225,28 @@ function addRotationHandle( $canvas, parent, px, py) {
 		drag: function ( layer ) {
 			var parent = layer._parent;
 
-			console.log(layer.dx, layer.dy);
+			var a = Math.sqrt(Math.pow(layer.x - layer.prevx,2) + Math.pow(layer.y - layer.prevy,2));
+			var b = Math.sqrt(Math.pow(parent.x - layer.prevx,2) + Math.pow(parent.y - layer.prevy,2));
+			var c = Math.sqrt(Math.pow(parent.x - layer.x,2) + Math.pow(parent.y - layer.y,2));
+			var angle = Math.acos(((Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2))/(2*b*c)))*(180/Math.PI);
+			var sign = layer.y > parent.y ? layer.x > layer.prevx ? '-':'+' : layer.prevx > layer.x ? '-' : '+';
 
-			if(layer.dy > prevDy)
-			{
-				
-				$canvas.setLayer(parent, {
-					rotate:layer.dx < -160 ? '-=2' : '+=2'
-				});
-			} else {
-				$canvas.setLayer(parent, {
-					rotate:layer.dx < -160 ? '+=2' : '-=2'
-				});
-			}
-			prevDy = layer.dy;
-	
+			//console.log(layer.y, parent.y);
+			//console.log("c ",c);
+			//console.log("b ",b);
+			//console.log("a ",a);
+			//console.log("angle ",angle);
 
-			updateRectHandles( parent );
+			//console.log(layer.prevx, layer.x);
+			$canvas.setLayer(parent, {
+				rotate: sign + "=" + angle
+			});
+			
+			layer.prevangle = angle;
+			layer.prevx = layer.x;
+			layer.prevy = layer.y;
+
+			//updateRotateHandle( parent );
 			$( this ).triggerLayerEvent( parent, 'handlemove' );
 		},
 		dragstop: function ( layer ) {
@@ -427,12 +440,26 @@ function updateRectHandles( parent ) {
 		// Move handles when dragging
 		for ( h = 0; h < parent._handles.length; h += 1 ) {
 			handle = parent._handles[h];
-			handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
-			handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+			if(!handle.isRotateHandle)
+			{
+				handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
+				handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+			} else {
+				handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
+				handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+				
+				var parent = handle._parent;
+				handle.prevx = parent.x + ( handle._px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
+				handle.prevy = parent.y + ( handle._py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+				handle.prevangle = 0;
+			}
 		}
+
 	}
 	updateRectGuides( parent );
 }
+
+
 
 // Update position of handles according to
 // coordinates and dimensions of path layer
