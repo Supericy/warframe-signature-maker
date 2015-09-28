@@ -56,8 +56,7 @@ body {
     margin-bottom:64px;
     margin-left:20px;
     margin-right:20px:
-    /*background: url("https://i.gyazo.com/702730022c8553ec6ba91f46d795e549.png");*/
-    padding:0px;
+     padding:0px;
     display:inline-block;
 }
 #toolbar {
@@ -240,4 +239,18 @@ nav {
 #weapon-list img {
     width:200px;
     height:65px;
+}
+
+#toolbar button {
+    width:30px;
+    height:30px;
+    padding:0px;
+    marin:0px;
+}
+#toolbar button img {
+    width:20px;
+    height:20px;
+}
+#toolbar .textButton {
+    width:120px;
 }

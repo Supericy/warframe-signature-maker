@@ -51,6 +51,7 @@ $.fn.extend({
                 y: $canvas.height() / 2,
                 width: img.width,
                 height: img.height,
+                handlePlacement: 'corners&rotational',
                 handle: {
                     type: 'arc',
                     strokeStyle: '#c33',
