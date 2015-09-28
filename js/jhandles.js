@@ -216,38 +216,23 @@ function addRotationHandle( $canvas, parent, px, py) {
 		// Resize rectangle when dragging a handle
 		drag: function ( layer ) {
 			var parent = layer._parent;
-/*
-			if ( parent.width + ( layer.dx * layer._px ) < parent.minWidth ) {
-				parent.width = parent.minWidth;
-				layer.dx = 0;
-			}
-			if ( parent.height + ( layer.dy * layer._py ) < parent.minHeight ) {
-				parent.height = parent.minHeight;
-				layer.dy = 0;
-			}
-*/			
+
+			console.log(layer.dx, layer.dy);
 
 			if(layer.dy > prevDy)
 			{
+				
 				$canvas.setLayer(parent, {
-					rotate:'+=3'
+					rotate:layer.dx < -160 ? '-=2' : '+=2'
 				});
 			} else {
 				$canvas.setLayer(parent, {
-					rotate:'-=3'
+					rotate:layer.dx < -160 ? '+=2' : '-=2'
 				});
 			}
 			prevDy = layer.dy;
-			/*
-			if ( layer._px !== 0 ) {
-				parent.x += layer.dx * ( ( 1 - layer._px ) && ( 1 - layer._px ) / Math.abs ( ( 1 - layer._px ) ) );
-			}
-			parent.height += layer.dy * layer._py;
-			if ( layer._py !== 0 ) {
-				parent.y += layer.dy * ( ( 1 - layer._py ) && ( 1 - layer._py ) / Math.abs ( ( 1 - layer._py ) ) );
-			}
-		*/
-				
+	
+
 			updateRectHandles( parent );
 			$( this ).triggerLayerEvent( parent, 'handlemove' );
 		},
