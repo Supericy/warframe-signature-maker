@@ -230,11 +230,11 @@ function addRotationHandle( $canvas, parent, px, py) {
 			if(layer.dy > prevDy)
 			{
 				$canvas.setLayer(parent, {
-					rotate:'+=5'
+					rotate:'+=3'
 				});
 			} else {
 				$canvas.setLayer(parent, {
-					rotate:'-=5'
+					rotate:'-=3'
 				});
 			}
 			prevDy = layer.dy;
