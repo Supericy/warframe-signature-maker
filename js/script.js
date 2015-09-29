@@ -112,7 +112,7 @@ $.fn.extend({
                 
             }
             // select it after placing it.
-            $canvas.selectedLayer = layer;
+            layer.mousedown(layer);
             $canvas.drawLayers();
             
             
@@ -384,9 +384,10 @@ $(document).ready(function () {
 
         $canvas.insertImage(this, "background");
         var image = this;
+        var layer = $canvas.selectedLayer;
         undoManager.add({
             undo:function(){
-                deleteSelectedLayer();                
+                deleteLayer(layer);                
             },
             redo:function(){
                 console.log(image.src);
@@ -400,9 +401,10 @@ $(document).ready(function () {
 
         $canvas.insertImage(this);
         var image = this;
+        var layer = $canvas.selectedLayer;
         undoManager.add({
             undo:function(){
-                deleteSelectedLayer();                
+                deleteLayer(layer);                
             },
             redo:function(){
                 console.log(image.src);
@@ -415,9 +417,10 @@ $(document).ready(function () {
 
         $canvas.insertImage(this);
         var image = this;
+        var layer = $canvas.selectedLayer;
         undoManager.add({
             undo:function(){
-                deleteSelectedLayer();                
+                deleteLayer(layer);                
             },
             redo:function(){
                 console.log(image.src);
@@ -470,10 +473,10 @@ $(document).ready(function () {
 
     $("#name-list img").click(function () {
         $canvas.toggleText(this);
-        
+        var layer = $canvas.selectedLayer;
         undoManager.add({
             undo:function(){
-                deleteSelectedLayer();             
+                deleteLayer(layer);             
             },
             redo:function(){
                 $canvas.toggleText(this);
@@ -569,26 +572,28 @@ $(document).ready(function () {
 function registerHooksForToolbar(undoManager){
 
     $("#flipVert").click(function () {
-       flipSelectedLayerVertical();
+        var layer = $canvas.selectedLayer;
+       flipLayerVertical(layer);
        undoManager.add({
             undo:function(){
-                flipSelectedLayerVertical();                
+                flipLayerVertical(layer);                
             },
             redo:function(){
-                flipSelectedLayerVertical();
+                flipLayerVertical(layer);
             }
         });
 
     });
 
     $("#flipHoriz").click(function () {
-        flipSelectedLayerHorizontal();
+        var layer = $canvas.selectedLayer;
+        flipLayerHorizontal(layer);
         undoManager.add({
             undo:function(){
-                flipSelectedLayerHorizontal();                
+                flipLayerHorizontal(layer);                
             },
             redo:function(){
-                flipSelectedLayerHorizontal();
+                flipLayerHorizontal(layer);
             }
         });
 
@@ -596,27 +601,28 @@ function registerHooksForToolbar(undoManager){
 
 
     $("#upLayer").click(function () {
-
-       moveSelectedLayerUp();
+        var layer = $canvas.selectedLayer;
+       moveLayerUp(layer);
        undoManager.add({
             undo:function(){
-                moveSelectedLayerDown();                
+                moveLayerDown(layer);                
             },
             redo:function(){
-                moveSelectedLayerUp();
+                moveLayerUp(layer);
             }
         });
 
     });
 
     $("#downLayer").click(function () {
-        moveSelectedLayerDown();
+        var layer = $canvas.selectedLayer;
+        moveLayerDown(layer);
         undoManager.add({
             undo:function(){
-                moveSelectedLayerUp();                
+                moveLayerUp(layer);                
             },
             redo:function(){
-                moveSelectedLayerDown();
+                moveLayerDown(layer);
             }
         });
        
@@ -627,7 +633,7 @@ function registerHooksForToolbar(undoManager){
     $("#delete").click(function () {
 
         var layer = $canvas.selectedLayer;
-        deleteSelectedLayer();
+        deleteLayer(layer);
 
         undoManager.add({
             undo:function(){
@@ -637,16 +643,14 @@ function registerHooksForToolbar(undoManager){
                 $canvas.selectedLayer = layer;             
             },
             redo:function(){
-                deleteSelectedLayer();
+                deleteLayer(layer);
             }
         });
 
     });
 }
 
-function rotateSelectedLayer(degrees){
-    
-    var layer = $canvas.selectedLayer;
+function rotateLayer(layer, degrees){
     if(layer)
     {
     console.log("rotating " + layer.name + " " + degrees + "  degrees");
@@ -658,10 +662,8 @@ function rotateSelectedLayer(degrees){
 
 }
 
-function flipSelectedLayerVertical()
+function flipLayerVertical(layer)
 {
-    
-    var layer = $canvas.selectedLayer;
     if(layer)
     {
 
@@ -679,10 +681,8 @@ function flipSelectedLayerVertical()
     }
 }
 
-function flipSelectedLayerHorizontal()
+function flipSelectedLayerHorizontal(layer)
 {
-    
-    var layer = $canvas.selectedLayer;
     if(layer)
     {
         console.log("flipping " + layer.name + " horizontally");
@@ -700,12 +700,8 @@ function flipSelectedLayerHorizontal()
     }
 }
 
-function deleteSelectedLayer()
+function deleteLayer(layer)
 {
-    
-
-    var layer = $canvas.selectedLayer;
-
     if(layer){
         $canvas.removeLayer(layer.name);
         $canvas.drawLayers();
@@ -713,14 +709,12 @@ function deleteSelectedLayer()
     }
 }
 
-function moveSelectedLayerDown()
+function moveLayerDown(layer)
 {
-    
-     var layer = $canvas.selectedLayer;
      if(layer)
      {
         if (layer.index !== 0) {
-            $canvas.moveLayer(layer.name, layer.index - 5);
+            $canvas.moveLayer(layer.name, layer.index - 6);
             $canvas.drawLayers();
             console.log("moving " + layer.name + " down a layer");
 
@@ -728,17 +722,16 @@ function moveSelectedLayerDown()
     }
 }
 
-function moveSelectedLayerUp()
+function moveLayerUp(layer)
 {
-    
-     var layer = $canvas.selectedLayer;
-        var numLayers = $canvas.getLayers().length;
-        console.log(numLayers);
     if(layer)
+    {
+        var numLayers = $canvas.getLayers().length;
+        if (layer.index !== (numLayers - 6)) 
         {
-        if (layer.index !== (numLayers - 5)) {
-            $canvas.moveLayer(layer.name, (layer.index + 5));
+            $canvas.moveLayer(layer.name, (layer.index + 6));
             $canvas.drawLayers();
+            console.log(layer.index);
 
             console.log("moving " +layer.name + " up a layer");
         }
