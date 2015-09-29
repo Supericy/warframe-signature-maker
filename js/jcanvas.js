@@ -192,7 +192,8 @@ jCanvasDefaults.baseDefaults = {
 	visible: TRUE,
 	width: NULL,
 	x: 0,
-	y: 0
+	y: 0,
+	selectedLayer: NULL
 };
 defaults = new jCanvasDefaults();
 jCanvasObject.prototype = defaults;

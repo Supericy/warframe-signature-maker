@@ -41,7 +41,7 @@ $.fn.extend({
 
     insertImage: function (img, trait) {
         return this.each(function () {
-            var $canvas = $(this);
+            
             var layer = {
                 type: 'image',
                 name: img.src + new Date().getTime(),
@@ -61,20 +61,14 @@ $.fn.extend({
 
                 },
                 mousedown: function (layer) {
-                    var previouslySelectedLayer = $canvas.data("selectedLayer");
-                    console.log(previouslySelectedLayer);
-
-                    $canvas.data("selectedLayer", layer.name);
-
-                    console.log("You selected " + $canvas.data("selectedLayer"));
-
+                    var previouslySelectedLayer = $canvas.selectedLayer;
+                   
+                    console.log("You selected " + layer.name);
+                    $canvas.selectedLayer = layer;
 
                     //clear previous "selection"                  
                     if (previouslySelectedLayer) {
-                        $canvas.enableLayerHandles(previouslySelectedLayer, false);
-                        if (previouslySelectedLayer === "usernameText") {
-                            $canvas.enableLayerHandles("usernameTextHandles", false);
-                        }
+                        $canvas.enableLayerHandles(previouslySelectedLayer.name, false);
                     }
 
                     // "select" new guy
@@ -118,8 +112,10 @@ $.fn.extend({
                 
             }
             // select it after placing it.
-                layer.mousedown(layer);
-                $canvas.drawLayers();
+            $canvas.selectedLayer = layer;
+            $canvas.drawLayers();
+            
+            
 
 
 
@@ -165,7 +161,7 @@ $.fn.extend({
         var spanId = $(img).attr("id");
         var style = textEffectStyles[spanId.replace("Sample","")];
         return this.each(function () {
-            var $canvas = $(this);
+            
             var username = $canvas.data("username");
             
             if ($canvas.getLayer("usernameText") !== undefined) {
@@ -207,21 +203,18 @@ $.fn.extend({
                 },
                    
                     mousedown: function (layer) {
-                        var previouslySelectedLayer = $canvas.data("selectedLayer");
-                        console.log(previouslySelectedLayer);
-
-                        $canvas.data("selectedLayer", layer.name);
-
-                        console.log("You selected " + $canvas.data("selectedLayer"));
-
+                        var previouslySelectedLayer = $canvas.selectedLayer;
+                   
+                        console.log("You selected " + layer.name);
+                        $canvas.selectedLayer = layer;
 
                         //clear previous "selection"                  
                         if (previouslySelectedLayer) {
-                            $canvas.enableLayerHandles(previouslySelectedLayer, false);
+                            $canvas.enableLayerHandles(previouslySelectedLayer.name, false);
                         }
 
                         // "select" new guy
-                        $canvas.enableLayerHandles("usernameText", true);
+                        $canvas.enableLayerHandles(layer.name, true);
 
 
                         $("#nameToolbar").show();
@@ -230,10 +223,9 @@ $.fn.extend({
                 })
                     .drawLayers();
 
-
-                var layer = $canvas.getLayer("usernameText");
-                layer.mousedown(layer);
-
+                // set layer to selected.
+                $canvas.selectedLayer = $canvas.getLayer("usernameText");
+                $("#nameToolbar").show();
             }
 
 
@@ -246,112 +238,8 @@ $.fn.extend({
 
     addStat: function (statIcon, stat) {
         return this.each(function () {
-            var $canvas = $(this);
             
-
-            $canvas.addLayer({
-                type: 'image',
-                name: statIcon.src,
-                source: statIcon.src,
-                x: 150,
-                y: 100,
-                width: statIcon.width,
-                height: statIcon.height,
-
-            }).drawLayers();
-
-            var myIcon = $canvas.getLayer(statIcon.src);
-
-            var origIconWidth = statIcon.width;
-            var origIconHeight = statIcon.height;
-
-
-            $canvas.addLayer({
-                type: 'text',
-                fillStyle: "#000",
-                fontSize: 32,
-                strokeStyle: '#25a',
-                strokeWidth: 0,
-                x: 150,
-                y: 100,
-                translateX: +statIcon.width / 2,
-                fontFamily: "Arial",
-                text:stat,
-                 name: stat
-
-            })
-                .drawLayers();
-
-           
-            var mytext = $canvas.getLayer(stat);
-            $canvas.measureText(mytext);
-
-            var origWidth = mytext.width;
-            var origHeight = mytext.height;
-
-            $canvas.setLayer(myIcon.name, {
-                translateX: -myIcon.width*2 -myIcon.width/2
-            });
-
-            $canvas.setLayer(mytext.name, {
-                translateX: +myIcon.width / 2
-            });
-
-            $canvas.addLayer({
-                type: 'rectangle',
-                draggable: true,
-                name: stat + "handles",
-                strokeStyle: '#c33',
-                strokeWidth: 0,
-                x: 150,
-                y: 100,
-                width: myIcon.width + mytext.width,
-                height: myIcon.height,
-                handlePlacement: 'corners&rotational',
-                handle: {
-                    type: 'arc',
-                    strokeStyle: '#c33',
-                    strokeWidth: 2,
-                    radius: 5
-                },
-                handlemove: function (layer) {
-                    $canvas.setLayer(mytext, {
-                        scaleX: layer.width / (origWidth + origIconWidth),
-                        scaleY: layer.height / origHeight
-                    });
-                    $canvas.setLayer(myIcon, {
-                        scaleX: layer.width / (origWidth + origIconWidth),
-                        scaleY: layer.height / origIconHeight
-                    });
-                    $canvas.drawLayers();
-                },
-                drag: function (layer) {
-                    $canvas.setLayer(mytext, {
-                        x: layer.x,
-                        y: layer.y
-                    });
-                    $canvas.setLayer(myIcon, {
-                        x: layer.x,
-                        y: layer.y
-                    });
-                    $canvas.drawLayers();
-                }
-            });
-            // Redraw layers to ensure handles are on top of rectangle
-
-            $canvas.drawLayers();
-
-
-            /*
-                var layer = $canvas.getLayer(stat);
-                layer.mousedown(layer);
-                */
-
-
-
-
-
-
+            
 
 
         });
@@ -361,7 +249,7 @@ $.fn.extend({
 
     insertRect: function (x, y, width, height, fill, stroke, strokeWidth, name) {
         return this.each(function () {
-            var $canvas = $(this);
+            
 
             var layer = {
                 type: 'rectangle',
@@ -413,7 +301,7 @@ $.fn.extend({
 
     enableLayerHandles: function (layerName, enabled) {
         return this.each(function (elm) {
-            var $canvas = $(this);
+           
 
             var layer = $canvas.getLayer(layerName);
             $canvas.setLayerGroup(layer._handles, {
@@ -446,6 +334,27 @@ $.fn.extend({
 
 $(document).ready(function () {
 
+     // undo manager
+    var undoManager,
+        btnUndo,
+        btnRedo;
+
+    undoManager = new UndoManager();    
+    
+    btnUndo = document.getElementById("undo");
+    btnRedo = document.getElementById("redo");
+
+    btnUndo.onclick = function () {
+        console.log("UNDOING");
+        undoManager.undo();  
+    };
+    btnRedo.onclick = function () {
+        console.log("REDOING");
+        undoManager.redo();
+    };
+
+
+
     $("#tabs").tabs({
         hide: {
             effect: "fadeOut",
@@ -469,12 +378,11 @@ $(document).ready(function () {
 },0);
     
 
-    var $canvas = $('#workspaceCanvas');
+    $canvas = $('#workspaceCanvas');
 
     $("#bg-list img").click(function () {
 
         $canvas.insertImage(this, "background");
-        var layer = $canvas.data("selectedLayer");
         var image = this;
         undoManager.add({
             undo:function(){
@@ -491,7 +399,6 @@ $(document).ready(function () {
     $("#weapon-list img").click(function () {
 
         $canvas.insertImage(this);
-        var layer = $canvas.data("selectedLayer");
         var image = this;
         undoManager.add({
             undo:function(){
@@ -507,7 +414,6 @@ $(document).ready(function () {
     $("#extras-list img").click(function () {
 
         $canvas.insertImage(this);
-        var layer = $canvas.data("selectedLayer");
         var image = this;
         undoManager.add({
             undo:function(){
@@ -533,6 +439,134 @@ $(document).ready(function () {
     });
     */
 
+    registerHooksForToolbar(undoManager);
+
+ 
+
+    var username = "SuperCoolGuy";
+
+    $canvas.data("username", username);
+
+    // setup text samples
+ 
+    $("#StereoscopicSample").attr("src", createTextEffect(username, textEffectStyles[$("#StereoscopicSample").attr("id").replace("Sample","")]));
+    $("#NeonSample").attr("src", createTextEffect(username, textEffectStyles[$("#NeonSample").attr("id").replace("Sample","")]));
+    $("#AnaglyphicSample").attr("src", createTextEffect(username, textEffectStyles[$("#AnaglyphicSample").attr("id").replace("Sample","")]));
+    $("#VintageRadioSample").attr("src", createTextEffect(username, textEffectStyles[$("#VintageRadioSample").attr("id").replace("Sample","")]));
+    $("#InsetSample").attr("src", createTextEffect(username, textEffectStyles[$("#InsetSample").attr("id").replace("Sample","")]));
+    $("#ShadowSample").attr("src", createTextEffect(username, textEffectStyles[$("#ShadowSample").attr("id").replace("Sample","")]));
+    $("#Shadow2Sample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow2Sample").attr("id").replace("Sample","")]));
+    $("#Shadow3DSample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow3DSample").attr("id").replace("Sample","")]));
+
+
+                    
+                     
+                    
+                    
+                    
+
+
+
+
+    $("#name-list img").click(function () {
+        $canvas.toggleText(this);
+        
+        undoManager.add({
+            undo:function(){
+                deleteSelectedLayer();             
+            },
+            redo:function(){
+                $canvas.toggleText(this);
+            }
+        });
+    });
+
+ 
+    $("#colorPicker").spectrum({
+        color: "#fff",
+        className: "full-spectrum",
+        showInitial: true,
+        showPalette: false,
+        showSelectionPalette: false,
+        showAlpha: true,
+        maxSelectionSize: 10,
+        chooseText: "Done",
+        cancelText: "",
+        preferredFormat: "rgb",
+        localStorageKey: "spectrum.demo",
+        move: function (color) {
+
+        },
+        show: function () {
+
+        },
+        beforeShow: function () {
+
+        },
+        hide: function () {
+
+        },
+        move: function (color) {
+            var layer = $canvas.selectedLayer;
+            if (layer !== undefined) {
+
+                var oldColor = layer.fillStyle;
+                $canvas.setLayer(layer.name, {
+                    fillStyle: color
+                });
+                $canvas.drawLayers();
+                console.log("changed font color");
+                undoManager.add({
+                    undo:function(){
+                        $canvas.setLayer(layer.name, {
+                            fillStyle: oldColor
+                        });
+                        $canvas.drawLayers();
+                        console.log("changed font color");                
+                  },
+                    redo:function(){
+                        $canvas.setLayer(layer.name, {
+                            fillStyle: color
+                        });
+                        $canvas.drawLayers();
+                        console.log("changed font color");
+                    }
+                });
+            }
+            // also change font colors of the sample displays
+            /*
+            $(".font1").css("color", color.toRgbString());
+            $(".font2").css("color", color.toRgbString());
+            $(".font3").css("color", color.toRgbString());
+            */
+        }
+        
+    });
+
+
+
+
+    $("#nameToolbar").hide();
+    $("#statsToolbar").hide();
+
+
+    $("#shareTab").click(function() {
+        // hide any layer handles & clear selection
+        var layer = $canvas.selectedLayer;
+        if(layer)
+        {
+            $canvas.selectedLayer = null;
+            $canvas.enableLayerHandles(layer.name, false); 
+        }
+       
+    });
+
+   
+
+});
+
+
+function registerHooksForToolbar(undoManager){
 
     $("#flipVert").click(function () {
        flipSelectedLayerVertical();
@@ -592,15 +626,15 @@ $(document).ready(function () {
 
     $("#delete").click(function () {
 
-        
-        var layer = $canvas.getLayer($canvas.data("selectedLayer"));
+        var layer = $canvas.selectedLayer;
         deleteSelectedLayer();
+
         undoManager.add({
             undo:function(){
                 console.log(layer);
                 $canvas.addLayer(layer);
                 $canvas.drawLayers();   
-                $canvas.data("selectedLayer",layer);             
+                $canvas.selectedLayer = layer;             
             },
             redo:function(){
                 deleteSelectedLayer();
@@ -608,245 +642,107 @@ $(document).ready(function () {
         });
 
     });
-
- 
-
-    var username = "SuperCoolGuy";
-
-    $canvas.data("username", username);
-
-    // setup text samples
- 
-    $("#StereoscopicSample").attr("src", createTextEffect(username, textEffectStyles[$("#StereoscopicSample").attr("id").replace("Sample","")]));
-    $("#NeonSample").attr("src", createTextEffect(username, textEffectStyles[$("#NeonSample").attr("id").replace("Sample","")]));
-    $("#AnaglyphicSample").attr("src", createTextEffect(username, textEffectStyles[$("#AnaglyphicSample").attr("id").replace("Sample","")]));
-    $("#VintageRadioSample").attr("src", createTextEffect(username, textEffectStyles[$("#VintageRadioSample").attr("id").replace("Sample","")]));
-    $("#InsetSample").attr("src", createTextEffect(username, textEffectStyles[$("#InsetSample").attr("id").replace("Sample","")]));
-    $("#ShadowSample").attr("src", createTextEffect(username, textEffectStyles[$("#ShadowSample").attr("id").replace("Sample","")]));
-    $("#Shadow2Sample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow2Sample").attr("id").replace("Sample","")]));
-    $("#Shadow3DSample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow3DSample").attr("id").replace("Sample","")]));
-
-
-                    
-                    
-                    
-                    
-                    
-
-
-
-
-    $("#name-list img").click(function () {
-        $canvas.toggleText(this);
-        undoManager.add({
-            undo:function(){
-                deleteSelectedLayer();             
-            },
-            redo:function(){
-                $canvas.toggleText(this);
-            }
-        });
-    });
-
- 
-    $("#colorPicker").spectrum({
-        color: "#fff",
-        className: "full-spectrum",
-        showInitial: true,
-        showPalette: true,
-        showSelectionPalette: true,
-        showAlpha: true,
-        maxSelectionSize: 10,
-        chooseText: "Done",
-        cancelText: "",
-        preferredFormat: "rgb",
-        localStorageKey: "spectrum.demo",
-        move: function (color) {
-
-        },
-        show: function () {
-
-        },
-        beforeShow: function () {
-
-        },
-        hide: function () {
-
-        },
-        move: function (color) {
-            var layer = $canvas.getLayer($canvas.data("selectedLayer"));
-            if (layer !== undefined) {
-
-                var oldColor = layer.fillStyle;
-                $canvas.setLayer(layer.name, {
-                    fillStyle: color
-                });
-                $canvas.drawLayers();
-                console.log("changed font color");
-                undoManager.add({
-                    undo:function(){
-                        $canvas.setLayer(layer.name, {
-                            fillStyle: oldColor
-                        });
-                        $canvas.drawLayers();
-                        console.log("changed font color");                
-                  },
-                    redo:function(){
-                        $canvas.setLayer(layer.name, {
-                            fillStyle: color
-                        });
-                        $canvas.drawLayers();
-                        console.log("changed font color");
-                    }
-                });
-            }
-            // also change font colors of the sample displays
-            /*
-            $(".font1").css("color", color.toRgbString());
-            $(".font2").css("color", color.toRgbString());
-            $(".font3").css("color", color.toRgbString());
-            */
-        },
-        palette: [
-            ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
-                "rgb(204, 204, 204)", "rgb(217, 217, 217)", "rgb(255, 255, 255)"],
-            ["rgb(152, 0, 0)", "rgb(255, 0, 0)", "rgb(255, 153, 0)", "rgb(255, 255, 0)", "rgb(0, 255, 0)",
-                "rgb(0, 255, 255)", "rgb(74, 134, 232)", "rgb(0, 0, 255)", "rgb(153, 0, 255)", "rgb(255, 0, 255)"],
-            ["rgb(230, 184, 175)", "rgb(244, 204, 204)", "rgb(252, 229, 205)", "rgb(255, 242, 204)", "rgb(217, 234, 211)",
-                "rgb(208, 224, 227)", "rgb(201, 218, 248)", "rgb(207, 226, 243)", "rgb(217, 210, 233)", "rgb(234, 209, 220)",
-                "rgb(221, 126, 107)", "rgb(234, 153, 153)", "rgb(249, 203, 156)", "rgb(255, 229, 153)", "rgb(182, 215, 168)",
-                "rgb(162, 196, 201)", "rgb(164, 194, 244)", "rgb(159, 197, 232)", "rgb(180, 167, 214)", "rgb(213, 166, 189)",
-                "rgb(204, 65, 37)", "rgb(224, 102, 102)", "rgb(246, 178, 107)", "rgb(255, 217, 102)", "rgb(147, 196, 125)",
-                "rgb(118, 165, 175)", "rgb(109, 158, 235)", "rgb(111, 168, 220)", "rgb(142, 124, 195)", "rgb(194, 123, 160)",
-                "rgb(166, 28, 0)", "rgb(204, 0, 0)", "rgb(230, 145, 56)", "rgb(241, 194, 50)", "rgb(106, 168, 79)",
-                "rgb(69, 129, 142)", "rgb(60, 120, 216)", "rgb(61, 133, 198)", "rgb(103, 78, 167)", "rgb(166, 77, 121)",
-                "rgb(91, 15, 0)", "rgb(102, 0, 0)", "rgb(120, 63, 4)", "rgb(127, 96, 0)", "rgb(39, 78, 19)",
-                "rgb(12, 52, 61)", "rgb(28, 69, 135)", "rgb(7, 55, 99)", "rgb(32, 18, 77)", "rgb(76, 17, 48)"]
-        ]
-    });
-
-
-
-
-    $("#nameToolbar").hide();
-    $("#statsToolbar").hide();
-
-
-    $("#shareTab").click(function() {
-        // hide any layer handles & clear selection
-        var layerName = $canvas.data("selectedLayer");
-        if(layerName)
-        {
-            $canvas.data("selectedLayer", null);
-            $canvas.enableLayerHandles(layerName, false); 
-        }
-       
-    });
-
-    // undo manager
-    var undoManager,
-        btnUndo,
-        btnRedo;
-
-    undoManager = new UndoManager();    
-    
-    btnUndo = document.getElementById("undo");
-    btnRedo = document.getElementById("redo");
-
-    btnUndo.onclick = function () {
-        console.log("UNDOING");
-        undoManager.undo();  
-    };
-    btnRedo.onclick = function () {
-        console.log("REDOING");
-        undoManager.redo();
-    };
-
-});
+}
 
 function rotateSelectedLayer(degrees){
-    var $canvas = $('#workspaceCanvas');
-    console.log("rotating " + $canvas.data("selectedLayer") + degrees + "  degrees");
+    
+    var layer = $canvas.selectedLayer;
+    if(layer)
+    {
+    console.log("rotating " + layer.name + " " + degrees + "  degrees");
 
-        $canvas.animateLayer($canvas.data("selectedLayer"), {
+        $canvas.animateLayer(layer.name, {
             rotate: '+=' + degrees
         }, 200);
+    }
 
 }
 
 function flipSelectedLayerVertical()
 {
-    var $canvas = $('#workspaceCanvas');
-     console.log("flipping " + $canvas.data("selectedLayer") + " vertically");
+    
+    var layer = $canvas.selectedLayer;
+    if(layer)
+    {
 
-        var layer = $canvas.getLayer($canvas.data("selectedLayer"));
-        var layerName = $canvas.data("selectedLayer");
+     console.log("flipping " + layer.name + " vertically");
         var value = -1;
         if (layer.scaleY === -1) {
             value = 1;
         }
 
-        $canvas.animateLayer(layerName, {
+        $canvas.animateLayer(layer.name, {
 
             scaleY: value
 
         }, 200);
+    }
 }
 
 function flipSelectedLayerHorizontal()
 {
-    var $canvas = $('#workspaceCanvas');
-    console.log("flipping " + $canvas.data("selectedLayer") + " horizontally");
+    
+    var layer = $canvas.selectedLayer;
+    if(layer)
+    {
+        console.log("flipping " + layer.name + " horizontally");
 
-        var layer = $canvas.getLayer($canvas.data("selectedLayer"));
-        var layerName = $canvas.data("selectedLayer");
         var value = -1;
         if (layer.scaleX === -1) {
             value = 1;
         }
 
-        $canvas.animateLayer(layerName, {
+        $canvas.animateLayer(layer.name, {
 
             scaleX: value
 
         }, 200);
+    }
 }
 
 function deleteSelectedLayer()
 {
-    var $canvas = $('#workspaceCanvas');
-    var layer = $canvas.getLayer($canvas.data("selectedLayer"));
+    
+
+    var layer = $canvas.selectedLayer;
+
     if(layer){
         $canvas.removeLayer(layer.name);
         $canvas.drawLayers();
-        $canvas.data("selectedLayer", null);
+        $canvas.selectedLayer = null;
     }
 }
 
 function moveSelectedLayerDown()
 {
-    var $canvas = $('#workspaceCanvas');
-     var layer = $canvas.getLayer($canvas.data("selectedLayer"));
+    
+     var layer = $canvas.selectedLayer;
+     if(layer)
+     {
         if (layer.index !== 0) {
             $canvas.moveLayer(layer.name, layer.index - 5);
             $canvas.drawLayers();
-            console.log("moving " + $canvas.data("selectedLayer") + " down a layer");
+            console.log("moving " + layer.name + " down a layer");
 
         }
+    }
 }
 
 function moveSelectedLayerUp()
 {
-    var $canvas = $('#workspaceCanvas');
-     var layer = $canvas.getLayer($canvas.data("selectedLayer"));
+    
+     var layer = $canvas.selectedLayer;
         var numLayers = $canvas.getLayers().length;
         console.log(numLayers);
+    if(layer)
+        {
         if (layer.index !== (numLayers - 5)) {
             $canvas.moveLayer(layer.name, (layer.index + 5));
             $canvas.drawLayers();
 
-            console.log("moving " + $canvas.data("selectedLayer") + " up a layer");
+            console.log("moving " +layer.name + " up a layer");
         }
+    }
 
 }
 
