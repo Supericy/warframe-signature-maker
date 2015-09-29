@@ -775,7 +775,7 @@ audioElement.play();
 
 
     setTimeout(function () {
-        audioElement.setAttribute('src', 'http://media.soundcloud.com/stream/VLWbetum1EQA.mp3');
+        audioElement.setAttribute('src', 'audio/doorSound.mp3');
         audioElement.play();
         open = false;
         setTimeout(
