@@ -20,7 +20,7 @@ var textEffectStyles = {
 		background: "#fff",
 		shadow: "3px 3px 0 rgba(255,0,180,0.5)"
 	},
-	"Vintage Radio": {
+	"VintageRadio": {
 		color: "#707070",
 		background: "#ddd",
 		shadow: "2px 2px 0px #eee, 4px 4px 0px #666"
@@ -36,7 +36,7 @@ var textEffectStyles = {
 		background: "#444",
 		shadow: "0 0 11px #000"
 	},
-	"Shadow ;)": {
+	"Shadow2": {
 		background: "#ddd",
 		shadow: "0 0 11px #000"
 	},

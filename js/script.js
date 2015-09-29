@@ -161,18 +161,20 @@ $.fn.extend({
 
 
 
-    toggleText: function (span) {
-        var spanId = $(span).attr("class");
-        var style = textEffectStyles["Neon"];
+    toggleText: function (img) {
+        var spanId = $(img).attr("id");
+        var style = textEffectStyles[spanId.replace("Sample","")];
         return this.each(function () {
             var $canvas = $(this);
             var username = $canvas.data("username");
             
-            if ($canvas.getLayer("usernameText") !== undefined && false) {
+            if ($canvas.getLayer("usernameText") !== undefined) {
                 $canvas.setLayer("usernameText", {
-                    fontFamily: $(span).css("font-family")
+                    //fontFamily: $(span).css("font-family")
+                    source: createTextEffect(username, style)
                 });
                 $canvas.drawLayers();
+
             
 
 
@@ -180,7 +182,7 @@ $.fn.extend({
 
                 var img = new Image();
                 img.src = createTextEffect(username, style);
-                console.log(img);
+
                 $('canvas').addLayer({
                     type: 'image',
                     //fillStyle: $(span).css("color"),
@@ -613,14 +615,28 @@ $(document).ready(function () {
 
     $canvas.data("username", username);
 
-    $(".font1").text(username);
-    $(".font2").text(username);
-    $(".font3").text(username);
+    // setup text samples
+ 
+    $("#StereoscopicSample").attr("src", createTextEffect(username, textEffectStyles[$("#StereoscopicSample").attr("id").replace("Sample","")]));
+    $("#NeonSample").attr("src", createTextEffect(username, textEffectStyles[$("#NeonSample").attr("id").replace("Sample","")]));
+    $("#AnaglyphicSample").attr("src", createTextEffect(username, textEffectStyles[$("#AnaglyphicSample").attr("id").replace("Sample","")]));
+    $("#VintageRadioSample").attr("src", createTextEffect(username, textEffectStyles[$("#VintageRadioSample").attr("id").replace("Sample","")]));
+    $("#InsetSample").attr("src", createTextEffect(username, textEffectStyles[$("#InsetSample").attr("id").replace("Sample","")]));
+    $("#ShadowSample").attr("src", createTextEffect(username, textEffectStyles[$("#ShadowSample").attr("id").replace("Sample","")]));
+    $("#Shadow2Sample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow2Sample").attr("id").replace("Sample","")]));
+    $("#Shadow3DSample").attr("src", createTextEffect(username, textEffectStyles[$("#Shadow3DSample").attr("id").replace("Sample","")]));
+
+
+                    
+                    
+                    
+                    
+                    
 
 
 
 
-    $("#name-list span").click(function () {
+    $("#name-list img").click(function () {
         $canvas.toggleText(this);
         undoManager.add({
             undo:function(){
@@ -685,9 +701,11 @@ $(document).ready(function () {
                 });
             }
             // also change font colors of the sample displays
+            /*
             $(".font1").css("color", color.toRgbString());
             $(".font2").css("color", color.toRgbString());
             $(".font3").css("color", color.toRgbString());
+            */
         },
         palette: [
             ["rgb(0, 0, 0)", "rgb(67, 67, 67)", "rgb(102, 102, 102)",
