@@ -62,18 +62,9 @@ $.fn.extend({
                 },
                    dragstart: function (layer) {
                     // code to run when dragging starts
-                        var dragstartx = layer.x;
-                        var dragstarty = layer.y;
-                        $canvas.undoManager.add({
-                            undo:function(){
-                                console.log("undoing drag start");
-                                $canvas.setLayer(layer, {
-                                    x:dragstartx,
-                                    y:dragstarty
-                                }).drawLayers();               
-                            },
-                            redo:undefined
-                        });
+                        layer.dragstartx = layer.x;
+                        layer.dragstarty = layer.y;
+                        
 
 
                     },
@@ -81,7 +72,18 @@ $.fn.extend({
                     // code to run when dragging starts
                         var dragstopx = layer.x;
                         var dragstopy = layer.y;
+                        // pointlessly copy oh wait makes it work
+                        var dragstartx = layer.dragstartx;
+                        var dragstarty = layer.dragstarty;
                         $canvas.undoManager.add({
+                            undo:function(){
+                                console.log("undoing drag start");
+                                console.log("old values are ", layer.dragstartx, layer.dragstarty);
+                                $canvas.setLayer(layer, {
+                                    x:dragstartx,
+                                    y:dragstarty
+                                }).drawLayers();               
+                            },
                             redo:function(){
                                 console.log("restoring drag stop");
                                 $canvas.setLayer(layer, {
@@ -89,8 +91,7 @@ $.fn.extend({
                                     y:dragstopy
                                 }).drawLayers();
 
-                            },
-                            undo:undefined
+                            }
                         });
 
                     },
