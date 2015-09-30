@@ -255,7 +255,7 @@ function addRotationHandle( $canvas, parent, px, py) {
 		},
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'rotatehandlecancel' );
+			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
 		}
 	} );
 	$canvas.draw( handle );
