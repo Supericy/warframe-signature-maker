@@ -178,7 +178,7 @@ function addRectHandle( $canvas, parent, px, py ) {
 		},
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlecancel' );
+			$( this ).triggerLayerEvent( parent, 'handlestop' );
 		}
 	} );
 	$canvas.draw( handle );
