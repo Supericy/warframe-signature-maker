@@ -219,7 +219,7 @@ function addRotationHandle( $canvas, parent, px, py) {
 		prevangle: 0,
 		strokeStyle:"orange",
 		dragstart: function ( layer ) {
-			$( this ).triggerLayerEvent( layer._parent, 'handlestart' );
+			$( this ).triggerLayerEvent( layer._parent, 'rotatehandlestart' );
 		},
 		// Resize rectangle when dragging a handle
 		drag: function ( layer ) {
@@ -247,15 +247,15 @@ function addRotationHandle( $canvas, parent, px, py) {
 			layer.prevy = layer.y;
 
 			//updateRotateHandle( parent );
-			$( this ).triggerLayerEvent( parent, 'handlemove' );
+			$( this ).triggerLayerEvent( parent, 'rotatehandlemove' );
 		},
 		dragstop: function ( layer ) {
 			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlestop' );
+			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
 		},
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlecancel' );
+			$( this ).triggerLayerEvent( parent, 'rotatehandlecancel' );
 		}
 	} );
 	$canvas.draw( handle );

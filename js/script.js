@@ -60,6 +60,130 @@ $.fn.extend({
 
 
                 },
+                   dragstart: function (layer) {
+                    // code to run when dragging starts
+                        var dragstartx = layer.x;
+                        var dragstarty = layer.y;
+                        $canvas.undoManager.add({
+                            undo:function(){
+                                console.log("undoing drag start");
+                                $canvas.setLayer(layer, {
+                                    x:dragstartx,
+                                    y:dragstarty
+                                }).drawLayers();               
+                            },
+                            redo:undefined
+                        });
+
+
+                    },
+                    dragstop: function (layer){
+                    // code to run when dragging starts
+                        var dragstopx = layer.x;
+                        var dragstopy = layer.y;
+                        $canvas.undoManager.add({
+                            redo:function(){
+                                console.log("restoring drag stop");
+                                $canvas.setLayer(layer, {
+                                    x:dragstopx,
+                                    y:dragstopy
+                                }).drawLayers();
+
+                            },
+                            undo:undefined
+                        });
+
+                    },
+                    handlestart: function(layer) {
+                    // code to run when resizing starts
+                        console.log("STARTED RESIZING");
+                        var oldheight = layer.height;
+                        var oldwidth = layer.width;
+                        var oldx = layer.x;
+                        var oldy = layer.y;
+                        $canvas.undoManager.add({
+                            undo:function(){
+                                console.log("restoring old stuff");
+                                $canvas.setLayer(layer, {
+                                    x:oldx,
+                                    y:oldy,
+                                    width:oldwidth,
+                                    height:oldheight
+
+                                }).drawLayers();              
+                            },
+                            redo:undefined
+                        });
+
+
+                    },
+
+                    handlestop: function(layer) {
+                    // code to run when resizing stops
+                    console.log("STOPPED RESIZING");
+                    var newheight = layer.height;
+                    var newwidth = layer.width;
+                    var newx = layer.x;
+                    var newy = layer.y;
+                    $canvas.undoManager.add({
+                        redo:function(){
+                            console.log("restoring new stuff");
+                            $canvas.setLayer(layer, {
+                                x:newx,
+                                y:newy,
+                                width:newwidth,
+                                height:newheight
+
+                            }).drawLayers();              
+                        },
+                        undo:undefined
+                    });
+
+                    },
+                    rotatehandlestart:function(layer)
+                    {
+                    // code to run when rotation starts
+                    console.log("STARTED ROTATING");
+
+                    var oldangle = layer.rotate;
+                    console.log(layer._handles[4]);
+                    var oldhandlex = layer._handles[4]._endX;
+                    var oldhandley = layer._handles[4]._endY;
+                    $canvas.undoManager.add({
+                        undo:function(){
+                            $canvas.setLayer(layer, {
+                                rotate:oldangle,
+                            }).drawLayers();
+                            $canvas.setLayer(layer._handles[4], {
+                                x:oldhandlex,
+                                y:oldhandley
+                            }).drawLayers();                
+                        },
+                        redo:undefined
+                    });
+
+                    },
+                    rotatehandlestop: function(layer)
+                    {
+                    // code to run when rotation stops
+                    console.log("STOPPED ROTATING");
+                    var newangle = layer.rotate;
+                    var newhandlex = layer._handles[4]._endX;
+                    var newhandley = layer._handles[4]._endY;
+                    $canvas.undoManager.add({
+                        redo:function(){
+                            $canvas.setLayer(layer, {
+                                rotate:newangle,
+                            }).drawLayers();
+                            $canvas.setLayer(layer._handles[4], {
+                                x:newhandlex,
+                                y:newhandley
+                            }).drawLayers();               
+                        },
+                        undo:undefined
+                    });
+
+                    },
                 mousedown: function (layer) {
                     var previouslySelectedLayer = $canvas.selectedLayer;
                    
@@ -129,37 +253,11 @@ $.fn.extend({
 
     },
 
-    removeImage: function (img) {
-        var imgId = img.src;
-
-        return this.each(function () {
-            $(this)
-                .removeLayer(imgId)
-                .drawLayers();
-        });
-    },
-    /* DOESN'T WORK ANYMORE SINCE LAYER NAME'S ARENT IMG.SRC / KNOWN.
-    toggleImage: function (img) {
-        var imgId = img.src;
-
-        return this.each(function () {
-            var $canvas = $(this);
-
-            if ($canvas.getLayer(imgId) !== undefined) {
-                $canvas.removeImage(img);
-            } else {
-                $canvas.insertImage(img);
-                var layer = $canvas.getLayer(img.src);
-                layer.click(layer);
-            }
-        });
-    },*/
-
-
-
     toggleText: function (img) {
         var spanId = $(img).attr("id");
+        
         var style = textEffectStyles[spanId.replace("Sample","")];
+        
         return this.each(function () {
             
             var username = $canvas.data("username");
@@ -200,8 +298,132 @@ $.fn.extend({
                     radius: 5
 
 
+
                 },
-                   
+                    dragstart: function (layer) {
+                    // code to run when dragging starts
+                        var dragstartx = layer.x;
+                        var dragstarty = layer.y;
+                        $canvas.undoManager.add({
+                            undo:function(){
+                                console.log("undoing drag start");
+                                $canvas.setLayer(layer, {
+                                    x:dragstartx,
+                                    y:dragstarty
+                                }).drawLayers();               
+                            },
+                            redo:undefined
+                        });
+
+
+                    },
+                    dragstop: function (layer){
+                    // code to run when dragging starts
+                        var dragstopx = layer.x;
+                        var dragstopy = layer.y;
+                        $canvas.undoManager.add({
+                            redo:function(){
+                                console.log("restoring drag stop");
+                                $canvas.setLayer(layer, {
+                                    x:dragstopx,
+                                    y:dragstopy
+                                }).drawLayers();
+
+                            },
+                            undo:undefined
+                        });
+
+                    },
+                    handlestart: function(layer) {
+                    // code to run when resizing starts
+                        console.log("STARTED RESIZING");
+                        var oldheight = layer.height;
+                        var oldwidth = layer.width;
+                        var oldx = layer.x;
+                        var oldy = layer.y;
+                        $canvas.undoManager.add({
+                            undo:function(){
+                                console.log("restoring old stuff");
+                                $canvas.setLayer(layer, {
+                                    x:oldx,
+                                    y:oldy,
+                                    width:oldwidth,
+                                    height:oldheight
+
+                                }).drawLayers();              
+                            },
+                            redo:undefined
+                        });
+
+
+                    },
+
+                    handlestop: function(layer) {
+                    // code to run when resizing stops
+                    console.log("STOPPED RESIZING");
+                    var newheight = layer.height;
+                    var newwidth = layer.width;
+                    var newx = layer.x;
+                    var newy = layer.y;
+                    $canvas.undoManager.add({
+                        redo:function(){
+                            console.log("restoring new stuff");
+                            $canvas.setLayer(layer, {
+                                x:newx,
+                                y:newy,
+                                width:newwidth,
+                                height:newheight
+
+                            }).drawLayers();              
+                        },
+                        undo:undefined
+                    });
+
+                    },
+                    rotatehandlestart:function(layer)
+                    {
+                    // code to run when rotation starts
+                    console.log("STARTED ROTATING");
+
+                    var oldangle = layer.rotate;
+                    console.log(layer._handles[4]);
+                    var oldhandlex = layer._handles[4]._endX;
+                    var oldhandley = layer._handles[4]._endY;
+                    $canvas.undoManager.add({
+                        undo:function(){
+                            $canvas.setLayer(layer, {
+                                rotate:oldangle,
+                            }).drawLayers();
+                            $canvas.setLayer(layer._handles[4], {
+                                x:oldhandlex,
+                                y:oldhandley
+                            }).drawLayers();                
+                        },
+                        redo:undefined
+                    });
+
+                    },
+                    rotatehandlestop: function(layer)
+                    {
+                    // code to run when rotation stops
+                    console.log("STOPPED ROTATING");
+                    var newangle = layer.rotate;
+                    var newhandlex = layer._handles[4]._endX;
+                    var newhandley = layer._handles[4]._endY;
+                    $canvas.undoManager.add({
+                        redo:function(){
+                            $canvas.setLayer(layer, {
+                                rotate:newangle,
+                            }).drawLayers();
+                            $canvas.setLayer(layer._handles[4], {
+                                x:newhandlex,
+                                y:newhandley
+                            }).drawLayers();               
+                        },
+                        undo:undefined
+                    });
+
+                    },
                     mousedown: function (layer) {
                         var previouslySelectedLayer = $canvas.selectedLayer;
                    
@@ -224,7 +446,8 @@ $.fn.extend({
                     .drawLayers();
 
                 // set layer to selected.
-                $canvas.selectedLayer = $canvas.getLayer("usernameText");
+                layer = $canvas.getLayer("usernameText");
+                layer.mousedown(layer);
                 $("#nameToolbar").show();
             }
 
@@ -319,38 +542,32 @@ $.fn.extend({
             // Don't forget to render the changes on the canvas!
             $canvas.drawLayers();
         });
-    },
-
-    constrainProportions: function () {
-        return this.each(function (elm) {
-            // if they hit shift or something maybe
-            //  constrainProportions: true;
-            //is all you need to apply to the selected layer.
-
-        });
     }
+
+
 
 });
 
 $(document).ready(function () {
 
+    $canvas = $('#workspaceCanvas');
+
      // undo manager
-    var undoManager,
-        btnUndo,
+    var btnUndo,
         btnRedo;
 
-    undoManager = new UndoManager();    
+    $canvas.undoManager = new UndoManager();    
     
     btnUndo = document.getElementById("undo");
     btnRedo = document.getElementById("redo");
 
     btnUndo.onclick = function () {
         console.log("UNDOING");
-        undoManager.undo();  
+        $canvas.undoManager.undo();  
     };
     btnRedo.onclick = function () {
         console.log("REDOING");
-        undoManager.redo();
+        $canvas.undoManager.redo();
     };
 
 
@@ -358,11 +575,11 @@ $(document).ready(function () {
     $("#tabs").tabs({
         hide: {
             effect: "fadeOut",
-            duration: 1000
+            duration: 500
         },
         show: {
             effect: "fadeIn",
-            duration: 1000
+            duration: 500
         },
         beforeActivate: function () {
            // toggleDoors(true);
@@ -378,20 +595,20 @@ $(document).ready(function () {
 },0);
     
 
-    $canvas = $('#workspaceCanvas');
+    
 
     $("#bg-list img").click(function () {
 
         $canvas.insertImage(this, "background");
         var image = this;
         var layer = $canvas.selectedLayer;
-        undoManager.add({
+        $canvas.undoManager.add({
             undo:function(){
                 deleteLayer(layer);                
             },
             redo:function(){
-                console.log(image.src);
-                $canvas.insertImage(image,"background");
+                $canvas.addLayer(layer).drawLayers();
+                $canvas.selectedLayer = layer;
             }
         });
 
@@ -402,13 +619,13 @@ $(document).ready(function () {
         $canvas.insertImage(this);
         var image = this;
         var layer = $canvas.selectedLayer;
-        undoManager.add({
+        $canvas.undoManager.add({
             undo:function(){
                 deleteLayer(layer);                
             },
             redo:function(){
-                console.log(image.src);
-                $canvas.insertImage(image);
+                 $canvas.addLayer(layer).drawLayers();
+                 $canvas.selectedLayer = layer;
             }
         });
  
@@ -418,13 +635,13 @@ $(document).ready(function () {
         $canvas.insertImage(this);
         var image = this;
         var layer = $canvas.selectedLayer;
-        undoManager.add({
+        $canvas.undoManager.add({
             undo:function(){
                 deleteLayer(layer);                
             },
             redo:function(){
-                console.log(image.src);
-                $canvas.insertImage(image);
+                 $canvas.addLayer(layer).drawLayers();
+                 $canvas.selectedLayer = layer;
             }
         });
 
@@ -442,7 +659,7 @@ $(document).ready(function () {
     });
     */
 
-    registerHooksForToolbar(undoManager);
+    registerHooksForToolbar($canvas.undoManager);
 
  
 
@@ -473,13 +690,15 @@ $(document).ready(function () {
 
     $("#name-list img").click(function () {
         $canvas.toggleText(this);
+        var image = this;
         var layer = $canvas.selectedLayer;
-        undoManager.add({
+        $canvas.undoManager.add({
             undo:function(){
                 deleteLayer(layer);             
             },
             redo:function(){
-                $canvas.toggleText(this);
+                $canvas.addLayer(layer).drawLayers();
+                $canvas.selectedLayer = layer;
             }
         });
     });
@@ -519,7 +738,7 @@ $(document).ready(function () {
                 });
                 $canvas.drawLayers();
                 console.log("changed font color");
-                undoManager.add({
+                $canvas.undoManager.add({
                     undo:function(){
                         $canvas.setLayer(layer.name, {
                             fillStyle: oldColor
@@ -637,9 +856,7 @@ function registerHooksForToolbar(undoManager){
 
         undoManager.add({
             undo:function(){
-                console.log(layer);
-                $canvas.addLayer(layer);
-                $canvas.drawLayers();   
+                $canvas.addLayer(layer).drawLayers();   
                 $canvas.selectedLayer = layer;             
             },
             redo:function(){
@@ -681,7 +898,7 @@ function flipLayerVertical(layer)
     }
 }
 
-function flipSelectedLayerHorizontal(layer)
+function flipLayerHorizontal(layer)
 {
     if(layer)
     {
