@@ -72,10 +72,11 @@ $.fn.extend({
                         // pointlessly copy oh wait makes it work
                         var dragstartx = layer.dragstartx;
                         var dragstarty = layer.dragstarty;
+                        console.log( "values before undo are ", layer.dragstartx, layer.dragstarty);
                         $canvas.undoManager.add({
                             undo:function(){
-                                console.log("undoing drag start  on ", layer.name);
-                                console.log("old values are ", layer.dragstartx, layer.dragstarty);
+                                console.log("undoing drag start  on ");
+                                console.log("values as i undo are ", dragstartx, dragstarty);
                                 $canvas.setLayer(layer, {
                                     x:dragstartx,
                                     y:dragstarty
@@ -236,7 +237,7 @@ $.fn.extend({
             $canvas.drawLayers();
             layer.mousedown(layer);
          
-            console.log(layer.width, layer.height);
+            console.log(layer.x, layer.y);
             
             
 
@@ -335,7 +336,6 @@ $.fn.extend({
                     },
                     handlestart: function(layer) {
                     // code to run when resizing starts
-                        console.log("STARTED RESIZING");
                         layer.oldheight = layer.height;
                         layer.oldwidth = layer.width;
                         layer.oldx = layer.x;
@@ -344,7 +344,6 @@ $.fn.extend({
 
                     handlestop: function(layer) {
                     // code to run when resizing stops
-                    console.log("STOPPED RESIZING");
                     var newheight = layer.height;
                     var newwidth = layer.width;
                     var newx = layer.x;
@@ -382,7 +381,6 @@ $.fn.extend({
                     rotatehandlestart:function(layer)
                     {
                     // code to run when rotation starts
-                    console.log("STARTED ROTATING");
                     layer.oldangle = layer.rotate;
                     layer.oldhandlex = layer._handles[4]._endX;
                     layer.oldhandley = layer._handles[4]._endY;
@@ -391,7 +389,6 @@ $.fn.extend({
                     rotatehandlestop: function(layer)
                     {
                     // code to run when rotation stops
-                    console.log("STOPPED ROTATING");
                     var newangle = layer.rotate;
                     var newhandlex = layer._handles[4]._endX;
                     var newhandley = layer._handles[4]._endY;
