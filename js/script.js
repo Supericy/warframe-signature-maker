@@ -74,7 +74,7 @@ $.fn.extend({
                         var dragstarty = layer.dragstarty;
                         $canvas.undoManager.add({
                             undo:function(){
-                                console.log("undoing drag start");
+                                console.log("undoing drag start  on ", layer.name);
                                 console.log("old values are ", layer.dragstartx, layer.dragstarty);
                                 $canvas.setLayer(layer, {
                                     x:dragstartx,
@@ -90,6 +90,7 @@ $.fn.extend({
 
                             }
                         });
+                        layer.mousedown(layer);
 
                     },
                     handlestart: function(layer) {
@@ -99,6 +100,7 @@ $.fn.extend({
                     layer.oldwidth = layer.width;
                     layer.oldx = layer.x;
                     layer.oldy = layer.y;
+
                     },
 
                     handlestop: function(layer) {
@@ -113,7 +115,7 @@ $.fn.extend({
                     var oldwidth = layer.oldwidth;
                     var oldx = layer.oldx;
                     var oldy = layer.oldy;
-
+                    console.log(newwidth,newheight);
                     $canvas.undoManager.add({
                         undo:function(){
                             console.log("restoring old stuff");
@@ -134,7 +136,7 @@ $.fn.extend({
                             }).drawLayers();              
                         }
                     });
-
+                    layer.mousedown(layer);
                     },
                     rotatehandlestart:function(layer)
                     {
@@ -176,6 +178,7 @@ $.fn.extend({
                             }).drawLayers();               
                         }
                     });
+                    layer.mousedown(layer);
 
                     },
                 mousedown: function (layer) {
@@ -186,11 +189,11 @@ $.fn.extend({
 
                     //clear previous "selection"                  
                     if (previouslySelectedLayer) {
-                        $canvas.enableLayerHandles(previouslySelectedLayer.name, false);
+                        $canvas.enableLayerHandles(previouslySelectedLayer, false);
                     }
 
                     // "select" new guy
-                    $canvas.enableLayerHandles(layer.name, true);
+                    $canvas.enableLayerHandles(layer, true);
 
                     $("#nameToolbar").hide();
 
@@ -219,7 +222,7 @@ $.fn.extend({
                 // move background to end
                 $canvas.moveLayer(layer.name, 0);
                 // hide handles
-                $canvas.enableLayerHandles(layer.name, false);
+                $canvas.enableLayerHandles(layer, false);
 
                 $canvas.drawLayers();
             } else {
@@ -230,8 +233,10 @@ $.fn.extend({
                 
             }
             // select it after placing it.
-            layer.mousedown(layer);
             $canvas.drawLayers();
+            layer.mousedown(layer);
+         
+            console.log(layer.width, layer.height);
             
             
 
@@ -306,6 +311,7 @@ $.fn.extend({
                         // pointlessly copy oh wait makes it work
                         var dragstartx = layer.dragstartx;
                         var dragstarty = layer.dragstarty;
+
                         $canvas.undoManager.add({
                             undo:function(){
                                 console.log("undoing drag start");
@@ -324,6 +330,7 @@ $.fn.extend({
 
                             }
                         });
+                        layer.mousedown(layer);
 
                     },
                     handlestart: function(layer) {
@@ -348,6 +355,7 @@ $.fn.extend({
                     var oldx = layer.oldx;
                     var oldy = layer.oldy;
 
+
                     $canvas.undoManager.add({
                         undo:function(){
                             console.log("restoring old stuff");
@@ -368,6 +376,7 @@ $.fn.extend({
                             }).drawLayers();              
                         }
                     });
+                    layer.mousedown(layer);
 
                     },
                     rotatehandlestart:function(layer)
@@ -410,6 +419,7 @@ $.fn.extend({
                             }).drawLayers();               
                         }
                     });
+                    layer.mousedown(layer);
 
                     },
 
@@ -421,11 +431,11 @@ $.fn.extend({
 
                         //clear previous "selection"                  
                         if (previouslySelectedLayer) {
-                            $canvas.enableLayerHandles(previouslySelectedLayer.name, false);
+                            $canvas.enableLayerHandles(previouslySelectedLayer, false);
                         }
 
                         // "select" new guy
-                        $canvas.enableLayerHandles(layer.name, true);
+                        $canvas.enableLayerHandles(layer, true);
 
 
                         $("#nameToolbar").show();
@@ -511,26 +521,27 @@ $.fn.extend({
         })
     },
 
-    enableLayerHandles: function (layerName, enabled) {
-        return this.each(function (elm) {
-           
-
-            var layer = $canvas.getLayer(layerName);
-            $canvas.setLayerGroup(layer._handles, {
-                visible: enabled
-            });
-
-            var background = $canvas.getLayerGroup("background");
-
-            if (background) {
-                $canvas.setLayerGroup(background[0]._handles, {
-                    visible: false
+    enableLayerHandles: function (layer, enabled) {
+        if(layer)
+        {
+            return this.each(function (elm) {
+          
+                $canvas.setLayerGroup(layer._handles, {
+                    visible: enabled
                 });
-            }
 
-            // Don't forget to render the changes on the canvas!
-            $canvas.drawLayers();
-        });
+                var background = $canvas.getLayerGroup("background");
+
+                if (background) {
+                    $canvas.setLayerGroup(background[0]._handles, {
+                        visible: false
+                    });
+                }
+
+                // Don't forget to render the changes on the canvas!
+                $canvas.drawLayers();
+            });
+        }  
     }
 
 
@@ -597,6 +608,7 @@ $(document).ready(function () {
             },
             redo:function(){
                 $canvas.addLayer(layer).drawLayers();
+                $canvas.enableLayerHandles($canvas.selectedLayer, false); 
                 $canvas.selectedLayer = layer;
             }
         });
@@ -614,6 +626,7 @@ $(document).ready(function () {
             },
             redo:function(){
                  $canvas.addLayer(layer).drawLayers();
+                 $canvas.enableLayerHandles($canvas.selectedLayer, false); 
                  $canvas.selectedLayer = layer;
             }
         });
@@ -630,6 +643,7 @@ $(document).ready(function () {
             },
             redo:function(){
                  $canvas.addLayer(layer).drawLayers();
+                 $canvas.enableLayerHandles($canvas.selectedLayer, false); 
                  $canvas.selectedLayer = layer;
             }
         });
@@ -687,6 +701,7 @@ $(document).ready(function () {
             },
             redo:function(){
                 $canvas.addLayer(layer).drawLayers();
+                $canvas.enableLayerHandles($canvas.selectedLayer, false); 
                 $canvas.selectedLayer = layer;
             }
         });
@@ -767,7 +782,7 @@ $(document).ready(function () {
         if(layer)
         {
             $canvas.selectedLayer = null;
-            $canvas.enableLayerHandles(layer.name, false); 
+            $canvas.enableLayerHandles(layer, false); 
         }
        
     });
@@ -841,15 +856,19 @@ function registerHooksForToolbar(undoManager){
     $("#delete").click(function () {
 
         var layer = $canvas.selectedLayer;
+        console.log("layer before delete", layer);
         deleteLayer(layer);
 
         undoManager.add({
             undo:function(){
-                $canvas.addLayer(layer).drawLayers();   
-                $canvas.selectedLayer = layer;             
+                $canvas.addLayer(layer).drawLayers();  
+                $canvas.enableLayerHandles($canvas.selectedLayer, false);
+                $canvas.selectedLayer = layer;
+                console.log("layer after undo",layer);             
             },
             redo:function(){
                 deleteLayer(layer);
+                console.log("layer after redo",layer);  
             }
         });
 
