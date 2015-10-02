@@ -64,6 +64,7 @@ $.fn.extend({
                     // code to run when dragging starts
                         layer.dragstartx = layer.x;
                         layer.dragstarty = layer.y;
+                        layer.mousedown(layer);
                     },
                     dragstop: function (layer){
                     // code to run when dragging starts
@@ -76,15 +77,17 @@ $.fn.extend({
                         $canvas.undoManager.add({
                             undo:function(){
                                 console.log("undoing drag start  on ");
+                                console.log("layer before moving in undo",layer);
                                 console.log("values as i undo are ", dragstartx, dragstarty);
-                                $canvas.setLayer(layer, {
+                                $canvas.setLayer(layer.name, {
                                     x:dragstartx,
                                     y:dragstarty
-                                }).drawLayers();               
+                                }).drawLayers();  
+                                console.log("layer after undo:", layer);             
                             },
                             redo:function(){
                                 console.log("restoring drag stop");
-                                $canvas.setLayer(layer, {
+                                $canvas.setLayer(layer.name, {
                                     x:dragstopx,
                                     y:dragstopy
                                 }).drawLayers();
@@ -120,7 +123,7 @@ $.fn.extend({
                     $canvas.undoManager.add({
                         undo:function(){
                             console.log("restoring old stuff");
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 x:oldx,
                                 y:oldy,
                                 width:oldwidth,
@@ -129,7 +132,7 @@ $.fn.extend({
                         },
                         redo:function(){
                             console.log("restoring new stuff");
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 x:newx,
                                 y:newy,
                                 width:newwidth,
@@ -161,7 +164,7 @@ $.fn.extend({
                     var oldhandley = layer.oldhandley;
                     $canvas.undoManager.add({
                         undo:function(){
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 rotate:oldangle,
                             }).drawLayers();
                             $canvas.setLayer(layer._handles[4], {
@@ -170,7 +173,7 @@ $.fn.extend({
                             }).drawLayers();                
                         },
                         redo:function(){
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 rotate:newangle,
                             }).drawLayers();
                             $canvas.setLayer(layer._handles[4], {
@@ -317,14 +320,14 @@ $.fn.extend({
                             undo:function(){
                                 console.log("undoing drag start");
                                 console.log("old values are ", layer.dragstartx, layer.dragstarty);
-                                $canvas.setLayer(layer, {
+                                $canvas.setLayer(layer.name, {
                                     x:dragstartx,
                                     y:dragstarty
                                 }).drawLayers();               
                             },
                             redo:function(){
                                 console.log("restoring drag stop");
-                                $canvas.setLayer(layer, {
+                                $canvas.setLayer(layer.name, {
                                     x:dragstopx,
                                     y:dragstopy
                                 }).drawLayers();
@@ -358,7 +361,7 @@ $.fn.extend({
                     $canvas.undoManager.add({
                         undo:function(){
                             console.log("restoring old stuff");
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 x:oldx,
                                 y:oldy,
                                 width:oldwidth,
@@ -367,7 +370,7 @@ $.fn.extend({
                         },
                         redo:function(){
                             console.log("restoring new stuff");
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 x:newx,
                                 y:newy,
                                 width:newwidth,
@@ -398,7 +401,7 @@ $.fn.extend({
                     var oldhandley = layer.oldhandley;
                     $canvas.undoManager.add({
                         undo:function(){
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 rotate:oldangle,
                             }).drawLayers();
                             $canvas.setLayer(layer._handles[4], {
@@ -407,7 +410,7 @@ $.fn.extend({
                             }).drawLayers();                
                         },
                         redo:function(){
-                            $canvas.setLayer(layer, {
+                            $canvas.setLayer(layer.name, {
                                 rotate:newangle,
                             }).drawLayers();
                             $canvas.setLayer(layer._handles[4], {
