@@ -147,8 +147,8 @@ $.fn.extend({
                     // code to run when rotation starts
                     console.log("STARTED ROTATING");
                     layer.oldangle = layer.rotate;
-                    layer.oldhandlex = layer._handles[4]._endX;
-                    layer.oldhandley = layer._handles[4]._endY;
+                    layer.oldhandlex = layer._handles[4].x;
+                    layer.oldhandley = layer._handles[4].y;
 
                     },
                     rotatehandlestop: function(layer)
@@ -156,9 +156,9 @@ $.fn.extend({
                     // code to run when rotation stops
                     console.log("STOPPED ROTATING");
                     var newangle = layer.rotate;
-                    var newhandlex = layer._handles[4]._endX;
-                    var newhandley = layer._handles[4]._endY;
-
+                    var newhandlex = layer._handles[4].x;
+                    var newhandley = layer._handles[4].y;
+                
                     var oldangle = layer.oldangle;
                     var oldhandlex = layer.oldhanlex;
                     var oldhandley = layer.oldhandley;
@@ -167,19 +167,12 @@ $.fn.extend({
                             $canvas.setLayer(layer.name, {
                                 rotate:oldangle,
                             }).drawLayers();
-                            $canvas.setLayer(layer._handles[4], {
-                                x:oldhandlex,
-                                y:oldhandley
-                            }).drawLayers();                
+             
                         },
                         redo:function(){
                             $canvas.setLayer(layer.name, {
                                 rotate:newangle,
-                            }).drawLayers();
-                            $canvas.setLayer(layer._handles[4], {
-                                x:newhandlex,
-                                y:newhandley
-                            }).drawLayers();               
+                            }).drawLayers();            
                         }
                     });
                     layer.mousedown(layer);
@@ -385,16 +378,16 @@ $.fn.extend({
                     {
                     // code to run when rotation starts
                     layer.oldangle = layer.rotate;
-                    layer.oldhandlex = layer._handles[4]._endX;
-                    layer.oldhandley = layer._handles[4]._endY;
+                    layer.oldhandlex = layer._handles[4].x;
+                    layer.oldhandley = layer._handles[4].y;
 
                     },
                     rotatehandlestop: function(layer)
                     {
                     // code to run when rotation stops
                     var newangle = layer.rotate;
-                    var newhandlex = layer._handles[4]._endX;
-                    var newhandley = layer._handles[4]._endY;
+                    var newhandlex = layer._handles[4].x;
+                    var newhandley = layer._handles[4].y;
 
                     var oldangle = layer.oldangle;
                     var oldhandlex = layer.oldhanlex;
@@ -404,19 +397,23 @@ $.fn.extend({
                             $canvas.setLayer(layer.name, {
                                 rotate:oldangle,
                             }).drawLayers();
-                            $canvas.setLayer(layer._handles[4], {
+                            /*
+                            $canvas.setLayer($canvas.getLayer($canvas.getLayer(layer.name)._handles[4]).name, {
                                 x:oldhandlex,
                                 y:oldhandley
-                            }).drawLayers();                
+                            }).drawLayers();  
+                            */              
                         },
                         redo:function(){
                             $canvas.setLayer(layer.name, {
                                 rotate:newangle,
                             }).drawLayers();
-                            $canvas.setLayer(layer._handles[4], {
+                            /*
+                            $canvas.setLayer($canvas.getLayer(layer._handles[4].name), {
                                 x:newhandlex,
                                 y:newhandley
-                            }).drawLayers();               
+                            }).drawLayers();          
+                            */     
                         }
                     });
                     layer.mousedown(layer);
