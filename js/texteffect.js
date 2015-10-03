@@ -7,44 +7,73 @@ var textEffectStyles = {
 	"Stereoscopic": {
 		color: "#000",
 		background: "#fff",
-		shadow: "-0.06em 0 0 red, 0.06em 0 0 cyan"
+		shadow: [
+			"-0.06em 0 0 red",
+			"0.06em 0 0 cyan"
+		]
 	},
 	// http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects
 	"Neon": {
 		color: "#FFF",
 		background: "#000",
-		shadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de"
+		shadow: [
+			"0 0 10px #fff",
+			"0 0 20px #fff",
+			"0 0 30px #fff",
+			"0 0 40px #ff00de",
+			"0 0 70px #ff00de",
+			"0 0 80px #ff00de",
+			"0 0 100px #ff00de",
+			"0 0 150px #ff00de"
+		]
+		// shadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de"
 	},
 	"Anaglyphic": {
 		color: "rgba(0,0,255,0.5)",
 		background: "#fff",
-		shadow: "3px 3px 0 rgba(255,0,180,0.5)"
+		shadow: [
+			"3px 3px 0 rgba(255,0,180,0.5)"
+		]
 	},
 	"VintageRadio": {
 		color: "#707070",
 		background: "#ddd",
-		shadow: "2px 2px 0px #eee, 4px 4px 0px #666"
+		shadow: [
+			"2px 2px 0px #eee",
+			"4px 4px 0px #666"
+		]
 	},
 	"Inset": {
 		color: "#222",
 		background: "#444",
-		shadow: "0px 1px 1px #777"
+		shadow: [
+			"0px 1px 1px #777"
+		]
 	},
 	// meinen kopf
 	"Shadow": {
 		color: "#444",
 		background: "#444",
-		shadow: "0 0 11px #000"
+		shadow: [
+			"0 0 11px #000"
+		]
 	},
 	"Shadow2": {
 		background: "#ddd",
-		shadow: "0 0 11px #000"
+		shadow: [
+			"0 0 11px #000"
+		]
 	},
 	// http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
 	"Shadow3D": {
 		color: "#fff",
 		background: "#ddd",
-		shadow: "1px -1px #444, 2px -2px #444, 3px -3px #444, 4px -4px #444"
+		shadow: [
+			"1px -1px #444",
+			"2px -2px #444",
+			"3px -3px #444",
+			"4px -4px #444"
+		]
 	}
 };
 
@@ -66,7 +95,7 @@ function createTextEffect(text, style, fontFamily) {
 	};
 
 	function parseShadow(shadows) {
-		shadows = shadows.split(", ");
+		// shadows = shadows.split(", ");
 		var ret = [];
 		for (var n = 0, length = shadows.length; n < length; n ++) {
 			var shadow = shadows[n].split(" ");
@@ -118,8 +147,8 @@ function createTextEffect(text, style, fontFamily) {
 	while(n--) {
 		var shadow = shadows[n];
 		var totalWidth = width + shadow.blur * 2;
-		
-	
+
+
 
 		ctx.save();
 		ctx.beginPath();
@@ -146,7 +175,7 @@ function createTextEffect(text, style, fontFamily) {
 	ctx.translate(0, textHeight);
 
 	ctx.restore();
-	
+
 
 	return canvas.toDataURL("png");
 }

@@ -1,408 +1,433 @@
 <html>
-<head>
-	<link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/jquery-ui.css" />
-    <link rel="stylesheet" href="css/font-awesome.css"/>
-    <link rel="stylesheet" href="css/spectrum.css" />
 
-    
-    <script src="js/jquery.js"></script>
-    <script src="js/jquery-ui.js"></script>
-    <script src="js/awesomecursormin.js" type="text/javascript"></script>
-    <script src="js/jcanvas.js"></script>
-     <script src="js/jhandles.js"></script>
-     <script src="js/spectrum.js"></script>
-     <script src="js/undomanager.js"></script>
-       <script src="js/texteffect.js"></script>
-     <script src="js/script.js"></script>
+<head>
+	<link rel="stylesheet" href="css/jquery-ui.css" />
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link rel="stylesheet" href="css/spectrum.css" />
+	<link rel="stylesheet" href="css/style.css" />
+
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/awesomecursormin.js" type="text/javascript"></script>
+	<script src="js/jcanvas.js"></script>
+	<script src="js/jhandles.js"></script>
+	<script src="js/spectrum.js"></script>
+	<script src="js/undomanager.js"></script>
+	<script src="js/texteffect.js"></script>
+	<script src="js/script.js"></script>
+	<script src="js/text-effect-stuff.js"></script>
 </head>
 
 <body>
-<div id="container">
-    <div id="tabs">
-        <ul id="nav">
-            <li> <a href="#background">Background</a>
+	<div id="customize-text" title="Dialog Title goes here...">
+		<div class="">
+			Color:
+			<input id="customize-text-color" class="color-picker" type="text">
+		</div>
 
-            </li>
-            <li> <a href="#weapons">Weapons</a>
+		<div class="">
+			Background:
+			<input id="customize-text-background" class="color-picker" type="text">
+		</div>
 
-            </li>
-            <li> <a href="#extras">Extras</a>
+		<div class="">
+			Shadows:
+			<div id="shadows">
+			</div>
+			<!-- TODO: add/remove shadow button to make cool effects -->
+			<!-- <button type="button" name="button">Add Shadow</button> -->
+		</div>
 
-            </li>
-            <li> <a href="#stats">Stats</a>
+		<canvas id="customize-text-preview" width="300" height="300"></canvas>
+	</div>
+	<div id="container">
+		<div id="tabs">
+			<ul id="nav">
+				<li> <a href="#background">Background</a>
 
-            </li>
-            <li> <a href="#name">Name</a>
+				</li>
+				<li> <a href="#weapons">Weapons</a>
 
-            </li>
-            <li> <a href="#share" id="shareTab">Share</a>
+				</li>
+				<li> <a href="#extras">Extras</a>
 
-            </li>
-        </ul>
-        <div>
-            <div id="leftToolbar">
-                <table id="nameToolbar">
-                    <tr>
-                        <th>Name Tools</td=h>
-                    </tr>
-                    <tr>
-                        <td>Font Color
-                            <br>
-                            <input type='text' id="colorPicker" />
-                        </td>
-                    </tr>
-                </table>
-                <table id="statsToolbar">
-                    <tr>
-                        <td>Stats</td>
-                    </tr>
-                </table>
-            </div>
-            <canvas id="workspaceCanvas" width="600" height="200"></canvas>
-            <table id="toolbar">
-                <tr>
-                    <td>
-                        <button id="upLayer"> <span class="fa fa-caret-up"></span>
+				</li>
+				<li> <a href="#stats">Stats</a>
 
-                        </button>
-                        <button id="downLayer"> <span class="fa fa-caret-down"></span>
+				</li>
+				<li> <a href="#name">Name</a>
 
-                        </button>
-                    </td>
-                    <td>
-                        <button id="flipVert">
-                            <img src="images/ui/flipvertical.png">
-                        </button>
-                        <button id="flipHoriz">
-                            <img src="images/ui/fliphorizontal.png">
-                        </button>
-                    </td>
-                    <td>
-                        <button id="undo"> <span class="fa fa-undo"> </span>
+				</li>
+				<li> <a href="#share" id="shareTab">Share</a>
 
-                        </button>
-                        <button id="redo"> <span class="fa fa-repeat"> </span>
+				</li>
+			</ul>
+			<div>
+				<div id="leftToolbar">
+					<table id="username-toolbar">
+						<tr>
+							<td>
+								<button id="customize-text-opener" type="button">Customize</button>
+							</td>
+						</tr>
+					</table>
 
-                        </button>
-                    </td>
-                    <td>
-                        <button id="delete"><span class="fa fa-trash"></span>
+					<table id="statsToolbar">
+						<tr>
+							<td>Stats</td>
+						</tr>
+					</table>
+				</div>
+				<canvas id="workspaceCanvas" width="600" height="200"></canvas>
+				<table id="toolbar">
+					<tr>
+						<td>
+							<button id="upLayer">
+								<span class="fa fa-caret-up"></span>
 
-                        </button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="background">
-            <table class="image-list" id="bg-list">
-                <tr>
-                    <td>
-                        <img src="images/backgrounds/background-1.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-2.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-3.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-4.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-5.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-6.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/backgrounds/background-7.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-8.jpg">
-                    </td>
-                    <td>
-                       <img src="images/backgrounds/background-9.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-10.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-11.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-12.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/backgrounds/background-13.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-14.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-15.jpg">
-                    </td>
-                    <td>
-                       <img src="images/backgrounds/background-16.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-17.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-18.jpg">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/backgrounds/background-19.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-20.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-21.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-22.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-23.jpg">
-                    </td>
-                    <td>
-                        <img src="images/backgrounds/background-24.jpg">
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div id="weapons">
-            <table class="image-list" id="weapon-list">
-                <tr>
-                    <td>
-                        <img src="images/weapons/weapon-1.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-2.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-3.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-4.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-5.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-6.png">
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                        <img src="images/weapons/weapon-7.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-8.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-9.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-10.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-11.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-12.png">
-                    </td>
-                </tr>
-                 <tr>
-                    <td>
-                        <img src="images/weapons/weapon-13.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-14.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-15.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-16.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-17.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-18.png">
-                    </td>
-                </tr>
-                   <tr>
-                    <td>
-                        <img src="images/weapons/weapon-19.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-20.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-21.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-22.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-23.png">
-                    </td>
-                    <td>
-                        <img src="images/weapons/weapon-24.png">
-                    </td>
-                </tr>
-               
+							</button>
+							<button id="downLayer">
+								<span class="fa fa-caret-down"></span>
 
-             
-            </table>
-        </div>
-        <div id="extras">
-            <table class="image-list" id="extras-list">
-                <tr>
-                    <td>
-                        <img src="images/extras/extras-1.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-2.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-3.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-4.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-5.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-6.png">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/extras/extras-7.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-8.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-9.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-10.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-11.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-12.png">
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <img src="images/extras/extras-13.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-14.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-15.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-16.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-17.png">
-                    </td>
-                    <td>
-                        <img src="images/extras/extras-18.png">
-                    </td>
-      
+							</button>
+						</td>
+						<td>
+							<button id="flipVert">
+								<img src="images/ui/flipvertical.png">
+							</button>
+							<button id="flipHoriz">
+								<img src="images/ui/fliphorizontal.png">
+							</button>
+						</td>
+						<td>
+							<button id="undo">
+								<span class="fa fa-undo"> </span>
 
-                </tr>
+							</button>
+							<button id="redo">
+								<span class="fa fa-repeat"> </span>
 
-               
-            </table>
-        </div>
-        <div id="stats">
-            <table class="image-list" id="stats-list">
-                <tr>
-                    <td>
-                        <img src="http://mw2resource.com/images/emblems/emblem-headshot.jpg"><span>Headshots1</span></td>
-                </tr>
-                <tr>
-                    <td>stats 2</td>
-                </tr>
-            </table>
-        </div>
-        <div id="name">
-            <table class="image-list" id="name-list">
-                <tr>
-                    <td><img id="StereoscopicSample">
+							</button>
+						</td>
+						<td>
+							<button id="delete">
+								<span class="fa fa-trash"></span>
 
-                    </td>
-               
-                    <td><img id="NeonSample">
-
-                    </td>
-                
-                    <td><img id="AnaglyphicSample">
-
-                    </td>
-                </tr>
-                <tr>
-                    <td><img id="VintageRadioSample">
-
-                    </td>
-                
-                    <td><img id="InsetSample">
-
-                    </td>
-               
-                    <td><img id="ShadowSample">
-
-                    </td>
-                    <td><img id="Shadow2Sample">
-
-                    </td>
-                    <td><img id="Shadow3DSample">
-
-                    </td>
-                </tr>
-                
-            </table>
-        </div>
-        <div id="share">
-            <table class="image-list" id="share-list">
-                <tr>
-                    <th>link 1</th>
-                </tr>
-                <tr>
-                    <td>link 2</td>
-                </tr>
-                <tr>
-                    <td>link 3</td>
-                </tr>
-            </table>
-        </div>
-    </div>
-    <div id="leftDoor">
-        <img src="./images/ui/leftdoor.jpg" width="640" height="720">
-    </div>
-    <div id="rightDoor">
-        <img src="./images/ui/rightdoor.jpg" width="640" height="720">
-    </div>
-</div>
+							</button>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="background">
+				<table class="image-list" id="bg-list">
+					<tr>
+						<td>
+							<img src="images/backgrounds/background-1.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-2.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-3.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-4.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-5.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-6.jpg">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/backgrounds/background-7.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-8.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-9.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-10.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-11.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-12.jpg">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/backgrounds/background-13.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-14.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-15.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-16.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-17.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-18.jpg">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/backgrounds/background-19.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-20.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-21.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-22.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-23.jpg">
+						</td>
+						<td>
+							<img src="images/backgrounds/background-24.jpg">
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div id="weapons">
+				<table class="image-list" id="weapon-list">
+					<tr>
+						<td>
+							<img src="images/weapons/weapon-1.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-2.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-3.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-4.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-5.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-6.png">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/weapons/weapon-7.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-8.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-9.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-10.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-11.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-12.png">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/weapons/weapon-13.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-14.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-15.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-16.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-17.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-18.png">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/weapons/weapon-19.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-20.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-21.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-22.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-23.png">
+						</td>
+						<td>
+							<img src="images/weapons/weapon-24.png">
+						</td>
+					</tr>
 
 
-	</body>
-	</html>
+
+				</table>
+			</div>
+			<div id="extras">
+				<table class="image-list" id="extras-list">
+					<tr>
+						<td>
+							<img src="images/extras/extras-1.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-2.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-3.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-4.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-5.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-6.png">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/extras/extras-7.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-8.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-9.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-10.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-11.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-12.png">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img src="images/extras/extras-13.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-14.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-15.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-16.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-17.png">
+						</td>
+						<td>
+							<img src="images/extras/extras-18.png">
+						</td>
+
+
+					</tr>
+
+
+				</table>
+			</div>
+			<div id="stats">
+				<table class="image-list" id="stats-list">
+					<tr>
+						<td>
+							<img src="http://mw2resource.com/images/emblems/emblem-headshot.jpg">
+							<span>Headshots1</span>
+						</td>
+					</tr>
+					<tr>
+						<td>stats 2</td>
+					</tr>
+				</table>
+			</div>
+			<div id="name">
+				<table class="image-list" id="name-list">
+					<tr>
+						<td>
+							<img class="text-style-preset" data-text-style="Stereoscopic">
+						</td>
+
+						<td>
+							<img class="text-style-preset" data-text-style="Neon">
+						</td>
+
+						<td>
+							<img class="text-style-preset" data-text-style="Anaglyphic">
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<img class="text-style-preset" data-text-style="VintageRadio">
+						</td>
+						<td>
+							<img class="text-style-preset" data-text-style="Inset">
+						</td>
+						<td>
+							<img class="text-style-preset" data-text-style="Shadow">
+						</td>
+						<td>
+							<img class="text-style-preset" data-text-style="Shadow2">
+						</td>
+						<td>
+							<img class="text-style-preset" data-text-style="Shadow3D">
+						</td>
+					</tr>
+
+				</table>
+			</div>
+			<div id="share">
+				<table class="image-list" id="share-list">
+					<tr>
+						<th>link 1</th>
+					</tr>
+					<tr>
+						<td>link 2</td>
+					</tr>
+					<tr>
+						<td>link 3</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div id="leftDoor">
+			<img src="./images/ui/leftdoor.jpg" width="640" height="720">
+		</div>
+		<div id="rightDoor">
+			<img src="./images/ui/rightdoor.jpg" width="640" height="720">
+		</div>
+	</div>
+
+
+</body>
+
+</html>
