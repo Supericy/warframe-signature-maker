@@ -4,27 +4,43 @@
 
 var textEffectStyles = {
   // http://simurai.com/post/802968365/css3d-css3-3d-text
-  "Stereoscopic": {
-    color: "#000",
+  "Firey": {
+    color: "#FFF",
     background: "#fff",
     shadow: [
-      "-0.06em 0 0 red",
-      "0.06em 0 0 cyan"
+      "0px -1px 4px white", 
+      "0px -2px 10px yellow", 
+      "0px -10px 20px #ff8000", 
+      "0px -18px 40px red"
+    ]
+  },
+  "Real3D": {
+    color: "#FFF",
+    background: "#fff",
+    shadow: [
+      "0px -1px 0px #999", 
+      "0px -2px 0px #888", 
+      "0px -3px 0px #777", 
+      "0px -4px 0px #666", 
+      "0px -5px 0px #555", 
+      "0px -6px 0px #444", 
+      "0px -7px 0px #333", 
+      "0px 8px -7px #001135"
     ]
   },
   // http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects
   "Neon": {
-    color: "#FFF",
+    color: "#ffffff",
     background: "#000",
     shadow: [
-        "0 0 10px #fff",
-        "0 0 20px #fff",
-        "0 0 30px #fff",
-        "0 0 40px #ff00de",
-        "0 0 70px #ff00de",
-        "0 0 80px #ff00de",
-        "0 0 100px #ff00de",
-        "0 0 150px #ff00de"
+        "0 0 10px #000",
+        "0 0 20px #ff0000",
+        "0 0 30px #ff0000",
+        "0 0 40px #dd0000",
+        "0 0 70px #de0000",
+        "0 0 80px #ee000",
+        "0 0 100px #ff0000",
+        "0 0 150px #ff0000"
       ]
       // shadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de"
   },
@@ -32,7 +48,10 @@ var textEffectStyles = {
     color: "rgba(0,0,255,0.5)",
     background: "#fff",
     shadow: [
-      "3px 3px 0 rgba(255,0,180,0.5)"
+     
+      "-1px -1px 1px #fff", 
+      "1px 1px 1px #00f",
+
     ]
   },
   "VintageRadio": {
