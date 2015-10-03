@@ -51,18 +51,18 @@ var textEffectStyles = {
 
 
 
-function createTextEffect(text, style) {
+function createTextEffect(text, style, fontFamily) {
 	var canvas = document.createElement('CANVAS');
-	canvas.width = 600;
-	canvas.height = 300;
+	canvas.width = 300;
+	canvas.height = 100;
 	var metrics = {
 		direction: 'ltr',
 		top: 0,
-		em: 60,
+		em: 40,
 		middle: 0,
 		bottom: 0,
-		height: 300,
-		width: 600
+		height: 100,
+		width: 300
 	};
 
 	function parseShadow(shadows) {
@@ -96,14 +96,16 @@ function createTextEffect(text, style) {
 
 	var ctx = canvas.getContext('2d');
 	ctx.save();
-	ctx.font = "60px Futura, Helvetica, sans-serif";
+	ctx.font = "43px " + fontFamily;
 	// absolute position of the text (within a translation state)
-	var offsetX = 50;
-	var offsetY = 62;
+	var offsetX = 20;
+	var offsetY = 60;
 	// gather information about the height of the font
 	var textHeight = metrics.height * 1.20;
 
 	var width = ctx.measureText(text).width;
+
+
 
 	// add a background to the current effect
 	//ctx.fillStyle = style.background;
@@ -112,9 +114,13 @@ function createTextEffect(text, style) {
 	var shadows = parseShadow(style.shadow);
 	// loop through the shadow collection
 	var n = shadows.length;
+
 	while(n--) {
 		var shadow = shadows[n];
 		var totalWidth = width + shadow.blur * 2;
+		
+	
+
 		ctx.save();
 		ctx.beginPath();
 		ctx.rect(offsetX - shadow.blur, 0, offsetX + totalWidth, textHeight);
@@ -140,6 +146,7 @@ function createTextEffect(text, style) {
 	ctx.translate(0, textHeight);
 
 	ctx.restore();
+	
 
 	return canvas.toDataURL("png");
 }

@@ -192,12 +192,6 @@ function addRotationHandle( $canvas, parent) {
 
 	cursor = 'rotate-right';
 	
-/*
-	var prevx = parent.x + ( px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
-	var prevy = parent.y + ( py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
-	var prevangle = 0;
-	*/
-
 	handle = $.extend( {
 		// Set cursors for handle
 		cursors: {
@@ -221,15 +215,6 @@ function addRotationHandle( $canvas, parent) {
 		drag: function ( layer ) {
 			var parent = layer._parent;
 
-			/*
-			var a = Math.sqrt(Math.pow(layer.x - layer.prevx,2) + Math.pow(layer.y - layer.prevy,2));
-			var b = Math.sqrt(Math.pow(parent.x - layer.prevx,2) + Math.pow(parent.y - layer.prevy,2));
-			var c = Math.sqrt(Math.pow(parent.x - layer.x,2) + Math.pow(parent.y - layer.y,2));
-			var angle = Math.acos(((Math.pow(b,2) + Math.pow(c,2) - Math.pow(a,2))/(2*b*c)))*(180/Math.PI);
-			var sign = layer.y > parent.y ? layer.x > layer.prevx ? '-':'+' : layer.prevx > layer.x ? '-' : '+';
-			*/
-	
-
 			var c = Math.abs(layer.x-parent.x);
 			// distance to center from current point
 			var b = Math.sqrt(Math.pow(parent.x - layer.x,2) + Math.pow(parent.y - layer.y,2));
@@ -248,11 +233,6 @@ function addRotationHandle( $canvas, parent) {
 			$canvas.setLayer(parent, {
 				rotate: angle
 			});
-
-			// radius of circle
-			var r = Math.sqrt(Math.pow(parent.width,2)/4 + Math.pow(parent.height,2)/4);
-
-
 
 			updateRectHandles( parent );
 			$( this ).triggerLayerEvent( parent, 'rotatehandlemove' );
@@ -455,12 +435,9 @@ function updateRectHandles( parent ) {
 				handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
 
 			} else {
-				//handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
-				//handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
 				
 				var parent = handle._parent;
 				var angle = parent.rotate* (Math.PI/180);
-				console.log(parent.rotate);
 				var r = Math.sqrt(Math.pow(parent.width,2)/4 + Math.pow(parent.height,2)/4);
 				var cx = (Math.cos(angle) * r) + parent.x;
 				var cy = Math.sqrt(Math.pow(r,2) - Math.pow(parent.x - cx,2));
@@ -474,7 +451,6 @@ function updateRectHandles( parent ) {
 				
 				handle.x = cx;
 				handle.y = cy;
-				console.log("updated rotate handle position");
 			}
 		}
 

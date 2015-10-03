@@ -261,7 +261,7 @@ $.fn.extend({
             if ($canvas.getLayer("usernameText") !== undefined) {
                 $canvas.setLayer("usernameText", {
                     //fontFamily: $(span).css("font-family")
-                    source: createTextEffect(username, style)
+                    source: createTextEffect(username, style, "Helvectica")
                 });
                 $canvas.drawLayers();
 
@@ -863,7 +863,6 @@ function registerHooksForToolbar(undoManager){
                 $canvas.selectedLayer = $canvas.getLayer(layer.name);
                 $canvas.enableLayerHandles($canvas.selectedLayer, true);
                 console.log($canvas.selectedLayer);
-                //$canvas.selectedLayer.updateRectHandles();
 
             },
             redo:function(){
