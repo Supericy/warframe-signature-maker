@@ -4,7 +4,7 @@ function initColorPickers(selector) {
     containerClassName: "test",
     className: "test",
     showInitial: true,
-    showPalette: true,
+    showPalette: false,
     showSelectionPalette: false,
     showAlpha: true,
     maxSelectionSize: 10,
@@ -25,6 +25,7 @@ $(function() {
     title: "Text Effect Customizer",
     resizable: false,
     width: 'auto',
+    height: 'auto',
     modal: true,
     buttons: {
       OK: function() {

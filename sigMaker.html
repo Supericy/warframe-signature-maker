@@ -19,27 +19,7 @@
 </head>
 
 <body>
-	<div id="customize-text" title="Dialog Title goes here...">
-		<div class="">
-			Color:
-			<input id="customize-text-color" class="color-picker" type="text">
-		</div>
-
-		<div class="">
-			Background:
-			<input id="customize-text-background" class="color-picker" type="text">
-		</div>
-
-		<div class="">
-			Shadows:
-			<div id="shadows">
-			</div>
-			<!-- TODO: add/remove shadow button to make cool effects -->
-			<!-- <button type="button" name="button">Add Shadow</button> -->
-		</div>
-
-		<canvas id="customize-text-preview" width="300" height="300"></canvas>
-	</div>
+	
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
@@ -63,60 +43,102 @@
 				</li>
 			</ul>
 			<div>
-				<div id="leftToolbar">
-					<table id="nameToolbar">
-						<tr>
-							<td>
-								<button id="customize-text-opener" type="button">Customize</button>
-							</td>
-						</tr>
-					</table>
+                <table id="leftToolbar">
+                    <tr>
+                        <td>
+                            <button id="upLayer">
+                                <span class="fa fa-caret-up"></span>
+                               
+                            </button>
+                            </td>
+                         </tr> 
+                         <tr>
+                            <td>
+                            <button id="downLayer">
+                                <span class="fa fa-caret-down"></span>
 
-					<table id="statsToolbar">
-						<tr>
-							<td>Stats</td>
-						</tr>
-					</table>
-				</div>
+                            </button>
+                       </td>
+
+                         </tr> 
+                         <tr>
+                            <td>
+                            <button id="flipVert">
+                                <img src="images/ui/flipvertical.png">
+                            </button>
+                            </td>
+                         </tr> 
+                         <tr>
+                            <td>
+                            <button id="flipHoriz">
+                                <img src="images/ui/fliphorizontal.png">
+                            </button>
+                            </td>
+                         </tr> 
+                        <tr>
+                            <td>
+                            <button id="undo">
+                                <span class="fa fa-undo"> </span>
+
+                            </button>
+                            </td>
+                         </tr> 
+                         <tr>
+                            <td>
+                            <button id="redo">
+                                <span class="fa fa-repeat"> </span>
+
+                            </button>
+
+                            </td>
+                         </tr> 
+                         <tr>
+                            <td>
+                 
+                            <button id="delete">
+                                <span class="fa fa-trash"></span>
+
+                            </button>
+
+                        </td>
+                    </tr>
+                </table>
+				
 				<canvas id="workspaceCanvas" width="600" height="200"></canvas>
-				<table id="toolbar">
-					<tr>
-						<td>
-							<button id="upLayer">
-								<span class="fa fa-caret-up"></span>
+				<div id="rightToolbar">
+                    <table id="nameToolbar">
+                        <tr>
+                            <td>
+                                <div id="customize-text" title="Dialog Title goes here...">
+                                    <div class="">
+                                         Color:
+                                        <input id="customize-text-color" class="color-picker" type="text">
+                                    </div>
 
-							</button>
-							<button id="downLayer">
-								<span class="fa fa-caret-down"></span>
+                                <div class="">
+                                    Background:
+                                    <input id="customize-text-background" class="color-picker" type="text">
+                                </div>
 
-							</button>
-						</td>
-						<td>
-							<button id="flipVert">
-								<img src="images/ui/flipvertical.png">
-							</button>
-							<button id="flipHoriz">
-								<img src="images/ui/fliphorizontal.png">
-							</button>
-						</td>
-						<td>
-							<button id="undo">
-								<span class="fa fa-undo"> </span>
+                                <div class="">
+                                    Shadows:
+                                    <div id="shadows">
+                                        </div>
+                                        <!-- TODO: add/remove shadow button to make cool effects -->
+                                        <!-- <button type="button" name="button">Add Shadow</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
 
-							</button>
-							<button id="redo">
-								<span class="fa fa-repeat"> </span>
-
-							</button>
-						</td>
-						<td>
-							<button id="delete">
-								<span class="fa fa-trash"></span>
-
-							</button>
-						</td>
-					</tr>
-				</table>
+                    <table id="statsToolbar">
+                        <tr>
+                            <td>Stats</td>
+                        </tr>
+                    </table>
+                </div>
 			</div>
 			<div id="background">
 				<table class="image-list" id="bg-list">
