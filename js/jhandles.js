@@ -1,5 +1,5 @@
 /**
- * @license jCanvas Handles v15.09.25
+ * @license jCanvas Handles v15.10.01b
  * Copyright 2015 Caleb Evans
  * Released under the MIT license
  */
@@ -72,119 +72,6 @@ function addPathHandle( $canvas, parent, xProp, yProp ) {
 	parent._handles.push( $canvas.getLayer( -1 ) );
 }
 
-// Add a single handle to rectangle
-function addRectHandle( $canvas, parent, px, py ) {
-	var handle, cursor;
-
-	// Determine cursor to use depending on handle's placement
-	if ( ( px === -1 && py === -1 ) || ( px === 1 && py === 1 ) ) {
-		cursor = 'nwse-resize';
-	} else if ( px === 0 && ( py === -1 || py === 1 ) ) {
-		cursor = 'ns-resize';
-	} else if ( ( px === -1 || px === 1 ) && py === 0 ) {
-		cursor = 'ew-resize';
-	} else if ( ( px === 1 && py === -1 ) || ( px === -1 && py === 1 ) ) {
-		cursor = 'nesw-resize';
-	}
-
-	handle = $.extend( {
-		// Set cursors for handle
-		cursors: {
-			mouseover: cursor
-		}
-	}, parent.handle, {
-		// Define constant properties for handle
-		layer: true,
-		draggable: true,
-		x: parent.x + ( px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) ),
-		y: parent.y + ( py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) ),
-		_parent: parent,
-		_px: px,
-		_py: py,
-		fromCenter: true,
-		dragstart: function ( layer ) {
-			$( this ).triggerLayerEvent( layer._parent, 'handlestart' );
-		},
-		// Resize rectangle when dragging a handle
-		drag: function ( layer ) {
-			var parent = layer._parent;
-
-			if ( parent.width + ( layer.dx * layer._px ) < parent.minWidth ) {
-				parent.width = parent.minWidth;
-				layer.dx = 0;
-			}
-			if ( parent.height + ( layer.dy * layer._py ) < parent.minHeight ) {
-				parent.height = parent.minHeight;
-				layer.dy = 0;
-			}
-
-			if ( !parent.resizeFromCenter ) {
-				// Optionally resize rectangle from corner
-				if ( parent.fromCenter ) {
-					parent.width += layer.dx * layer._px;
-					parent.height += layer.dy * layer._py;
-				} else {
-					//This is simplified version based on math. Also you can write this using an if statement for each handle
-					parent.width += layer.dx * layer._px;
-					if ( layer._px !== 0 ) {
-						parent.x += layer.dx * ( ( 1 - layer._px ) && ( 1 - layer._px ) / Math.abs ( ( 1 - layer._px ) ) );
-					}
-					parent.height += layer.dy * layer._py;
-					if ( layer._py !== 0 ) {
-						parent.y += layer.dy * ( ( 1 - layer._py ) && ( 1 - layer._py ) / Math.abs ( ( 1 - layer._py ) ) );
-					}
-				}
-				// Optionally constrain proportions
-				if ( parent.constrainProportions ) {
-					if ( layer._py === 0 ) {
-						// Manage handles whose y is at layer's center
-						parent.height = parent.width / parent.aspectRatio;
-					} else {
-						// Manage every other handle
-						parent.width = parent.height * parent.aspectRatio;
-						layer.dx = layer.dy * parent.aspectRatio * layer._py * layer._px;
-					}
-				}
-				// Ensure diagonal handle does not move
-				if ( parent.fromCenter ) {
-					if ( layer._px !== 0 ) {
-						parent.x += layer.dx / 2;
-					}
-					if ( layer._py !== 0 ) {
-						parent.y += layer.dy / 2;
-					}
-				}
-			} else {
-				// Otherwise, resize rectangle from center
-				parent.width += layer.dx * layer._px * 2;
-				parent.height += layer.dy * layer._py * 2;
-				// Optionally constrain proportions
-				if ( parent.constrainProportions ) {
-					if ( layer._py === 0 ) {
-						// Manage handles whose y is at layer's center
-						parent.height = parent.width / parent.aspectRatio;
-					} else {
-						// Manage every other handle
-						parent.width = parent.height * parent.aspectRatio;
-					}
-				}
-			}
-			updateRectHandles( parent );
-			$( this ).triggerLayerEvent( parent, 'handlemove' );
-		},
-		dragstop: function ( layer ) {
-			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlestop' );
-		},
-		dragcancel: function ( layer ) {
-			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlestop' );
-		}
-	} );
-	$canvas.draw( handle );
-	// Add handle to parent layer's list of handles
-	parent._handles.push( $canvas.getLayer( -1 ) );
-}
 
 // Add a single handle to rectangle
 function addRotationHandle( $canvas, parent) {
@@ -204,7 +91,8 @@ function addRotationHandle( $canvas, parent) {
 		x: Math.sqrt(Math.pow(parent.width,2)/4 + Math.pow(parent.height,2)/4)+parent.x ,
 		y: parent.y,
 		_parent: parent,
-
+		rotate: parent.rotate,
+		scale: parent.scale,
 		fromCenter: true,
 		isRotateHandle:true,
 		strokeStyle:"orange",
@@ -251,6 +139,125 @@ function addRotationHandle( $canvas, parent) {
 	parent._handles.push( $canvas.getLayer( -1 ) );
 }
 
+// Add a single handle to rectangle
+function addRectHandle( $canvas, parent, px, py ) {
+	var handle, cursor;
+
+	// Determine cursor to use depending on handle's placement
+	if ( ( px === -1 && py === -1 ) || ( px === 1 && py === 1 ) ) {
+		cursor = 'nwse-resize';
+	} else if ( px === 0 && ( py === -1 || py === 1 ) ) {
+		cursor = 'ns-resize';
+	} else if ( ( px === -1 || px === 1 ) && py === 0 ) {
+		cursor = 'ew-resize';
+	} else if ( ( px === 1 && py === -1 ) || ( px === -1 && py === 1 ) ) {
+		cursor = 'nesw-resize';
+	}
+
+	handle = $.extend( {
+		// Set cursors for handle
+		cursors: {
+			mouseover: cursor
+		}
+	}, parent.handle, {
+		// Define constant properties for handle
+		layer: true,
+		draggable: true,
+		dragByTranslate: true,
+		x: parent.x,
+		y: parent.y,
+		rotate: parent.rotate,
+		scale: parent.scale,
+		translateX: ( px * parent.width / 2 + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) ),
+		translateY: ( py * parent.height / 2 + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) ),
+		_parent: parent,
+		_px: px,
+		_py: py,
+		fromCenter: true,
+		dragstart: function ( layer ) {
+			$( this ).triggerLayerEvent( layer._parent, 'handlestart' );
+		},
+		// Resize rectangle when dragging a handle
+		drag: function ( layer ) {
+			var parent = layer._parent;
+
+			if ( parent.width + ( layer.dx * layer._px ) < parent.minWidth ) {
+				parent.width = parent.minWidth;
+				layer.dx = 0;
+			}
+			if ( parent.height + ( layer.dy * layer._py ) < parent.minHeight ) {
+				parent.height = parent.minHeight;
+				layer.dy = 0;
+			}
+
+			if ( !parent.resizeFromCenter ) {
+				// Optionally resize rectangle from corner
+				if ( parent.fromCenter ) {
+					parent.width += layer.dx * layer._px;
+					parent.height += layer.dy * layer._py;
+				} else {
+					//This is simplified version based on math. Also you can write this using an if statement for each handle
+					parent.width += layer.dx * layer._px;
+					if ( layer._px !== 0 ) {
+						parent.translateX += layer.dx * ( ( 1 - layer._px ) && ( 1 - layer._px ) / Math.abs ( ( 1 - layer._px ) ) );
+					}
+					parent.height += layer.dy * layer._py;
+					if ( layer._py !== 0 ) {
+						parent.translateY += layer.dy * ( ( 1 - layer._py ) && ( 1 - layer._py ) / Math.abs ( ( 1 - layer._py ) ) );
+					}
+				}
+				// Optionally constrain proportions
+				if ( parent.constrainProportions ) {
+					if ( layer._py === 0 ) {
+						// Manage handles whose y is at layer's center
+						parent.height = parent.width / parent.aspectRatio;
+					} else {
+						// Manage every other handle
+						parent.width = parent.height * parent.aspectRatio;
+						layer.dx = layer.dy * parent.aspectRatio * layer._py * layer._px;
+					}
+				}
+				// Ensure diagonal handle does not move
+				if ( parent.fromCenter ) {
+					if ( layer._px !== 0 ) {
+						parent.x += layer.dx / 2;
+					}
+					if ( layer._py !== 0 ) {
+						parent.y += layer.dy / 2;
+					}
+				}
+			} else {
+				// Otherwise, resize rectangle from center
+				parent.width += layer.dx * layer._px * 2;
+				parent.height += layer.dy * layer._py * 2;
+				// Optionally constrain proportions
+				if ( parent.constrainProportions ) {
+					if ( layer._py === 0 ) {
+						// Manage handles whose y is at layer's center
+						parent.height = parent.width / parent.aspectRatio;
+					} else {
+						// Manage every other handle
+						parent.width = parent.height * parent.aspectRatio;
+					}
+				}
+			}
+			updateRectHandles( parent );
+			$( this ).triggerLayerEvent( parent, 'handlemove' );
+		},
+		dragstop: function ( layer ) {
+			var parent = layer._parent;
+			$( this ).triggerLayerEvent( parent, 'handlestop' );
+		},
+		dragcancel: function ( layer ) {
+			var parent = layer._parent;
+			$( this ).triggerLayerEvent( parent, 'handlecancel' );
+		}
+	} );
+	$canvas.draw( handle );
+	// Add handle to parent layer's list of handles
+	parent._handles.push( $canvas.getLayer( -1 ) );
+}
+
 // Add all handles to rectangle
 function addRectHandles( $canvas, parent ) {
 	var handlePlacement = parent.handlePlacement;
@@ -276,6 +283,7 @@ function addRectHandles( $canvas, parent ) {
 	if ( parent.guide ) {
 		addRectGuides( $canvas, parent );
 	}
+
 	// add rotational handle
 	if (handlePlacement === 'corners&rotational')
 	{
@@ -287,9 +295,8 @@ function addRectHandles( $canvas, parent ) {
 		//rotational handle
 		addRotationHandle( $canvas, parent);
 		updateRectHandles(parent);
+		console.log("HMM");
 	}
-	
-
 }
 
 // Update handle guides for rectangular layer
@@ -429,36 +436,40 @@ function updateRectHandles( parent ) {
 		// Move handles when dragging
 		for ( h = 0; h < parent._handles.length; h += 1 ) {
 			handle = parent._handles[h];
+			if ( parent.dragByTranslate ) {
+				handle.x = parent.x + parent.translateX;
+				handle.y = parent.y + parent.translateY;
+			} else {
+				handle.x = parent.x;
+				handle.y = parent.y;
+			}
+			handle.rotate = parent.rotate;
+			handle.scale = parent.scale;
 			if(!handle.isRotateHandle)
 			{
-				handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
-				handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
-
+				handle.translateX = ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
+				handle.translateY = ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
 			} else {
-				
 				var parent = handle._parent;
 				var angle = parent.rotate* (Math.PI/180);
 				var r = Math.sqrt(Math.pow(parent.width,2)/4 + Math.pow(parent.height,2)/4);
 				var cx = (Math.cos(angle) * r) + parent.x;
-				var cy = Math.sqrt(Math.pow(r,2) - Math.pow(parent.x - cx,2));
-				
+				var cy = Math.sqrt(Math.abs(Math.pow(r,2) - Math.pow(parent.x - cx,2)));
 				if(parent.rotate < 0)
 				{
-					cy = cy *-1 + parent.y;
+					cy = (cy * -1) + parent.y;
 				} else {
 					cy = cy + parent.y;
 				}
-				
 				handle.x = cx;
 				handle.y = cy;
+			
 			}
-		}
 
+		}
 	}
 	updateRectGuides( parent );
 }
-
-
 
 // Update position of handles according to
 // coordinates and dimensions of path layer
@@ -523,7 +534,7 @@ $.extend( $.jCanvas.eventHooks, {
 	// If necessary, add handles when layer is added
 	add: function ( layer ) {
 		if ( layer.handle ) {
-			addHandles( layer );				
+			addHandles( layer );
 		}
 	},
 	// Remove handles of layer is removed
@@ -550,7 +561,7 @@ $.extend( $.jCanvas.eventHooks, {
 		}
 		if ( isRectLayer( layer ) ) {
 			// If width/height was changed
-			if ( props.width !== undefined || props.height !== undefined || props.x !== undefined || props.y !== undefined ) {
+			if ( props.width !== undefined || props.height !== undefined || props.x !== undefined || props.y !== undefined || props.rotate !== undefined || props.scale !== undefined ) {
 				// Update handle positions
 				updateRectHandles( layer );
 			}
@@ -564,7 +575,7 @@ $.extend( $.jCanvas.eventHooks, {
 		// If layer is a rectangle or ellipse layer
 		if ( isRectLayer( layer ) ) {
 			// If width or height are animated
-			if ( fx.prop === 'width' || fx.prop === 'height' || fx.prop === 'x' || fx.prop === 'y' ) {
+			if ( fx.prop === 'width' || fx.prop === 'height' || fx.prop === 'x' || fx.prop === 'y' || fx.prop === 'rotate' || fx.prop === 'scale' ) {
 				// Update rectangular handles
 				updateRectHandles( layer );
 			}
