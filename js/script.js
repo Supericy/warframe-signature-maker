@@ -521,6 +521,7 @@ $.fn.extend({
     enableLayerHandles: function (layer, enabled) {
         if(layer)
         {
+            layer = $canvas.getLayer(layer.name);
             return this.each(function (elm) {
           
                 $canvas.setLayerGroup(layer._handles, {
@@ -853,43 +854,30 @@ function registerHooksForToolbar(undoManager){
     $("#delete").click(function () {
 
         var layer = $canvas.selectedLayer;
-        console.log("layer before delete", layer);
         deleteLayer(layer);
 
         undoManager.add({
             undo:function(){
                 $canvas.addLayer(layer).drawLayers();  
                 $canvas.enableLayerHandles($canvas.selectedLayer, false);
-                $canvas.selectedLayer = layer;
-                console.log("layer after undo",layer);             
+                $canvas.selectedLayer = $canvas.getLayer(layer.name);
+                $canvas.enableLayerHandles($canvas.selectedLayer, true);
+                console.log($canvas.selectedLayer);
+                //$canvas.selectedLayer.updateRectHandles();
+
             },
             redo:function(){
                 deleteLayer(layer);
-                console.log("layer after redo",layer);  
             }
         });
 
     });
 }
 
-function rotateLayer(layer, degrees){
-    if(layer)
-    {
-    console.log("rotating " + layer.name + " " + degrees + "  degrees");
-
-        $canvas.animateLayer(layer.name, {
-            rotate: '+=' + degrees
-        }, 200);
-    }
-
-}
-
 function flipLayerVertical(layer)
 {
     if(layer)
     {
-
-     console.log("flipping " + layer.name + " vertically");
         var value = -1;
         if (layer.scaleY === -1) {
             value = 1;
@@ -907,8 +895,6 @@ function flipLayerHorizontal(layer)
 {
     if(layer)
     {
-        console.log("flipping " + layer.name + " horizontally");
-
         var value = -1;
         if (layer.scaleX === -1) {
             value = 1;
@@ -938,8 +924,6 @@ function moveLayerDown(layer)
         if (layer.index !== 0) {
             $canvas.moveLayer(layer.name, layer.index - 6);
             $canvas.drawLayers();
-            console.log("moving " + layer.name + " down a layer");
-
         }
     }
 }
@@ -953,9 +937,6 @@ function moveLayerUp(layer)
         {
             $canvas.moveLayer(layer.name, (layer.index + 6));
             $canvas.drawLayers();
-            console.log(layer.index);
-
-            console.log("moving " +layer.name + " up a layer");
         }
     }
 

@@ -306,6 +306,7 @@ function addRectHandles( $canvas, parent ) {
 
 		//rotational handle
 		addRotationHandle( $canvas, parent);
+		updateRectHandles(parent);
 	}
 	
 
@@ -452,6 +453,7 @@ function updateRectHandles( parent ) {
 			{
 				handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
 				handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
+
 			} else {
 				//handle.x = parent.x + ( parent.width / 2 * handle._px + ( ( parent.fromCenter ) ? 0 : parent.width / 2 ) );
 				//handle.y = parent.y + ( parent.height / 2 * handle._py + ( ( parent.fromCenter ) ? 0 : parent.height / 2 ) );
@@ -469,11 +471,10 @@ function updateRectHandles( parent ) {
 				} else {
 					cy = cy + parent.y;
 				}
-				//console.log("hx,hy", handle.x, handle.y);
+				
 				handle.x = cx;
 				handle.y = cy;
-				
-				console.log("cx,cy",cx, cy);
+				console.log("updated rotate handle position");
 			}
 		}
 
@@ -546,7 +547,7 @@ $.extend( $.jCanvas.eventHooks, {
 	// If necessary, add handles when layer is added
 	add: function ( layer ) {
 		if ( layer.handle ) {
-			addHandles( layer );
+			addHandles( layer );				
 		}
 	},
 	// Remove handles of layer is removed

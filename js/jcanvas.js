@@ -1359,7 +1359,7 @@ function _setCursor( $canvas, layer, eventType ) {
 			$('canvas').awesomeCursor(cursor, {
 				color: 'white'
 			});
-		}
+		} 
 		
 		
 
@@ -1371,6 +1371,7 @@ function _resetCursor( $canvas, data ) {
 	$canvas.css( {
 		cursor: data.cursor
 	} );
+
 }
 
 // Run the given event callback with the given arguments
