@@ -665,9 +665,9 @@ $(document).ready(function() {
     var $this = $(this);
     var style = textEffectStyles[$this.data('text-style')];
     $this.attr('src', createTextEffect(username, style));
-		$this.click(function () {
-			currentTextStyle = style;
-		});
+    $this.click(function() {
+      currentTextStyle = style;
+    });
   });
 
 
