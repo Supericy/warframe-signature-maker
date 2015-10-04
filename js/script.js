@@ -710,7 +710,7 @@ var instructions = "";
 $("#getButton").click(function() {
 
     console.log("got instructions");
-    instructions = $canvas.getLayers().slice(0);
+    instructions = $canvas.getLayers().slice(0).reverse();
     console.log(instructions);
   });
 
