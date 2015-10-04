@@ -592,6 +592,7 @@ $(document).ready(function() {
     $canvas.insertImage(this, "background");
     var image = this;
     var layer = $canvas.selectedLayer;
+
     $canvas.undoManager.add({
       undo: function() {
         deleteLayer(layer);
@@ -855,6 +856,45 @@ function registerHooksForToolbar(undoManager) {
     });
 
   });
+
+  $( "#opacitySlider" ).slider({
+    change: function( event, ui ) {
+        setOpacity($canvas.selectedLayer, 1-ui.value/100);
+        console.log(ui.value);
+    },
+    start: function( event, ui ) {
+        $canvas.selectedLayer.oldOpacity = 1-ui.value/100;
+    },
+    stop: function( event, ui ) {
+        var newOpacity = 1-ui.value/100;
+        var oldOpacity =  $canvas.selectedLayer.oldOpacity;
+
+         undoManager.add({
+      undo: function() {
+        setOpacity($canvas.selectedLayer, oldOpacity);
+
+      },
+      redo: function() {
+        setOpacity($canvas.selectedLayer, newOpacity);
+      }
+    });
+
+    }
+  });
+
+
+}
+
+function setOpacity(layer, value)
+{
+    if(layer)
+    {
+        $canvas.animateLayer(layer.name, {
+
+          opacity: value
+
+        }, 200);
+    }
 }
 
 function flipLayerVertical(layer) {
