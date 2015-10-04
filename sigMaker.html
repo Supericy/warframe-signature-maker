@@ -19,7 +19,7 @@
 </head>
 
 <body>
-	
+
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
@@ -43,106 +43,105 @@
 				</li>
 			</ul>
 			<div>
-                <table id="leftToolbar">
-                    <tr>
-                        <td>
-                            <button id="upLayer">
-                                <span class="fa fa-caret-up"></span>
-                               
-                            </button>
-                            </td>
-                         </tr> 
-                         <tr>
-                            <td>
-                            <button id="downLayer">
-                                <span class="fa fa-caret-down"></span>
+				<table id="leftToolbar">
+					<tr>
+						<td>
+							<button id="upLayer">
+								<span class="fa fa-caret-up"></span>
 
-                            </button>
-                       </td>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="downLayer">
+								<span class="fa fa-caret-down"></span>
 
-                         </tr> 
-                         <tr>
-                            <td>
-                            <button id="flipVert">
-                                <img src="images/ui/flipvertical.png">
-                            </button>
-                            </td>
-                         </tr> 
-                         <tr>
-                            <td>
-                            <button id="flipHoriz">
-                                <img src="images/ui/fliphorizontal.png">
-                            </button>
-                            </td>
-                         </tr> 
-                        <tr>
-                            <td>
-                            <button id="undo">
-                                <span class="fa fa-undo"> </span>
+							</button>
+						</td>
 
-                            </button>
-                            </td>
-                         </tr> 
-                         <tr>
-                            <td>
-                            <button id="redo">
-                                <span class="fa fa-repeat"> </span>
+					</tr>
+					<tr>
+						<td>
+							<button id="flipVert">
+								<img src="images/ui/flipvertical.png">
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="flipHoriz">
+								<img src="images/ui/fliphorizontal.png">
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="undo">
+								<span class="fa fa-undo"> </span>
 
-                            </button>
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<button id="redo">
+								<span class="fa fa-repeat"> </span>
 
-                            </td>
-                         </tr> 
-                         <tr>
-                            <td>
-                 
-                            <button id="delete">
-                                <span class="fa fa-trash"></span>
+							</button>
 
-                            </button>
+						</td>
+					</tr>
+					<tr>
+						<td>
 
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div id="opacitySlider"></div>
-                        </td>
-                    </tr>
-                </table>
-				
+							<button id="delete">
+								<span class="fa fa-trash"></span>
+
+							</button>
+
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div id="opacitySlider"></div>
+						</td>
+					</tr>
+				</table>
+
 				<canvas id="workspaceCanvas" width="600" height="200"></canvas>
 				<div id="rightToolbar">
-                    <table id="nameToolbar">
-                        <tr>
-                            <td>
-                                <div id="customize-text" title="Dialog Title goes here...">
-                                    <div class="">
-                                         Color:
-                                        <input id="customize-text-color" class="color-picker" type="text">
-                                        Font:
-                                    <input id="customize-text-font" class="font-picker" type="text">
-                                    </div>
+					<table id="nameToolbar">
+						<tr>
+							<td>
+								<div id="customize-text" title="Dialog Title goes here...">
+									<div class="">
+										Color:
+										<input id="customize-text-color" class="color-picker" type="text"> Font:
+										<input id="customize-text-font" class="font-picker" type="text">
+									</div>
 
-                                
 
-                                <div class="">
-                                    Shadows:
-                                    <div id="shadows">
-                                        </div>
-                                        <!-- TODO: add/remove shadow button to make cool effects -->
-                                        <button type="button" id="addShadowButton">Add Shadow</button>
-                                       
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
 
-                    <table id="statsToolbar">
-                        <tr>
-                            <td>Stats</td>
-                        </tr>
-                    </table>
-                </div>
+									<div class="">
+										Shadows:
+										<div id="shadows">
+										</div>
+										<!-- TODO: add/remove shadow button to make cool effects -->
+										<button type="button" id="addShadowButton">Add Shadow</button>
+
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+
+					<table id="statsToolbar">
+						<tr>
+							<td>Stats</td>
+						</tr>
+					</table>
+				</div>
 			</div>
 			<div id="background">
 				<table class="image-list" id="bg-list">
@@ -410,9 +409,9 @@
 						<td>
 							<img class="text-style-preset" data-text-style="Anaglyphic">
 						</td>
-                        <td>
-                            <img class="text-style-preset" data-text-style="Real3D">
-                        </td>
+						<td>
+							<img class="text-style-preset" data-text-style="Real3D">
+						</td>
 					</tr>
 					<tr>
 						<td>
@@ -430,7 +429,7 @@
 						<td>
 							<img class="text-style-preset" data-text-style="Shadow3D">
 						</td>
-                        
+
 					</tr>
 
 				</table>
@@ -438,13 +437,19 @@
 			<div id="share">
 				<table class="image-list" id="share-list">
 					<tr>
-						<th><button id="getButton">Get Instructions</button></th>
+						<th>
+							<button id="getButton">Get Instructions</button>
+						</th>
 					</tr>
 					<tr>
-						<td><button id="clearButton">Clear</button></td>
+						<td>
+							<button id="clearButton">Clear</button>
+						</td>
 					</tr>
 					<tr>
-						<td><button id="drawButton">Draw</button></td>
+						<td>
+							<button id="drawButton">Draw</button>
+						</td>
 					</tr>
 				</table>
 			</div>
