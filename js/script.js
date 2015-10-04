@@ -450,7 +450,7 @@ $.fn.extend({
 
   addStat: function(text) {
     return this.each(function() {
-     
+
 
 
     });
@@ -642,13 +642,13 @@ $(document).ready(function() {
   });
 
   // terrible stats thing
-  
-  $("#stats-list td").click(function () {
-     
-      $canvas.addStat("Testing");
+
+  $("#stats-list td").click(function() {
+
+    $canvas.addStat("Testing");
 
   });
-  
+
 
   registerHooksForToolbar($canvas.undoManager);
 
@@ -706,33 +706,31 @@ $(document).ready(function() {
   });
 
 
-var instructions = "";
-$("#getButton").click(function() {
+  var instructions = "";
+  $("#getButton").click(function() {
 
     console.log("got instructions");
     instructions = $canvas.getLayers().slice(0).reverse();
     console.log(instructions);
   });
 
-$("#clearButton").click(function() {
+  $("#clearButton").click(function() {
 
     console.log("clearying canvaas");
-    for(var i =0; i<instructions.length; i++)
-    {
-        $canvas.removeLayer(instructions[i].name);
+    for (var i = 0; i < instructions.length; i++) {
+      $canvas.removeLayer(instructions[i].name);
     }
     $canvas.drawLayers();
 
   });
 
-$("#drawButton").click(function() {
+  $("#drawButton").click(function() {
 
     console.log("drawing on canvas");
-    for(var i =0; i<instructions.length; i++)
-    {
-        console.log(instructions[i]);
-        $canvas.addLayer(instructions[i]);
-        $canvas.enableLayerHandles($canvas.getLayer(instructions[i].name),false);
+    for (var i = 0; i < instructions.length; i++) {
+      console.log(instructions[i]);
+      $canvas.addLayer(instructions[i]);
+      $canvas.enableLayerHandles($canvas.getLayer(instructions[i].name), false);
     }
     $canvas.drawLayers();
 
@@ -826,27 +824,27 @@ function registerHooksForToolbar(undoManager) {
 
   });
 
-  $( "#opacitySlider" ).slider({
-    change: function( event, ui ) {
-        setOpacity($canvas.selectedLayer, 1-ui.value/100);
-        console.log(ui.value);
+  $("#opacitySlider").slider({
+    change: function(event, ui) {
+      setOpacity($canvas.selectedLayer, 1 - ui.value / 100);
+      console.log(ui.value);
     },
-    start: function( event, ui ) {
-        $canvas.selectedLayer.oldOpacity = 1-ui.value/100;
+    start: function(event, ui) {
+      $canvas.selectedLayer.oldOpacity = 1 - ui.value / 100;
     },
-    stop: function( event, ui ) {
-        var newOpacity = 1-ui.value/100;
-        var oldOpacity =  $canvas.selectedLayer.oldOpacity;
+    stop: function(event, ui) {
+      var newOpacity = 1 - ui.value / 100;
+      var oldOpacity = $canvas.selectedLayer.oldOpacity;
 
-         undoManager.add({
-      undo: function() {
-        setOpacity($canvas.selectedLayer, oldOpacity);
+      undoManager.add({
+        undo: function() {
+          setOpacity($canvas.selectedLayer, oldOpacity);
 
-      },
-      redo: function() {
-        setOpacity($canvas.selectedLayer, newOpacity);
-      }
-    });
+        },
+        redo: function() {
+          setOpacity($canvas.selectedLayer, newOpacity);
+        }
+      });
 
     }
   });
@@ -854,16 +852,14 @@ function registerHooksForToolbar(undoManager) {
 
 }
 
-function setOpacity(layer, value)
-{
-    if(layer)
-    {
-        $canvas.animateLayer(layer.name, {
+function setOpacity(layer, value) {
+  if (layer) {
+    $canvas.animateLayer(layer.name, {
 
-          opacity: value
+      opacity: value
 
-        }, 200);
-    }
+    }, 200);
+  }
 }
 
 function flipLayerVertical(layer) {
@@ -1022,5 +1018,3 @@ function downloadCanvas(link, canvasId, filename) {
   link.href = document.getElementById(canvasId).toDataURL();
   link.download = filename;
 }
-
-
