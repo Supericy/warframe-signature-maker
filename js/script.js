@@ -448,10 +448,9 @@ $.fn.extend({
     });
   },
 
-  addStat: function(statIcon, stat) {
+  addStat: function(text) {
     return this.each(function() {
-
-
+     
 
 
     });
@@ -601,6 +600,7 @@ $(document).ready(function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
+        $canvas.enableLayerHandles($canvas.selectedLayer, true);
       }
     });
 
@@ -642,16 +642,13 @@ $(document).ready(function() {
   });
 
   // terrible stats thing
-  /*
+  
   $("#stats-list td").click(function () {
-      var $cell = $(this);
-      var statIcon = $cell.find("img");
-      var statName = $cell.find("span");
-      console.log(statName[0].innerHTML);
-      $canvas.addStat(statIcon[0], statName[0].innerHTML);
+     
+      $canvas.addStat("Testing");
 
   });
-  */
+  
 
   registerHooksForToolbar($canvas.undoManager);
 
@@ -692,68 +689,6 @@ $(document).ready(function() {
     });
   });
 
-  // $("#colorPicker").spectrum({
-  //   color: "#fff",
-  //   className: "full-spectrum",
-  //   showInitial: true,
-  //   showPalette: false,
-  //   showSelectionPalette: false,
-  //   showAlpha: true,
-  //   maxSelectionSize: 10,
-  //   chooseText: "Done",
-  //   cancelText: "",
-  //   preferredFormat: "rgb",
-  //   localStorageKey: "spectrum.demo",
-  //   move: function(color) {
-  //
-  //   },
-  //   show: function() {
-  //
-  //   },
-  //   beforeShow: function() {
-  //
-  //   },
-  //   hide: function() {
-  //
-  //   },
-  //   move: function(color) {
-  //     var layer = $canvas.selectedLayer;
-  //     if (layer !== undefined) {
-  //
-  //       var oldColor = layer.fillStyle;
-  //       $canvas.setLayer(layer.name, {
-  //         fillStyle: color
-  //       });
-  //       $canvas.drawLayers();
-  //       console.log("changed font color");
-  //       $canvas.undoManager.add({
-  //         undo: function() {
-  //           $canvas.setLayer(layer.name, {
-  //             fillStyle: oldColor
-  //           });
-  //           $canvas.drawLayers();
-  //           console.log("changed font color");
-  //         },
-  //         redo: function() {
-  //           $canvas.setLayer(layer.name, {
-  //             fillStyle: color
-  //           });
-  //           $canvas.drawLayers();
-  //           console.log("changed font color");
-  //         }
-  //       });
-  //     }
-  //     // also change font colors of the sample displays
-  //     /*
-  //     $(".font1").css("color", color.toRgbString());
-  //     $(".font2").css("color", color.toRgbString());
-  //     $(".font3").css("color", color.toRgbString());
-  //     */
-  //   }
-  //
-  // });
-
-
 
 
   $("#nameToolbar").hide();
@@ -769,6 +704,39 @@ $(document).ready(function() {
     }
 
   });
+
+
+var instructions = "";
+$("#getButton").click(function() {
+
+    console.log("got instructions");
+    instructions = $canvas.getLayers().slice(0);
+    console.log(instructions);
+  });
+
+$("#clearButton").click(function() {
+
+    console.log("clearying canvaas");
+    for(var i =0; i<instructions.length; i++)
+    {
+        $canvas.removeLayer(instructions[i].name);
+    }
+    $canvas.drawLayers();
+
+  });
+
+$("#drawButton").click(function() {
+
+    console.log("drawing on canvas");
+    for(var i =0; i<instructions.length; i++)
+    {
+        console.log(instructions[i]);
+        $canvas.addLayer(instructions[i]);
+    }
+    $canvas.drawLayers();
+
+  });
+
 
 
 
