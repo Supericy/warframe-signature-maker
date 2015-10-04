@@ -110,6 +110,28 @@ body {
     margin-right:10px;
 }
 
+.ui-slider {
+   border: solid 2px black;
+
+}
+span.ui-slider-handle.ui-state-default.ui-corner-all {
+    background:#363941;
+
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    border-radius:5px; 
+     border: solid 2px black;
+
+}
+.ui-slider-horizontal {
+
+    background:#363941;
+
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    border-radius:5px; 
+
+    
+}
+
 #rightToolbar {
     display:inline-block;
     margin-top:44px;
@@ -209,6 +231,7 @@ nav {
     /* bevel */
     /*-moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
     -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);*/
+    
     box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
     /* round corners */
     border-radius:5px;
@@ -217,6 +240,7 @@ nav {
     /*text-shadow: 1px 1px 0 rgb(223, 227, 229), 4px 4px 0 rgba(0, 0, 0, 0.25);*/
     font-family:Verdana;
     /* black outline */
+
     text-shadow: 0 0 0 #000, 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 30px #fff, 0 0 40px #000;
     height:40px;
 }
