@@ -677,6 +677,7 @@ $(document).ready(function() {
     $canvas.toggleText(this);
     var image = this;
     var layer = $canvas.selectedLayer;
+    doStuff();
     $canvas.undoManager.add({
       undo: function() {
         deleteLayer(layer);
@@ -685,6 +686,7 @@ $(document).ready(function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
+        doStuff();
       }
     });
   });
