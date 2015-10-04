@@ -52,6 +52,7 @@ $.fn.extend({
         y: $canvas.height() / 2,
         width: img.width,
         height: img.height,
+        opacity:1,
         handlePlacement: 'corners&rotational',
         handle: {
           type: 'arc',
@@ -191,6 +192,9 @@ $.fn.extend({
 
           $("#nameToolbar").hide();
 
+          // set opacity slider position
+          $('#opacitySlider').slider('value',100-100*layer.opacity);
+
         }
 
       };
@@ -280,6 +284,7 @@ $.fn.extend({
             y: $canvas.height() / 2,
             width: img.width,
             height: img.height,
+            opacity:1,
             handlePlacement: 'corners&rotational',
             handle: {
               type: 'arc',
@@ -429,6 +434,9 @@ $.fn.extend({
 
               $("#nameToolbar").show();
               doStuff();
+
+              // set opacity slider position
+              $('#opacitySlider').slider('value',100-100*layer.opacity);
             }
 
           })
@@ -513,6 +521,7 @@ $.fn.extend({
   enableLayerHandles: function(layer, enabled) {
     if (layer) {
       layer = $canvas.getLayer(layer.name);
+       if (layer) {
       return this.each(function(elm) {
 
         $canvas.setLayerGroup(layer._handles, {
@@ -531,6 +540,7 @@ $.fn.extend({
         $canvas.drawLayers();
       });
     }
+  }
   }
 
 
@@ -826,25 +836,34 @@ function registerHooksForToolbar(undoManager) {
 
   $("#opacitySlider").slider({
     change: function(event, ui) {
-      setOpacity($canvas.selectedLayer, 1 - ui.value / 100);
-      console.log(ui.value);
+      if($canvas.selectedLayer)
+      {
+        setOpacity($canvas.selectedLayer, 1 - ui.value / 100);
+        console.log(ui.value);
+      }
     },
     start: function(event, ui) {
-      $canvas.selectedLayer.oldOpacity = 1 - ui.value / 100;
+      if($canvas.selectedLayer)
+      {
+        $canvas.selectedLayer.oldOpacity = 1 - ui.value / 100;
+      }
     },
     stop: function(event, ui) {
-      var newOpacity = 1 - ui.value / 100;
-      var oldOpacity = $canvas.selectedLayer.oldOpacity;
+      if($canvas.selectedLayer)
+      {
+        var newOpacity = 1 - ui.value / 100;
+        var oldOpacity = $canvas.selectedLayer.oldOpacity;
 
-      undoManager.add({
-        undo: function() {
-          setOpacity($canvas.selectedLayer, oldOpacity);
+        undoManager.add({
+          undo: function() {
+            setOpacity($canvas.selectedLayer, oldOpacity);
 
-        },
-        redo: function() {
-          setOpacity($canvas.selectedLayer, newOpacity);
-        }
-      });
+          },
+          redo: function() {
+            setOpacity($canvas.selectedLayer, newOpacity);
+          }
+        });
+      }
 
     }
   });

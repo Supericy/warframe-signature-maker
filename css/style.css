@@ -104,9 +104,10 @@ body {
     color:orange;
 }
 #leftToolbar div {
-    width:250px;
+    width:240px;
     
     margin-left:10px;
+    margin-right:10px;
 }
 
 #rightToolbar {
