@@ -52,31 +52,32 @@ body {
 }
 #workspaceCanvas {
     border: 2px solid #000;
-    margin-top:64px;
-    margin-bottom:64px;
+    margin-top:44px;
+    margin-bottom:0px;
     margin-left:20px;
     margin-right:20px;
      padding:0px;
     display:inline-block;
 }
 #leftToolbar {
-    display:inline-block;
-    margin-top:64px;
-    vertical-align:top;
-    margin-bottom:64px;
+    
+    margin-top:-42px;
+    
+    margin-bottom:4px;
     padding:0px;
     margin-right:0px;
-    margin-left:75px;
+    margin-left:20px;
     border: solid 2px black;
   background: rgba(0, 0, 0, 0.4);
 
 }
 #leftToolbar td {
     /*border: 2px solid white;*/
+    padding-right:4px;
 }
 #leftToolbar button {
-    width:25px;
-    height:25px;
+    width:40px;
+    height:40px;
     padding:0px;
     margin:0px;
     border: solid 2px black;
@@ -90,8 +91,8 @@ body {
     
 }
 #leftToolbar button img {
-    width:20px;
-    height:20px;
+    width:25px;
+    height:25px;
 
 }
 #leftToolbar span {
@@ -102,10 +103,15 @@ body {
 #leftToolbar span:hover {
     color:orange;
 }
+#leftToolbar div {
+    width:250px;
+    
+    margin-left:10px;
+}
 
 #rightToolbar {
     display:inline-block;
-    margin-top:64px;
+    margin-top:44px;
     vertical-align:top;
     margin-bottom:64px;
     padding:0px;
