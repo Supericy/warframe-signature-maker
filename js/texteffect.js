@@ -6,7 +6,6 @@ var textEffectStyles = {
   // http://simurai.com/post/802968365/css3d-css3-3d-text
   "Firey": {
     color: "#FFF",
-    background: "#fff",
     shadow: [
       "0px -1px 4px white", 
       "0px -2px 10px yellow", 
@@ -16,7 +15,6 @@ var textEffectStyles = {
   },
   "Real3D": {
     color: "#FFF",
-    background: "#fff",
     shadow: [
       "0px -1px 0px #999", 
       "0px -2px 0px #888", 
@@ -31,7 +29,6 @@ var textEffectStyles = {
   // http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects
   "Neon": {
     color: "#ffffff",
-    background: "#000",
     shadow: [
         "0 0 10px #000",
         "0 0 20px #ff0000",
@@ -46,7 +43,6 @@ var textEffectStyles = {
   },
   "Anaglyphic": {
     color: "rgba(0,0,255,0.5)",
-    background: "#fff",
     shadow: [
      
       "-1px -1px 1px #fff", 
@@ -56,7 +52,6 @@ var textEffectStyles = {
   },
   "VintageRadio": {
     color: "#707070",
-    background: "#ddd",
     shadow: [
       "2px 2px 0px #eee",
       "4px 4px 0px #666"
@@ -64,7 +59,6 @@ var textEffectStyles = {
   },
   "Inset": {
     color: "#222",
-    background: "#444",
     shadow: [
       "0px 1px 1px #777"
     ]
@@ -72,13 +66,11 @@ var textEffectStyles = {
   // meinen kopf
   "Shadow": {
     color: "#444",
-    background: "#444",
     shadow: [
       "0 0 11px #000"
     ]
   },
   "Shadow2": {
-    background: "#ddd",
     shadow: [
       "0 0 11px #000"
     ]
@@ -86,7 +78,6 @@ var textEffectStyles = {
   // http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
   "Shadow3D": {
     color: "#fff",
-    background: "#ddd",
     shadow: [
       "1px -1px #444",
       "2px -2px #444",
@@ -153,11 +144,6 @@ function createTextEffect(text, style, fontFamily) {
 
   var width = ctx.measureText(text).width;
 
-
-
-  // add a background to the current effect
-  //ctx.fillStyle = style.background;
-  //ctx.fillRect(0, 0, ctx.canvas.width, textHeight - 1)
   // parse text-shadows from css
   var shadows = parseShadow(style.shadow);
   // loop through the shadow collection

@@ -23,13 +23,11 @@ function initColorPickers(selector) {
         });
 
         var style = {
-          color: $('#customize-text-color').val(),
-          background: $('#customize-text-background').val(),
+          color: color,
           shadow: shadows
         };
         currentTextStyle = style;
 
-        // TODO: get the username from the same source as the other place
         usernameLayer.source = createTextEffect($canvas.data("username"), style);
         $canvas.drawLayers();
     }
@@ -44,7 +42,7 @@ $(function() {
   $("#addShadowButton").click(function()
       {
         console.log("HEYA");
-        console.log(currentTextStyle);
+        //console.log(currentTextStyle);
         /*
         var $shadow = $shadowBase.clone();
         $('#shadows').append($shadow);
@@ -53,16 +51,10 @@ $(function() {
         initColorPickers(this);
         $(this).spectrum("set", $(this).data("color"));
         */
-        currentTextStyle.shadow.push("0px 0px 5px #fff");
+        currentTextStyle.shadow.push("0px 0px 5px #fffff");
         doStuff();
       });
-  $(".removeShadowButton").click(function()
-      {
-        console.log("HEYA");
-        console.log(currentTextStyle);
-        //currentTextStyle.shadow.remove("0px 0px 5px #fff");
-        doStuff();
-      });
+
    
 });
 
@@ -103,6 +95,27 @@ function doStuff(){
       });
     
 
+
+      $(".removeShadowButton").click(function()
+      {
+        console.log("HEYA");
+        //console.log(currentTextStyle);
+        //currentTextStyle.shadow.remove("0px 0px 5px #fff");
+        var shadows = currentTextStyle.shadow;
+        console.log(currentTextStyle.shadow);
+        var position = $(this).parent("div").find('.text-style-shadow').val();
+        var color = $(this).parent("div").find('.text-style-shadow-color').val();
+        var string = position + ' ' + color;
+        string.trim();
+        console.log("IT IS :", string);
+        var index = shadows.indexOf(string);
+
+        console.log("FouND IT: ", index);
+        if (index > -1) {
+           shadows.splice(index, 1);
+        }
+        doStuff();
+      });
 
         
 
