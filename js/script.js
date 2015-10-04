@@ -732,6 +732,7 @@ $("#drawButton").click(function() {
     {
         console.log(instructions[i]);
         $canvas.addLayer(instructions[i]);
+        $canvas.enableLayerHandles($canvas.getLayer(instructions[i].name),false);
     }
     $canvas.drawLayers();
 
