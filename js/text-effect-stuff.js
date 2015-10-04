@@ -12,6 +12,27 @@ function initColorPickers(selector) {
     cancelText: "",
     preferredFormat: "rgba",
     localStorageKey: "spectrum.demo",
+
+    move: function(color){
+      var usernameLayer = $canvas.getLayer("usernameText");
+        var shadows = [];
+        $('#shadows .shadow').each(function() {
+          var position = $(this).find('.text-style-shadow').val();
+          var color = $(this).find('.text-style-shadow-color').val();
+          shadows.push(position + ' ' + color);
+        });
+
+        var style = {
+          color: $('#customize-text-color').val(),
+          background: $('#customize-text-background').val(),
+          shadow: shadows
+        };
+        currentTextStyle = style;
+
+        // TODO: get the username from the same source as the other place
+        usernameLayer.source = createTextEffect($canvas.data("username"), style);
+        $canvas.drawLayers();
+    }
   });
 }
 
@@ -41,7 +62,8 @@ function doStuff(){
       $('#shadows').empty();
 
       $('#customize-text-color').spectrum("set", currentTextStyle.color);
-      $('#customize-text-background').spectrum("set", currentTextStyle.background);
+
+      $('#customize-text-font').val("I'M A FONT");
 
       for (var n = 0, length = shadows.length; n < length; n++) {
         // just turning "0 0 10px red" into ['0', '0', '10px', 'red']
@@ -63,25 +85,7 @@ function doStuff(){
       });
     
 
-        var usernameLayer = $canvas.getLayer("usernameText");
-        var shadows = [];
-        $('#shadows .shadow').each(function() {
-          var position = $(this).find('.text-style-shadow').val();
-          var color = $(this).find('.text-style-shadow-color').val();
-          shadows.push(position + ' ' + color);
-        });
-
-        var style = {
-          color: $('#customize-text-color').val(),
-          background: $('#customize-text-background').val(),
-          shadow: shadows
-        };
-        currentTextStyle = style;
-        console.log(style);
-
-        // TODO: get the username from the same source as the other place
-        usernameLayer.source = createTextEffect('SuperCoolGuy', style);
-        $canvas.drawLayers();
+        
 
       
 }
