@@ -26,7 +26,7 @@ function initColorPickers(selector) {
       console.log(shadows);
 
       var style = {
-        color: color,
+        color: $('#customize-text-color').val(),
         shadow: shadows
       };
       currentTextStyle = style;
