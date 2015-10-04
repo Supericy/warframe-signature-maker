@@ -19,7 +19,6 @@ function initColorPickers(selector) {
       $('#shadows .shadow').each(function() {
         var position = $(this).find('.text-style-shadow').val();
         var color = $(this).find('.text-style-shadow-color').val();
-        var shadowID = $(this).attr("id");
         shadows.push(position + ' ' + color);
       });
 
