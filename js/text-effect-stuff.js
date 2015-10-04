@@ -20,39 +20,17 @@ $(function() {
 
   initColorPickers('.color-picker');
 
-  $("#customize-text").dialog({
-    autoOpen: false,
-    title: "Text Effect Customizer",
-    resizable: false,
-    width: 'auto',
-    height: 'auto',
-    modal: true,
-    buttons: {
-      OK: function() {
-        var usernameLayer = $canvas.getLayer("usernameText");
-        var shadows = [];
-        $('#shadows .shadow').each(function() {
-          var position = $(this).find('.text-style-shadow').val();
-          var color = $(this).find('.text-style-shadow-color').val();
-          shadows.push(position + ' ' + color);
-        });
 
-        var style = {
-          color: $('#customize-text-color').val(),
-          background: $('#customize-text-background').val(),
-          shadow: shadows
-        };
-        currentTextStyle = style;
-        console.log(style);
 
-        // TODO: get the username from the same source as the other place
-        usernameLayer.source = createTextEffect('SuperCoolGuy', style);
-        $canvas.drawLayers();
-        $(this).dialog("close");
-      }
-    },
-    open: function(event, ui) {
-      var shadows = currentTextStyle.shadow;
+    
+
+
+
+});
+
+function doStuff(){
+
+  var shadows = currentTextStyle.shadow;
       // TODO: refactor... so ugly
       var $shadowBase = $(
         '<div class="shadow">' +
@@ -83,9 +61,27 @@ $(function() {
         initColorPickers(this);
         $(this).spectrum("set", $(this).data("color"));
       });
-    }
-  });
-  $("#customize-text-opener").click(function() {
-    $("#customize-text").dialog("open");
-  });
-});
+    
+
+        var usernameLayer = $canvas.getLayer("usernameText");
+        var shadows = [];
+        $('#shadows .shadow').each(function() {
+          var position = $(this).find('.text-style-shadow').val();
+          var color = $(this).find('.text-style-shadow-color').val();
+          shadows.push(position + ' ' + color);
+        });
+
+        var style = {
+          color: $('#customize-text-color').val(),
+          background: $('#customize-text-background').val(),
+          shadow: shadows
+        };
+        currentTextStyle = style;
+        console.log(style);
+
+        // TODO: get the username from the same source as the other place
+        usernameLayer.source = createTextEffect('SuperCoolGuy', style);
+        $canvas.drawLayers();
+
+      
+}

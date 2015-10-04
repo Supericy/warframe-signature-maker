@@ -42,7 +42,7 @@ var textEffectStyles = {
         "0 0 100px #ff0000",
         "0 0 150px #ff0000"
       ]
-      // shadow: "0 0 10px #fff, 0 0 20px #fff, 0 0 30px #fff, 0 0 40px #ff00de, 0 0 70px #ff00de, 0 0 80px #ff00de, 0 0 100px #ff00de, 0 0 150px #ff00de"
+     
   },
   "Anaglyphic": {
     color: "rgba(0,0,255,0.5)",
