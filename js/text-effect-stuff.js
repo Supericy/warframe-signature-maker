@@ -20,8 +20,10 @@ function initColorPickers(selector) {
         var position = $(this).find('.text-style-shadow').val();
         var color = $(this).find('.text-style-shadow-color').val();
         var shadowID = $(this).attr("id");
-        shadows.push(position + ' ' + color + '~' + shadowID);
+        shadows.push(position + ' ' + color);
       });
+
+      console.log(shadows);
 
       var style = {
         color: color,
