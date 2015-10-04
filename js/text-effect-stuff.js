@@ -41,12 +41,29 @@ $(function() {
 
   initColorPickers('.color-picker');
 
-
-
-    
-
-
-
+  $("#addShadowButton").click(function()
+      {
+        console.log("HEYA");
+        console.log(currentTextStyle);
+        /*
+        var $shadow = $shadowBase.clone();
+        $('#shadows').append($shadow);
+        $shadow.find('.text-style-shadow').val("0 0 5px");
+        $shadow.find('.text-style-shadow-color').data("color", "red");
+        initColorPickers(this);
+        $(this).spectrum("set", $(this).data("color"));
+        */
+        currentTextStyle.shadow.push("0px 0px 5px #fff");
+        doStuff();
+      });
+  $(".removeShadowButton").click(function()
+      {
+        console.log("HEYA");
+        console.log(currentTextStyle);
+        //currentTextStyle.shadow.remove("0px 0px 5px #fff");
+        doStuff();
+      });
+   
 });
 
 function doStuff(){
@@ -57,6 +74,7 @@ function doStuff(){
         '<div class="shadow">' +
         '<input class="text-style-shadow" type="text">' +
         '<input class="text-style-shadow-color color-picker" type="text">' +
+        '<button type="button" class="removeShadowButton">Remove</button>' +
         '</div>');
 
       $('#shadows').empty();
@@ -84,6 +102,7 @@ function doStuff(){
         $(this).spectrum("set", $(this).data("color"));
       });
     
+
 
         
 
