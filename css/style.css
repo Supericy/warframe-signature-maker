@@ -29,7 +29,11 @@ body {
     display:inline-block;
     padding:0px;
     margin:0px;
-    padding-top:15px;
+    padding-top:0px;
+    margin-top:25px;
+    background: rgba(0, 0, 0, 0.4);
+    border:2px solid black;
+
 }
 .image-list td, th {
     padding:1px;
@@ -45,10 +49,17 @@ body {
     margin:0px;
 }
 .image-list img {
-    width: 208px;
-    height: 70px;
+    width: 192px;
+    height: 59px;
     padding:0px;
     margin:0px;
+    border: 2px solid black;
+}
+#bg-list img {
+    padding:4px;
+}
+#bg-list {
+    margin-left:10px;
 }
 #workspaceCanvas {
     border: 2px solid #000;
@@ -115,7 +126,7 @@ body {
 
 }
 span.ui-slider-handle.ui-state-default.ui-corner-all {
-    background:#363941;
+    background:rgba(255, 255, 255, 0.7);
 
     box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
     border-radius:5px; 
@@ -182,7 +193,9 @@ nav {
     margin-left:2.5px;
     margin-top:10px;
     margin-right:0px;
+    padding:0px;
 }
+
 .ui-tabs .ui-tabs-nav li:first-child {
     width:17%;
     margin-left:75px;
@@ -280,16 +293,17 @@ nav {
 #name-list td {
     width: 208px;
     height: 70px;
-    border: 2px solid white;
+
 }
 #extras-list td {
-    width: 208px;
+    width: 150px;
     height: 70px;
     /*border: 2px solid white;*/
 }
 #extras-list img {
-    width:55%;
+    width:75%;
     height:55%;
+    padding:4px;
 }
 #stats-list img {
     width:36px;
@@ -299,6 +313,14 @@ nav {
 #weapon-list img {
     width:200px;
     height:65px;
+
+}
+.image-list img:hover {
+    background:rgba(255, 255, 255, 0.3);
+}
+#weapons {
+    padding:0px;
+    margin-left:10px;
 }
 
 
