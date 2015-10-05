@@ -105,13 +105,71 @@ var textEffectStyles = {
 
   
     ]
+  },
+  "SoftEmboss":{
+    color: "rgba(0,0,0,0.6)",
+    shadow: [
+      "2px 8px 6px rgba(0,0,0,0.2)",
+      "0px -5px 35px rgba(255,255,255,0.3)"
+    ]    
+  },
+  "Reflection":{
+    color: "#000",
+    shadow: [
+      "0px -36px 0px #fff"
+    ]    
+  },
+  "Flame2":{
+    color: "#000",
+    shadow: [
+      "0 0 4px #ccc", 
+      "0 -5px 4px #ff3", 
+      "2px -10px 6px #fd3", 
+      "-2px -15px 11px #f80", 
+      "2px -18px 18px #f20"
+    ]    
+  },
+  "Other3D":{
+    color: "rgba(0,0,0,0.6)",
+    shadow: [
+      "-1px -1px 0  #6E981B",
+      "-2px -2px 1px  #6E981B",
+      "-2px -2px 2px #6E981B",
+      "-2px -2px 0 7px #FCFCE8",
+      "-3px -3px 0 7px #AFAF9D",
+      "-4px -4px 0 7px #AFAF9D",
+      "-5px -5px 0 7px #AFAF9D",
+      "-6px -6px 0 7px #AFAF9D",
+      "-7px -7px 4px 8px #70705C",
+      "-8px -8px 6px 9px #989881"
+    ]    
+  },
+  "Chocolate":{
+    color: "#662200",
+    shadow: [
+      "0 0 1px #5C1F00",
+      "-1px 1px 0px #5C1F00",               
+      "-2px 2px 2px #5C1F00",                            
+      "-4px 4px 2px #5C1F00",
+      "-6px 6px 3px #421600",
+      "-8px 8px 2px #2E0F00",
+      "-10px 10px 3px #290E00",
+      "-12px 12px 2px #290E00",
+      "-14px 14px 2px #1A0900",
+      "-15px 15px 2px #1A0900",                            
+      "-15px 15px 0px rgba(38,21,13,0.25)"
+     ]
   }
+
+  
 };
 
 
 
 
 function createTextEffect(text, style, fontFamily) {
+
+  fontFamily = "Impact";
   var canvas = document.createElement('CANVAS');
   canvas.width = 300;
   canvas.height = 100;

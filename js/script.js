@@ -259,7 +259,7 @@ $.fn.extend({
       if ($canvas.getLayer("usernameText") !== undefined) {
         $canvas.setLayer("usernameText", {
           //fontFamily: $(span).css("font-family")
-          source: createTextEffect(username, style, "Helvectica")
+          source: createTextEffect(username, style, "Arial")
         });
         $canvas.drawLayers();
 
