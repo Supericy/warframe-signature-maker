@@ -51,10 +51,12 @@ var textEffectStyles = {
     ]
   },
   "VintageRadio": {
-    color: "#707070",
+    color: "rgba(255,255,255,0.1)",
     shadow: [
-      "2px 2px 0px #eee",
-      "4px 4px 0px #666"
+      "0px 0px 10px rgba(255,255,255,0.6)", 
+      "0px 0px 30px rgba(255,255,255,0.4)", 
+      "0px 0px 50px rgba(255,255,255,0.3)", 
+      "0px 0px 180px rgba(255,255,255,0.3)"
     ]
   },
   "Inset": {
@@ -71,8 +73,12 @@ var textEffectStyles = {
     ]
   },
   "Shadow2": {
+    color:"rgba(255,255,255,0.5)",
     shadow: [
-      "0 0 11px #000"
+      "-1px -1px 0 #000",  
+    "1px -1px 0 #000",
+    "-1px 1px 0 #000",
+     "1px 1px 0 #000"
     ]
   },
   // http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
@@ -83,6 +89,21 @@ var textEffectStyles = {
       "2px -2px #444",
       "3px -3px #444",
       "4px -4px #444"
+    ]
+  },
+  "Shadow3": {
+    color:"#rgba(0,50,125,0.4)",
+    shadow: [
+      "1px 1px 0 #767676", 
+      "-1px 1px 1px #737272", 
+      "-2px 1px 1px #767474", 
+      "-3px 1px 1px #787777", 
+      "-4px 1px 1px #7b7a7a", 
+      "-5px 1px 1px #7f7d7d", 
+      "-6px 1px 1px #828181", 
+
+
+  
     ]
   }
 };

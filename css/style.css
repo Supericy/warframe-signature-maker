@@ -295,7 +295,11 @@ nav {
 #name-list td {
     width: 208px;
     height: 70px;
-
+    padding:0px;
+    margin:0px;
+}
+#name-list img {
+    width:95%;
 }
 #extras-list td {
     width: 150px;
