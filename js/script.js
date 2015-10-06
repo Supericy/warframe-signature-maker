@@ -722,6 +722,28 @@ $(document).ready(function() {
     console.log("got instructions");
     instructions = $canvas.getLayers().slice(0).reverse();
     console.log(instructions);
+
+    // send msg to server
+
+    $.ajax({
+       type:"POST",
+       url: "http://localhost:8888/warface/sigs/upload",
+       data: "BIG DICK",
+       success: function (data) {
+           console.log(data);
+           if(data)
+           {
+               return console.log("SUCCESS Connection");
+           } else {
+               return console.log("Data isn't available");
+           }
+       },
+       error: function (data) {
+           return console.log("ERROR Connection");
+       }
+   });
+
+
   });
 
   $("#clearButton").click(function() {
@@ -744,7 +766,32 @@ $(document).ready(function() {
     }
     $canvas.drawLayers();
 
+    $.ajax({
+       type:"GET",
+       url: "http://localhost:8888/warface/sigs/show",
+       success: function (data) {
+           //console.log(data);
+           if(data)
+           {   
+               var list = JSON.parse(data);
+               for(var i = 0; i<list.length; i++)
+               {
+                console.log(list[i].username);
+               }
+               return console.log("SUCCESS Connection");
+           } else {
+               return console.log("Data isn't available");
+           }
+       },
+       error: function (data) {
+           return console.log("ERROR Connection");
+       }
+   });
+
   });
+
+
+
 
 
 

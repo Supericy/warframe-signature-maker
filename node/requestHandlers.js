@@ -43,12 +43,12 @@ function upload(response, request) {
 		tried to rename to an already existing file */
 		if(files.upload)
 		{
-			fs.rename(files.upload.path, "/tmp/test.png", function(err) 
+			fs.rename(files.upload.path, "./tmp/test.png", function(err) 
 			{
 				if (err) 
 				{
-					fs.unlink("/tmp/test.png");
-					fs.rename(files.upload.path, "/tmp/test.png");
+					fs.unlink("./tmp/test.png");
+					fs.rename(files.upload.path, "./tmp/test.png");
 				}
 			});
 		}
@@ -61,11 +61,11 @@ function upload(response, request) {
 
 function show(response) {
 	console.log("Request handler 'show' was called.");
-	fs.readFile("/tmp/test.png", "binary", function(error, file) 
+	fs.readFile("./tmp/test.png", "binary", function(error, file) 
 	{
 		if(error) {
 			response.writeHead(500, {"Content-Type": "text/plain"});
-			response.write(err + "\n");
+			response.write(error + "\n");
 			response.end();
 		} else {
 			response.writeHead(200, {"Content-Type": "image/png"});
@@ -74,6 +74,123 @@ function show(response) {
 		}
 	});
 }
+
+
+function warfaceSigUpload(response,request) {
+		console.log("Request handler 'warfaceSigUpload' was called.");
+	
+		var postData = "";
+		request.setEncoding("utf8");
+
+		request.addListener("data", function(postDataChunk) {
+			postData += postDataChunk;
+			console.log("Received POST data chunk '"+
+			postDataChunk + "'.");
+		});
+
+		request.addListener("end", function() {
+			//route(handle, pathname, response, postData);
+			console.log("All chunks recieved");
+			var MongoClient = require('mongodb').MongoClient;
+			
+
+			var url = 'mongodb://localhost:27017/test';
+			MongoClient.connect(url, function(err,db)  {
+				if(!err){
+					console.log("Connected correctly to server.");
+					insertUser(db, function() {
+						db.close();
+					})
+				} else {
+					console.log(err);
+				}
+				
+			});
+
+
+
+
+			// STUPID FUCKING CORS
+			response.writeHead(200, {
+				"Content-Type": "text/plain",
+				'Access-Control-Allow-Origin' : '*'
+			});
+
+
+			response.write("Hey I got your request."+"\n");
+			response.end();
+
+
+		});
+
+
+
+}
+
+function warfaceSigShow(response,request) {
+		console.log("Request handler 'warfaceSigShow' was called.");
+	
+		// STUPID FUCKING CORS
+		response.writeHead(200, {
+			"Content-Type": "text/plain",
+			'Access-Control-Allow-Origin' : '*'
+		});
+
+		
+
+		var MongoClient = require('mongodb').MongoClient;
+		var url = 'mongodb://localhost:27017/test';
+
+		MongoClient.connect(url, function(err, db) 
+		{
+	  		if(!err){
+
+	  			findUsers(db, function(cursor) {
+
+	  				var array = cursor.toArray(function (err, result) {
+				     if (err) {
+				        console.log(err);
+				     } else if (result.length) {
+				        console.log('Found:', result);
+				        response.write(JSON.stringify(result));
+		  				response.end();
+		  				db.close();
+				     } else {
+				        console.log('No document(s) found with defined "find" criteria!');
+				     }
+				     });
+
+	  				
+	 		 	});
+	  		}
+		});
+}
+
+
+var insertUser = function(db, callback) {
+   db.collection('users').insertOne( {
+      "username" : "SuperCoolGuy"
+   }, function(err, result) {
+    if(!err){
+    	console.log("Insert sucessful");
+    }
+    callback(result);
+  });
+};
+
+
+var findUsers = function(db, callback) {
+   var cursor = db.collection('users').find();
+   callback(cursor);
+ 
+};
+
+
+
+
 exports.start = start;
 exports.upload = upload;
 exports.show = show;
+
+exports.warfaceSigUpload = warfaceSigUpload;
+exports.warfaceSigShow = warfaceSigShow;
