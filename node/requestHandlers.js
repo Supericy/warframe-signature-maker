@@ -98,7 +98,7 @@ function warfaceSigUpload(response,request) {
 			MongoClient.connect(url, function(err,db)  {
 				if(!err){
 					console.log("Connected correctly to server.");
-					insertUser(db, function() {
+					insertUser(db, postData, function() {
 						db.close();
 					})
 				} else {
@@ -167,9 +167,11 @@ function warfaceSigShow(response,request) {
 }
 
 
-var insertUser = function(db, callback) {
+var insertUser = function(db, postData, callback) {
    db.collection('users').insertOne( {
-      "username" : "SuperCoolGuy"
+      //"username" : "SuperCoolGuy",
+      "signature" : postData
+
    }, function(err, result) {
     if(!err){
     	console.log("Insert sucessful");
@@ -177,6 +179,8 @@ var insertUser = function(db, callback) {
     callback(result);
   });
 };
+
+
 
 
 var findUsers = function(db, callback) {

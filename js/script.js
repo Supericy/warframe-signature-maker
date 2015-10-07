@@ -197,7 +197,7 @@ $.fn.extend({
 
         }
 
-      };
+      }; 
 
 
       /* test if its background */
@@ -717,23 +717,28 @@ $(document).ready(function() {
 
 
   var instructions = "";
+  //var serializedCanvas = null;
   $("#getButton").click(function() {
 
     console.log("got instructions");
     instructions = $canvas.getLayers().slice(0).reverse();
-    console.log(instructions);
+    //console.log(instructions);
+
+    console.log("serializing canvas");
+    var serializedCanvas = serializeCanvas();
+    console.log("serialized canvas:", serializedCanvas);
 
     // send msg to server
-
+    console.log("contacting server");
     $.ajax({
        type:"POST",
        url: "http://localhost:8888/warface/sigs/upload",
-       data: "BIG DICK",
+       data: JSON.stringify(serializedCanvas),
        success: function (data) {
            console.log(data);
            if(data)
            {
-               return console.log("SUCCESS Connection");
+               return console.log("SUCCESS Connection, instructions sent to server");
            } else {
                return console.log("Data isn't available");
            }
@@ -742,6 +747,8 @@ $(document).ready(function() {
            return console.log("ERROR Connection");
        }
    });
+
+
 
 
   });
@@ -758,13 +765,17 @@ $(document).ready(function() {
 
   $("#drawButton").click(function() {
 
-    console.log("drawing on canvas");
+    //console.log("drawing on canvas");
+    /*
     for (var i = 0; i < instructions.length; i++) {
-      console.log(instructions[i]);
       $canvas.addLayer(instructions[i]);
       $canvas.enableLayerHandles($canvas.getLayer(instructions[i].name), false);
     }
     $canvas.drawLayers();
+    */
+
+    console.log("fetching server instructions")
+    var unserializedCanvas = null;
 
     $.ajax({
        type:"GET",
@@ -773,11 +784,22 @@ $(document).ready(function() {
            //console.log(data);
            if(data)
            {   
+
                var list = JSON.parse(data);
-               for(var i = 0; i<list.length; i++)
-               {
-                console.log(list[i].username);
-               }
+               list = list[list.length-1].signature;
+               //list = '"' + list + '"';
+               list = JSON.parse(list);
+               console.log(list);
+               unserializedCanvas = unserializeCanvas(list);
+               console.log("unserialized canvas:", unserializedCanvas);
+
+               console.log("drawing on canvas");
+                for (var i = 0; i < unserializedCanvas.length; i++) {
+                  $canvas.addLayer(unserializedCanvas[i]);
+                  $canvas.enableLayerHandles($canvas.getLayer(unserializedCanvas[i].name), false);
+                }
+                $canvas.drawLayers();
+
                return console.log("SUCCESS Connection");
            } else {
                return console.log("Data isn't available");
@@ -788,6 +810,11 @@ $(document).ready(function() {
        }
    });
 
+
+    
+
+    
+
   });
 
 
@@ -797,6 +824,213 @@ $(document).ready(function() {
 
 
 });
+
+function serializeCanvas(){
+  var canvasLayers = $canvas.getLayers().slice(0);
+  var serialized = [];
+  for(var n=0; n<canvasLayers.length; n+=6) // += 6 to dodge the handles.
+  {
+    serialized.push(serializeLayer(canvasLayers[n]));
+  }
+  return serialized;
+}
+
+function serializeLayer(layer){
+  var sLayer = {};
+
+  sLayer.name = layer.name;
+  sLayer.width = layer.width;
+  sLayer.height = layer.height;
+  sLayer.type = layer.type;
+  sLayer.draggable = layer.draggable;
+  sLayer.source = layer.source;
+  sLayer.x = layer.x;
+  sLayer.y = layer.y;
+  sLayer.translateX = layer.translateX;
+  sLayer.translateY = layer.translateY;
+  sLayer.opacity = layer.opacity;
+  sLayer.rotate = layer.rotate;
+  return sLayer;
+
+}
+
+function unserializeLayer(sLayer)
+{
+  console.log("unserializing: ", sLayer);
+  var layer = {
+        type: sLayer.type,
+        name: sLayer.name,
+        draggable: sLayer.draggable,
+        source: sLayer.source,
+        x: sLayer.x,
+        y: sLayer.y,
+        width: sLayer.width,
+        height: sLayer.height,
+        opacity:sLayer.opacity,
+        translateX:sLayer.translateX,
+        translateY:sLayer.translateY,
+        rotate:sLayer.rotate,
+        handlePlacement: 'corners&rotational',
+        handle: {
+          type: 'arc',
+          strokeStyle: '#c33',
+          strokeWidth: 2,
+          radius: 5
+        },
+        dragstart: function(layer) {
+          // code to run when dragging starts
+          layer.dragstartx = layer.x;
+          layer.dragstarty = layer.y;
+          layer.mousedown(layer);
+        },
+        dragstop: function(layer) {
+          // code to run when dragging starts
+          var dragstopx = layer.x;
+          var dragstopy = layer.y;
+          // pointlessly copy oh wait makes it work
+          var dragstartx = layer.dragstartx;
+          var dragstarty = layer.dragstarty;
+          console.log("values before undo are ", layer.dragstartx, layer.dragstarty);
+          $canvas.undoManager.add({
+            undo: function() {
+              console.log("undoing drag start  on ");
+              console.log("layer before moving in undo", layer);
+              console.log("values as i undo are ", dragstartx, dragstarty);
+              $canvas.setLayer(layer.name, {
+                x: dragstartx,
+                y: dragstarty
+              }).drawLayers();
+              console.log("layer after undo:", layer);
+            },
+            redo: function() {
+              console.log("restoring drag stop");
+              $canvas.setLayer(layer.name, {
+                x: dragstopx,
+                y: dragstopy
+              }).drawLayers();
+
+            }
+          });
+          layer.mousedown(layer);
+
+        },
+        handlestart: function(layer) {
+          // code to run when resizing starts
+          console.log("STARTED RESIZING");
+          layer.oldheight = layer.height;
+          layer.oldwidth = layer.width;
+          layer.oldx = layer.x;
+          layer.oldy = layer.y;
+
+        },
+
+        handlestop: function(layer) {
+          // code to run when resizing stops
+          console.log("STOPPED RESIZING");
+          var newheight = layer.height;
+          var newwidth = layer.width;
+          var newx = layer.x;
+          var newy = layer.y;
+
+          var oldheight = layer.oldheight;
+          var oldwidth = layer.oldwidth;
+          var oldx = layer.oldx;
+          var oldy = layer.oldy;
+          console.log(newwidth, newheight);
+          $canvas.undoManager.add({
+            undo: function() {
+              console.log("restoring old stuff");
+              $canvas.setLayer(layer.name, {
+                x: oldx,
+                y: oldy,
+                width: oldwidth,
+                height: oldheight
+              }).drawLayers();
+            },
+            redo: function() {
+              console.log("restoring new stuff");
+              $canvas.setLayer(layer.name, {
+                x: newx,
+                y: newy,
+                width: newwidth,
+                height: newheight
+              }).drawLayers();
+            }
+          });
+          layer.mousedown(layer);
+        },
+        rotatehandlestart: function(layer) {
+          // code to run when rotation starts
+          console.log("STARTED ROTATING");
+          layer.oldangle = layer.rotate;
+          layer.oldhandlex = layer._handles[4].x;
+          layer.oldhandley = layer._handles[4].y;
+
+        },
+        rotatehandlestop: function(layer) {
+          // code to run when rotation stops
+          console.log("STOPPED ROTATING");
+          var newangle = layer.rotate;
+          var newhandlex = layer._handles[4].x;
+          var newhandley = layer._handles[4].y;
+
+          var oldangle = layer.oldangle;
+          var oldhandlex = layer.oldhanlex;
+          var oldhandley = layer.oldhandley;
+          $canvas.undoManager.add({
+            undo: function() {
+              $canvas.setLayer(layer.name, {
+                rotate: oldangle,
+              }).drawLayers();
+
+            },
+            redo: function() {
+              $canvas.setLayer(layer.name, {
+                rotate: newangle,
+              }).drawLayers();
+            }
+          });
+          layer.mousedown(layer);
+
+        },
+        mousedown: function(layer) {
+          var previouslySelectedLayer = $canvas.selectedLayer;
+
+          console.log("You selected " + layer.name);
+          $canvas.selectedLayer = layer;
+
+          //clear previous "selection"
+          if (previouslySelectedLayer) {
+            $canvas.enableLayerHandles(previouslySelectedLayer, false);
+          }
+
+          // "select" new guy
+          $canvas.enableLayerHandles(layer, true);
+
+          $("#nameToolbar").hide();
+
+          // set opacity slider position
+          $('#opacitySlider').slider('value',100-100*layer.opacity);
+
+        }
+
+      }; 
+      return layer;
+}
+
+function unserializeCanvas(serializedCanvas){
+
+  var unserialized = [];
+  console.log(serializedCanvas[0]);
+  for(var n=0; n<serializedCanvas.length; n++) 
+  {
+    unserialized.push(unserializeLayer(serializedCanvas[n]));
+  }
+  return unserialized;
+
+
+}
+
 
 
 function registerHooksForToolbar(undoManager) {
