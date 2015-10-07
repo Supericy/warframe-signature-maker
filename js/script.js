@@ -850,6 +850,8 @@ function serializeLayer(layer){
   sLayer.translateY = layer.translateY;
   sLayer.opacity = layer.opacity;
   sLayer.rotate = layer.rotate;
+  sLayer.scaleX = layer.scaleX;
+  sLayer.scaleY = layer.scaleY;
   return sLayer;
 
 }
@@ -869,6 +871,8 @@ function unserializeLayer(sLayer)
         opacity:sLayer.opacity,
         translateX:sLayer.translateX,
         translateY:sLayer.translateY,
+        scaleY:sLayer.scaleY,
+        scaleX:sLayer.scaleX,
         rotate:sLayer.rotate,
         handlePlacement: 'corners&rotational',
         handle: {
