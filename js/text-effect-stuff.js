@@ -1,6 +1,8 @@
-function initColorPickers(selector) {
-  $(selector).spectrum({
-    color: "#fff",
+function initColorPickers(selector, color) {
+  var $elm = $(selector);
+
+  $elm.spectrum({
+    color: color || "#fff",
     containerClassName: "test",
     className: "test",
     showInitial: true,
@@ -14,24 +16,7 @@ function initColorPickers(selector) {
     localStorageKey: "spectrum.demo",
 
     move: function(color) {
-      var usernameLayer = $canvas.getLayer("usernameText");
-      var shadows = [];
-      $('#shadows .shadow').each(function() {
-        var position = $(this).find('.text-style-shadow').val();
-        var color = $(this).find('.text-style-shadow-color').val();
-        shadows.push(position + ' ' + color);
-      });
-
-      console.log(shadows);
-
-      var style = {
-        color: $('#customize-text-color').val(),
-        shadow: shadows
-      };
-      currentTextStyle = style;
-
-      usernameLayer.source = createTextEffect($canvas.data("username"), style);
-      $canvas.drawLayers();
+      updateTextLayer();
     }
   });
 }
@@ -39,96 +24,76 @@ function initColorPickers(selector) {
 $(function() {
   var $canvas = $('#workspaceCanvas');
 
-  initColorPickers('.color-picker');
-
-  $("#addShadowButton").click(function() {
-    console.log("HEYA");
-    currentTextStyle.shadow.push("0px 0px 5px #fffff");
-    doStuff();
-  });
-
-
-
+  initColorPickers('#customize-text-color');
 });
 
+function getStyleFromElements() {
+  var usernameLayer = $canvas.getLayer("usernameText");
+  var shadows = [];
+  $('#shadows .shadow').each(function() {
+    var position = $(this).find('.text-style-shadow').val();
+    var color = $(this).find('.text-style-shadow-color').val();
+    var shadow = position + ' ' + color;
+    shadows.push(shadow);
+  });
 
-function doStuff() {
+  var style = {
+    color: $('#customize-text-color').spectrum('get'),
+    shadow: shadows
+  };
 
-  var shadows = currentTextStyle.shadow;
-  // TODO: refactor... so ugly
+  return style;
+}
+
+function createElementsFromStyle(style) {
+  var $shadowParent = $('#shadows');
   var $shadowBase = $(
-    '<div class="shadow" id="">' +
+    '<div class="shadow">' +
     '<input class="text-style-shadow" type="text">' +
     '<input class="text-style-shadow-color color-picker" type="text">' +
     '<button type="button" class="removeShadowButton">Remove</button>' +
     '</div>');
 
-  $('#shadows').empty();
+  $shadowParent.empty();
 
-  $('#customize-text-color').spectrum("set", currentTextStyle.color);
+  // set font color
+  $('#customize-text-color').spectrum("set", style.color);
 
+  // TODO: load from style
+  // set font type
   $('#customize-text-font').val("I'M A FONT");
 
-  var shadowID = new Date().getTime();
-  for (var n = 0, length = shadows.length; n < length; n++) {
+  for (var n = 0, length = style.shadow.length; n < length; n++) {
     // just turning "0 0 10px red" into ['0', '0', '10px', 'red']
-    var chunks = shadows[n].split(' ');
+    var chunks = style.shadow[n].split(' ');
     var shadowColor = chunks.pop();
     var shadowPosition = chunks.join(' ');
 
     var $shadow = $shadowBase.clone();
 
-    $('#shadows').append($shadow);
+    $shadowParent.append($shadow);
 
     $shadow.find('.text-style-shadow').val(shadowPosition);
     $shadow.find('.text-style-shadow-color').data("color", shadowColor);
-    $shadow.attr("id", shadowID);
   }
+
+  $shadowParent.find('.shadow .removeShadowButton').on('click', function(e, p) {
+    $(this).parent().remove();
+    updateTextLayer();
+  });
 
   // TODO: yuck... can probably use shadowID to filter this now?
   $('#shadows .shadow .text-style-shadow-color').each(function() {
     initColorPickers(this);
     $(this).spectrum("set", $(this).data("color"));
   });
+}
 
+function updateTextLayer(style) {
+  // use the specified style, or create it from the elements
+  style = style || getStyleFromElements();
 
   var usernameLayer = $canvas.getLayer("usernameText");
-  usernameLayer.source = createTextEffect($canvas.data("username"), currentTextStyle);
+  usernameLayer.source = createTextEffect($canvas.data("username"), style);
   $canvas.drawLayers();
-
-
-
-  $(".removeShadowButton").click(function() {
-    var shadows = currentTextStyle.shadow;
-    console.log(shadows);
-    var shadowID = $(this).parent("div").attr("id");
-    console.log("its id is:", shadowID);
-
-    var $shadows = $('#shadows');
-    var list = $shadows.children();
-    console.log(list);
-
-    for (var n = 0, length = shadows.length; n < length; n++) {
-
-      console.log(list[n]);
-      if (shadowID === list[n].id) {
-
-        console.log("FouND IT: ", shadows[n]);
-
-        shadows.splice(n, 1);
-        console.log("REMOVED IT: ", shadows);
-        currentTextStyle.shadow = shadows;
-        doStuff();
-        break;
-
-      }
-
-    }
-
-
-  });
-
-
-
-
 }

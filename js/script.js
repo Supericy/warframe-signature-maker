@@ -1,5 +1,3 @@
-var currentTextStyle = '';
-
 function dragMove() {
   overwolf.windows.getCurrentWindow(function(result) {
     if (result.status == "success") {
@@ -197,7 +195,7 @@ $.fn.extend({
 
         }
 
-      }; 
+      };
 
 
       /* test if its background */
@@ -267,9 +265,9 @@ $.fn.extend({
 
 
       } else {
-
-        var img = new Image();
-        img.src = createTextEffect(username, style);
+        // default size for username text (pixels);
+        var INITIAL_NAME_WIDTH = 300;
+        var INITIAL_NAME_HEIGHT = 100;
 
         $('#workspaceCanvas').addLayer({
             type: 'image',
@@ -279,11 +277,11 @@ $.fn.extend({
             name: "usernameText",
             draggable: true,
             type: 'image',
-            source: img.src,
+            source: createTextEffect(username, style),
             x: $canvas.width() / 2,
             y: $canvas.height() / 2,
-            width: img.width,
-            height: img.height,
+            width: INITIAL_NAME_WIDTH,
+            height: INITIAL_NAME_HEIGHT,
             opacity:1,
             handlePlacement: 'corners&rotational',
             handle: {
@@ -433,7 +431,7 @@ $.fn.extend({
 
 
               $("#nameToolbar").show();
-              doStuff();
+              // doStuff();
 
               // set opacity slider position
               $('#opacitySlider').slider('value',100-100*layer.opacity);
@@ -574,11 +572,11 @@ $(document).ready(function() {
   $("#tabs").tabs({
     hide: {
       effect: "fadeOut",
-      duration: 500
+      duration: 200
     },
     show: {
       effect: "fadeIn",
-      duration: 500
+      duration: 300
     },
     beforeActivate: function() {
       // toggleDoors(true);
@@ -675,7 +673,7 @@ $(document).ready(function() {
     var style = textEffectStyles[$this.data('text-style')];
     $this.attr('src', createTextEffect(username, style));
     $this.click(function() {
-      currentTextStyle = style;
+      createElementsFromStyle(style);
     });
   });
 
@@ -685,7 +683,7 @@ $(document).ready(function() {
     $canvas.toggleText(this);
     var image = this;
     var layer = $canvas.selectedLayer;
-    doStuff();
+    // doStuff();
     $canvas.undoManager.add({
       undo: function() {
         deleteLayer(layer);
@@ -694,7 +692,7 @@ $(document).ready(function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
-        doStuff();
+        // doStuff();
       }
     });
   });
@@ -783,7 +781,7 @@ $(document).ready(function() {
        success: function (data) {
            //console.log(data);
            if(data)
-           {   
+           {
 
                var list = JSON.parse(data);
                list = list[list.length-1].signature;
@@ -811,9 +809,9 @@ $(document).ready(function() {
    });
 
 
-    
 
-    
+
+
 
   });
 
@@ -1018,7 +1016,7 @@ function unserializeLayer(sLayer)
 
         }
 
-      }; 
+      };
       return layer;
 }
 
@@ -1026,7 +1024,7 @@ function unserializeCanvas(serializedCanvas){
 
   var unserialized = [];
   console.log(serializedCanvas[0]);
-  for(var n=0; n<serializedCanvas.length; n++) 
+  for(var n=0; n<serializedCanvas.length; n++)
   {
     unserialized.push(unserializeLayer(serializedCanvas[n]));
   }
