@@ -1,37 +1,45 @@
 function initColorPickers(selector, color) {
   var $elm = $(selector);
 
-  $elm.spectrum({
-    color: color || "#fff",
-    containerClassName: "test",
-    className: "test",
-    showInitial: true,
-    showPalette: false,
-    showSelectionPalette: false,
-    showAlpha: true,
-    maxSelectionSize: 10,
-    chooseText: "Done",
-    cancelText: "",
-    preferredFormat: "rgba",
-    localStorageKey: "spectrum.demo",
+  $elm.each(function () {
+    var $this = $(this);
 
-    move: function(color) {
-      $(this).val(color);
-      updateTextLayer();
-    }
-  });
+    $this.spectrum({
+      color: color || "#fff",
+      containerClassName: "test",
+      className: "test",
+      showInitial: true,
+      showPalette: false,
+      showSelectionPalette: false,
+      showAlpha: true,
+      maxSelectionSize: 10,
+      chooseText: "Done",
+      cancelText: "",
+      preferredFormat: "rgba",
+      localStorageKey: "spectrum.demo",
+
+      move: function(color) {
+        $this.val(color);
+        updateTextLayer();
+      }
+    });
+
+    $this.spectrum('set', color);
+  })
 }
 
 $(function() {
   var $canvas = $('#workspaceCanvas');
-
-  initColorPickers('#customize-text-color');
+  // initColorPickers('.color-picker');
+  initColorPickers('#text-style-color');
 
   $('.customize-add-shadow').click(function() {
     var style = getStyleFromElements();
     style.shadow.push('0px 0px 0px #fff');
     createElementsFromStyle(style);
   });
+
+  $('#text-style-font-family').keyup(updateTextLayer);
 });
 
 function getStyleFromElements() {
@@ -43,15 +51,18 @@ function getStyleFromElements() {
       return $(this).val();
     }).get();
 
-    console.log(shadow);
-
     shadows.push(shadow.join(' '));
   });
 
   var style = {
-    color: $('#customize-text-color').spectrum('get'),
+    color: $('#text-style-color').spectrum('get'),
+    font: {
+      family: $('#text-style-font-family').val()
+    },
     shadow: shadows
   };
+
+  console.log(style);
 
   return style;
 }
@@ -62,25 +73,19 @@ function createElementsFromStyle(style) {
 
   $shadowParent.empty();
 
-  // set font color
-  $('#customize-text-color').spectrum("set", style.color);
-
-  // TODO: load from style
-  // set font type
-  $('#customize-text-font').val("I'M A FONT");
+  // set font color and
+  $('#text-style-color').spectrum("set", style.color);
+  $('#text-style-font-family').val(style.font.family);
 
   for (var n = 0, length = style.shadow.length; n < length; n++) {
     // just turning "0 0 10px red" into ['0', '0', '10px', 'red']
     var chunks = style.shadow[n].split(' ');
-    // var shadowColor = chunks.pop();
-    var shadowPosition = chunks.join(' ');
 
     var $shadow = $shadowBase.clone();
-
     $shadow.find('.text-style-shadow-horizontal').val(chunks[0]);
     $shadow.find('.text-style-shadow-vertical').val(chunks[1]);
     $shadow.find('.text-style-shadow-blur').val(chunks[2]);
-    $shadow.find('.text-style-shadow-color').data("color", chunks[3]);
+    initColorPickers($shadow.find('.text-style-shadow-color'), chunks[3]);
 
     $shadow.keyup(function() {
       updateTextLayer();
@@ -93,17 +98,11 @@ function createElementsFromStyle(style) {
     $(this).closest('.shadow').remove();
     updateTextLayer();
   });
-
-  // TODO: yuck... can probably use shadowID to filter this now?
-  $shadowParent.find('.text-style-shadow-color').each(function() {
-    initColorPickers(this);
-    $(this).spectrum("set", $(this).data("color"));
-  });
 }
 
-function updateTextLayer(style) {
+function updateTextLayer() {
   // use the specified style, or create it from the elements
-  style = style || getStyleFromElements();
+  var style = getStyleFromElements();
 
   var usernameLayer = $canvas.getLayer("usernameText");
   usernameLayer.source = createTextEffect($canvas.data("username"), style);

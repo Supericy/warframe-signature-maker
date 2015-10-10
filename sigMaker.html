@@ -1,6 +1,9 @@
 <html>
 
 <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="css/jquery-ui.css" />
 	<link rel="stylesheet" href="css/font-awesome.css" />
 	<link rel="stylesheet" href="css/spectrum.css" />
@@ -36,7 +39,7 @@
 						<input class="text-style-shadow text-style-shadow-color color-picker" type="text">
 					</td>
 					<td>
-						<button type="button" class="customize-remove-shadow">Remove</button>
+						<button type="button" class="btn btn-danger btn-xs customize-remove-shadow">✕</button>
 					</td>
 				</tr>
 			</table>
@@ -77,8 +80,8 @@
 								<div id="customize-text" title="Dialog Title goes here...">
 									<div class="">
 										Color:
-										<input id="customize-text-color" class="color-picker" type="text"> Font:
-										<input id="customize-text-font" class="font-picker" type="text">
+										<input id="text-style-color" class="color-picker" type="text"> Font:
+										<input id="text-style-font-family" class="font-picker" type="text" value="Impact">
 									</div>
 
 
@@ -88,7 +91,7 @@
 										<div id="shadows">
 										</div>
 										<!-- TODO: add/remove shadow button to make cool effects -->
-										<button type="button" class="customize-add-shadow">Add Shadow</button>
+										<button type="button" class="btn btn-success btn-xs customize-add-shadow" style="float: right;">+</button>
 
 									</div>
 								</div>
