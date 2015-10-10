@@ -30,15 +30,15 @@ var textEffectStyles = {
   "Neon": {
     color: "#ffffff",
     shadow: [
-        "0 0 10px #000",
-        "0 0 20px #ff0000",
-        "0 0 30px #ff0000",
-        "0 0 40px #dd0000",
-        "0 0 70px #de0000",
-        "0 0 80px #ee000",
-        "0 0 100px #ff0000",
-        "0 0 150px #ff0000"
-      ]
+      "0 0 10px #000",
+      "0 0 20px #ff0000",
+      "0 0 30px #ff0000",
+      "0 0 40px #dd0000",
+      "0 0 70px #de0000",
+      "0 0 80px #ee000",
+      "0 0 100px #ff0000",
+      "0 0 150px #ff0000"
+    ]
 
   },
   "Anaglyphic": {
@@ -73,12 +73,12 @@ var textEffectStyles = {
     ]
   },
   "Shadow2": {
-    color:"rgba(255,255,255,0.5)",
+    color: "rgba(255,255,255,0.5)",
     shadow: [
       "-1px -1px 0 #000",
-    "1px -1px 0 #000",
-    "-1px 1px 0 #000",
-     "1px 1px 0 #000"
+      "1px -1px 0 #000",
+      "-1px 1px 0 #000",
+      "1px 1px 0 #000"
     ]
   },
   // http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
@@ -92,7 +92,7 @@ var textEffectStyles = {
     ]
   },
   "Shadow3": {
-    color:"#rgba(0,50,125,0.4)",
+    color: "#rgba(0,50,125,0.4)",
     shadow: [
       "1px 1px 0 #767676",
       "-1px 1px 1px #737272",
@@ -106,20 +106,20 @@ var textEffectStyles = {
 
     ]
   },
-  "SoftEmboss":{
+  "SoftEmboss": {
     color: "rgba(0,0,0,0.6)",
     shadow: [
       "2px 8px 6px rgba(0,0,0,0.2)",
       "0px -5px 35px rgba(255,255,255,0.3)"
     ]
   },
-  "Reflection":{
+  "Reflection": {
     color: "#000",
     shadow: [
       "0px -36px 0px #fff"
     ]
   },
-  "Flame2":{
+  "Flame2": {
     color: "#000",
     shadow: [
       "0 0 4px #ccc",
@@ -129,7 +129,7 @@ var textEffectStyles = {
       "2px -18px 18px #f20"
     ]
   },
-  "Other3D":{
+  "Other3D": {
     color: "rgba(0,0,0,0.6)",
     shadow: [
       "-1px -1px 0  #6E981B",
@@ -144,7 +144,7 @@ var textEffectStyles = {
       "-8px -8px 6px 9px #989881"
     ]
   },
-  "Chocolate":{
+  "Chocolate": {
     color: "#662200",
     shadow: [
       "0 0 1px #5C1F00",
@@ -158,7 +158,7 @@ var textEffectStyles = {
       "-14px 14px 2px #1A0900",
       "-15px 15px 2px #1A0900",
       "-15px 15px 0px rgba(38,21,13,0.25)"
-     ]
+    ]
   }
 
 
@@ -167,8 +167,12 @@ var textEffectStyles = {
 
 
 
-function createTextEffect(text, style, fontFamily) {
-  fontFamily = "Impact";
+function createTextEffect(text, style) {
+  // default font if the style doesn't provide one
+  style.font = style.font || {
+    family: 'Impact'
+  };
+
   var canvas = document.createElement('CANVAS');
   canvas.width = 1200;
   canvas.height = 1200;
@@ -213,7 +217,7 @@ function createTextEffect(text, style, fontFamily) {
 
   var ctx = canvas.getContext('2d');
   ctx.save();
-  ctx.font = "100px " + fontFamily;
+  ctx.font = "100px " + style.font.family;
   // absolute position of the text (within a translation state)
   var offsetX = 400;
   var offsetY = 400;
@@ -278,7 +282,7 @@ function trim(c) {
     x, y;
 
   for (i = 0; i < l; i += 4) {
-    if (pixels.data[i+3] !== 0) {
+    if (pixels.data[i + 3] !== 0) {
       x = (i / 4) % c.width;
       y = ~~((i / 4) / c.width);
 
@@ -307,8 +311,8 @@ function trim(c) {
   }
 
   var trimHeight = bound.bottom - bound.top,
-      trimWidth = bound.right - bound.left,
-      trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
+    trimWidth = bound.right - bound.left,
+    trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
 
   copy.canvas.width = trimWidth;
   copy.canvas.height = trimHeight;

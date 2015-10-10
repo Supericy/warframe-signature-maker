@@ -25,6 +25,12 @@ $(function() {
   var $canvas = $('#workspaceCanvas');
 
   initColorPickers('#customize-text-color');
+
+  $('.customize-add-shadow').click(function() {
+    var style = getStyleFromElements();
+    style.shadow.push('0px 0px 0px #fff');
+    createElementsFromStyle(style);
+  });
 });
 
 function getStyleFromElements() {
@@ -47,12 +53,7 @@ function getStyleFromElements() {
 
 function createElementsFromStyle(style) {
   var $shadowParent = $('#shadows');
-  var $shadowBase = $(
-    '<div class="shadow">' +
-    '<input class="text-style-shadow" type="text">' +
-    '<input class="text-style-shadow-color color-picker" type="text">' +
-    '<button type="button" class="removeShadowButton">Remove</button>' +
-    '</div>');
+  var $shadowBase = $($('#shadow-template').html());
 
   $shadowParent.empty();
 
@@ -73,17 +74,20 @@ function createElementsFromStyle(style) {
 
     $shadowParent.append($shadow);
 
+    $shadow.keyup(function() {
+      updateTextLayer();
+    });
     $shadow.find('.text-style-shadow').val(shadowPosition);
     $shadow.find('.text-style-shadow-color').data("color", shadowColor);
   }
 
-  $shadowParent.find('.shadow .removeShadowButton').on('click', function(e, p) {
-    $(this).parent().remove();
+  $shadowParent.find('.customize-remove-shadow').on('click', function(e, p) {
+    $(this).closest('.shadow').remove();
     updateTextLayer();
   });
 
   // TODO: yuck... can probably use shadowID to filter this now?
-  $('#shadows .shadow .text-style-shadow-color').each(function() {
+  $shadowParent.find('.text-style-shadow-color').each(function() {
     initColorPickers(this);
     $(this).spectrum("set", $(this).data("color"));
   });
