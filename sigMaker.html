@@ -23,9 +23,9 @@
 
 <body>
 	<div id="templates" class="hidden">
-		<div id="shadow-template">
-			<table class="shadow">
-				<tr>
+		<table>
+			<tbody id="shadow-template">
+				<tr class="shadow">
 					<td>
 						<input type="text" class="text-style-shadow text-style-shadow-horizontal">
 					</td>
@@ -42,8 +42,22 @@
 						<button type="button" class="btn btn-danger btn-xs customize-remove-shadow">✕</button>
 					</td>
 				</tr>
-			</table>
-		</div>
+			</tbody>
+		</table>
+
+		<table>
+			<tbody id="shadow-template-add-button">
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td>
+						<button type="button" class="btn btn-success btn-xs customize-add-shadow">+</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
 
@@ -88,10 +102,11 @@
 
 									<div class="">
 										Shadows:
-										<div id="shadows">
-										</div>
+										<table id="shadows">
+
+										</table>
 										<!-- TODO: add/remove shadow button to make cool effects -->
-										<button type="button" class="btn btn-success btn-xs customize-add-shadow" style="float: right;">+</button>
+
 
 									</div>
 								</div>

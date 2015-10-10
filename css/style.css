@@ -314,9 +314,9 @@ nav {
   width: 80px;
 }
 
-.shadow {
+/*.shadow {
   width: 100%;
-}
+}*/
 
 .hidden {
   display: none;
@@ -349,4 +349,22 @@ nav {
   border-radius: 4px;
   box-shadow: inset 1px 1px 6px rgba(0, 0, 0, 0.8);
   padding: 4px;
+}
+
+#shadows {
+  width: 100%;
+}
+#shadows td {
+  padding: 2px;
+}
+
+.color-picker-button {
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+}
+.color-picker-popup {
+  background: lightgray;
+  border: solid 1px white;
+  box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.8)
 }

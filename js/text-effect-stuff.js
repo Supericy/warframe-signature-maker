@@ -6,8 +6,8 @@ function initColorPickers(selector, color) {
 
     $this.spectrum({
       color: color || "#fff",
-      containerClassName: "test",
-      className: "test",
+      containerClassName: "color-picker-popup",
+      className: "color-picker-button",
       showInitial: true,
       showPalette: false,
       showSelectionPalette: false,
@@ -32,12 +32,6 @@ $(function() {
   var $canvas = $('#workspaceCanvas');
   // initColorPickers('.color-picker');
   initColorPickers('#text-style-color');
-
-  $('.customize-add-shadow').click(function() {
-    var style = getStyleFromElements();
-    style.shadow.push('0px 0px 0px #fff');
-    createElementsFromStyle(style);
-  });
 
   $('#text-style-font-family').keyup(updateTextLayer);
 });
@@ -98,6 +92,15 @@ function createElementsFromStyle(style) {
     $(this).closest('.shadow').remove();
     updateTextLayer();
   });
+
+  // add the plus button!
+  var $shadowAdd = $($('#shadow-template-add-button').html());
+  $shadowAdd.click(function () {
+    var style = getStyleFromElements();
+    style.shadow.push('0px 0px 0px #fff');
+    createElementsFromStyle(style);
+  })
+  $shadowParent.append($shadowAdd)
 }
 
 function updateTextLayer() {
