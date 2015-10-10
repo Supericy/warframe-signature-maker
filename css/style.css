@@ -310,13 +310,14 @@ nav {
 }*/
 
 
-/*.text-style-shadow {
-  width: 140px;
-}*/
+.text-style-shadow {
+  width: 80px;
+}
 
 .shadow {
   width: 100%;
 }
+
 .hidden {
   display: none;
 }

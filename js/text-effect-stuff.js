@@ -16,6 +16,7 @@ function initColorPickers(selector, color) {
     localStorageKey: "spectrum.demo",
 
     move: function(color) {
+      $(this).val(color);
       updateTextLayer();
     }
   });
@@ -37,10 +38,14 @@ function getStyleFromElements() {
   var usernameLayer = $canvas.getLayer("usernameText");
   var shadows = [];
   $('#shadows .shadow').each(function() {
-    var position = $(this).find('.text-style-shadow').val();
-    var color = $(this).find('.text-style-shadow-color').val();
-    var shadow = position + ' ' + color;
-    shadows.push(shadow);
+    // basically just calls '.val()' on all elements with the class
+    var shadow = $(this).find('.text-style-shadow').map(function () {
+      return $(this).val();
+    }).get();
+
+    console.log(shadow);
+
+    shadows.push(shadow.join(' '));
   });
 
   var style = {
@@ -67,18 +72,21 @@ function createElementsFromStyle(style) {
   for (var n = 0, length = style.shadow.length; n < length; n++) {
     // just turning "0 0 10px red" into ['0', '0', '10px', 'red']
     var chunks = style.shadow[n].split(' ');
-    var shadowColor = chunks.pop();
+    // var shadowColor = chunks.pop();
     var shadowPosition = chunks.join(' ');
 
     var $shadow = $shadowBase.clone();
 
-    $shadowParent.append($shadow);
+    $shadow.find('.text-style-shadow-horizontal').val(chunks[0]);
+    $shadow.find('.text-style-shadow-vertical').val(chunks[1]);
+    $shadow.find('.text-style-shadow-blur').val(chunks[2]);
+    $shadow.find('.text-style-shadow-color').data("color", chunks[3]);
 
     $shadow.keyup(function() {
       updateTextLayer();
     });
-    $shadow.find('.text-style-shadow').val(shadowPosition);
-    $shadow.find('.text-style-shadow-color').data("color", shadowColor);
+
+    $shadowParent.append($shadow);
   }
 
   $shadowParent.find('.customize-remove-shadow').on('click', function(e, p) {
