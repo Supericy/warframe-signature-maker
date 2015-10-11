@@ -28,12 +28,49 @@ function initColorPickers(selector, color) {
   })
 }
 
+function initFontFamilies() {
+  var fontTypes = [
+    'Impact',
+    'Georgia, serif',
+    '"Palatino Linotype", "Book Antiqua", Palatino, serif',
+    '"Times New Roman", Times, serif',
+    'Arial, Helvetica, sans-serif',
+    '"Arial Black", Gadget, sans-serif',
+    '"Comic Sans MS", cursive, sans-serif',
+    'Impact, Charcoal, sans-serif',
+    '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
+    'Tahoma, Geneva, sans-serif',
+    '"Trebuchet MS", Helvetica, sans-serif',
+    'Verdana, Geneva, sans-serif',
+    '"Courier New", Courier, monospace',
+    '"Lucida Console", Monaco, monospace',
+  ];
+  var $textStyleFontFamily = $('#text-style-font-family');
+  for (var n = 0, length = fontTypes.length; n < length; n++) {
+    var fontFamily = fontTypes[n];
+    var $elm = $('<option></option>');
+    $elm
+      .val(fontFamily)
+      .text(fontFamily)
+      .css({
+      'font-family': fontFamily
+    });
+    $textStyleFontFamily.append($elm);
+  }
+  $textStyleFontFamily.change(updateTextLayer);
+}
+
 $(function() {
   var $canvas = $('#workspaceCanvas');
-  // initColorPickers('.color-picker');
-  initColorPickers('#text-style-color');
 
-  $('#text-style-font-family').keyup(updateTextLayer);
+  initColorPickers('#text-style-color');
+  initFontFamilies();
+
+  $('body').on('click', '.customize-add-shadow', function () {
+    var style = getStyleFromElements();
+    style.shadow.push('0px 0px 0px #fff');
+    createElementsFromStyle(style);
+  });
 });
 
 function getStyleFromElements() {
@@ -93,14 +130,10 @@ function createElementsFromStyle(style) {
     updateTextLayer();
   });
 
-  // add the plus button!
-  var $shadowAdd = $($('#shadow-template-add-button').html());
-  $shadowAdd.click(function () {
-    var style = getStyleFromElements();
-    style.shadow.push('0px 0px 0px #fff');
-    createElementsFromStyle(style);
-  })
-  $shadowParent.append($shadowAdd)
+  // TODO: if we want the add button on the bottom, just have to uncomment
+  // the template and uncomment this code
+  // var $shadowAdd = $($('#shadow-template-add-button').html());
+  // $shadowParent.append($shadowAdd)
 }
 
 function updateTextLayer() {

@@ -11,7 +11,10 @@ var textEffectStyles = {
       "0px -2px 10px yellow",
       "0px -10px 20px #ff8000",
       "0px -18px 40px red"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Real3D": {
     color: "#FFF",
@@ -24,7 +27,10 @@ var textEffectStyles = {
       "0px -6px 0px #444",
       "0px -7px 0px #333",
       "0px 8px -7px #001135"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   // http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects
   "Neon": {
@@ -38,17 +44,20 @@ var textEffectStyles = {
       "0 0 80px #ee000",
       "0 0 100px #ff0000",
       "0 0 150px #ff0000"
-    ]
-
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Anaglyphic": {
     color: "rgba(0,0,255,0.5)",
     shadow: [
-
       "-1px -1px 1px #fff",
       "1px 1px 1px #00f",
-
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "VintageRadio": {
     color: "rgba(255,255,255,0.1)",
@@ -57,20 +66,29 @@ var textEffectStyles = {
       "0px 0px 30px rgba(255,255,255,0.4)",
       "0px 0px 50px rgba(255,255,255,0.3)",
       "0px 0px 180px rgba(255,255,255,0.3)"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Inset": {
     color: "#222",
     shadow: [
       "0px 1px 1px #777"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   // meinen kopf
   "Shadow": {
     color: "#444",
     shadow: [
       "0 0 11px #000"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Shadow2": {
     color: "rgba(255,255,255,0.5)",
@@ -79,7 +97,10 @@ var textEffectStyles = {
       "1px -1px 0 #000",
       "-1px 1px 0 #000",
       "1px 1px 0 #000"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   // http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
   "Shadow3D": {
@@ -89,7 +110,10 @@ var textEffectStyles = {
       "2px -2px #444",
       "3px -3px #444",
       "4px -4px #444"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Shadow3": {
     color: "#rgba(0,50,125,0.4)",
@@ -101,23 +125,29 @@ var textEffectStyles = {
       "-4px 1px 1px #7b7a7a",
       "-5px 1px 1px #7f7d7d",
       "-6px 1px 1px #828181",
-
-
-
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "SoftEmboss": {
     color: "rgba(0,0,0,0.6)",
     shadow: [
       "2px 8px 6px rgba(0,0,0,0.2)",
       "0px -5px 35px rgba(255,255,255,0.3)"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Reflection": {
     color: "#000",
     shadow: [
       "0px -36px 0px #fff"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Flame2": {
     color: "#000",
@@ -127,7 +157,10 @@ var textEffectStyles = {
       "2px -10px 6px #fd3",
       "-2px -15px 11px #f80",
       "2px -18px 18px #f20"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Other3D": {
     color: "rgba(0,0,0,0.6)",
@@ -142,7 +175,10 @@ var textEffectStyles = {
       "-6px -6px 0 7px #AFAF9D",
       "-7px -7px 4px 8px #70705C",
       "-8px -8px 6px 9px #989881"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   },
   "Chocolate": {
     color: "#662200",
@@ -158,10 +194,11 @@ var textEffectStyles = {
       "-14px 14px 2px #1A0900",
       "-15px 15px 2px #1A0900",
       "-15px 15px 0px rgba(38,21,13,0.25)"
-    ]
+    ],
+    font: {
+      family: 'Impact'
+    }
   }
-
-
 };
 
 
@@ -169,9 +206,9 @@ var textEffectStyles = {
 
 function createTextEffect(text, style) {
   // default font if the style doesn't provide one
-  style.font = style.font || {
-    family: 'Impact'
-  };
+  // style.font = style.font || {
+  //   family: 'Impact'
+  // };
 
   var canvas = document.createElement('CANVAS');
   canvas.width = 1200;

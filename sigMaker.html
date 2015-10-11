@@ -45,7 +45,7 @@
 			</tbody>
 		</table>
 
-		<table>
+		<!-- <table>
 			<tbody id="shadow-template-add-button">
 				<tr>
 					<td></td>
@@ -57,7 +57,7 @@
 					</td>
 				</tr>
 			</tbody>
-		</table>
+		</table> -->
 	</div>
 
 
@@ -88,31 +88,44 @@
 
 				<canvas id="workspaceCanvas" width="600" height="200"></canvas>
 				<div id="rightToolbar">
-					<table id="nameToolbar">
-						<tr>
-							<td>
-								<div id="customize-text" title="Dialog Title goes here...">
-									<div class="">
-										Color:
-										<input id="text-style-color" class="color-picker" type="text"> Font:
-										<input id="text-style-font-family" class="font-picker" type="text" value="Impact">
-									</div>
+					<div id="nameToolbar">
+						<!-- <tr> -->
+							<!-- <td> -->
+								<div id="customize-text">
+									<table>
+										<tr>
+											<td>
+												Color:
+											</td>
+											<td style="text-align: right">
+												<input id="text-style-color" class="color-picker" type="text">
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Font:
+											</td>
+											<td style="text-align: right">
+												<select id="text-style-font-family" class="" name="">
 
+												</select>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												Shadows:
+											</td>
+											<td style="text-align: right">
+<button type="button" class="btn btn-success btn-xs customize-add-shadow">+</button>
+											</td>
+										</tr>
+									</table>
 
-
-									<div class="">
-										Shadows:
-										<table id="shadows">
-
-										</table>
-										<!-- TODO: add/remove shadow button to make cool effects -->
-
-
-									</div>
+									<table id="shadows"></table>
 								</div>
-							</td>
-						</tr>
-					</table>
+							<!-- </td> -->
+						<!-- </tr> -->
+					</div>
 
 					<table id="statsToolbar">
 						<tr>
