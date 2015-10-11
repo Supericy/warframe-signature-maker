@@ -60,19 +60,6 @@ function initFontFamilies() {
   $textStyleFontFamily.change(updateTextLayer);
 }
 
-$(function() {
-  var $canvas = $('#workspaceCanvas');
-
-  initColorPickers('#text-style-color');
-  initFontFamilies();
-
-  $('body').on('click', '.customize-add-shadow', function () {
-    var style = getStyleFromElements();
-    style.shadow.push('0px 0px 0px #fff');
-    createElementsFromStyle(style);
-  });
-});
-
 function getStyleFromElements() {
   var usernameLayer = $canvas.getLayer("usernameText");
   var shadows = [];
@@ -144,3 +131,16 @@ function updateTextLayer() {
   usernameLayer.source = createTextEffect($canvas.data("username"), style);
   $canvas.drawLayers();
 }
+
+$(function() {
+  var $canvas = $('#workspaceCanvas');
+
+  initColorPickers('#text-style-color');
+  initFontFamilies();
+
+  $('body').on('click', '.customize-add-shadow', function () {
+    var style = getStyleFromElements();
+    style.shadow.push('0px 0px 0px #fff');
+    createElementsFromStyle(style);
+  });
+});
