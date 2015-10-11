@@ -1,7 +1,7 @@
 function initColorPickers(selector, color) {
   var $elm = $(selector);
 
-  $elm.each(function () {
+  $elm.each(function() {
     var $this = $(this);
 
     $this.spectrum({
@@ -53,8 +53,8 @@ function initFontFamilies() {
       .val(fontFamily)
       .text(fontFamily)
       .css({
-      'font-family': fontFamily
-    });
+        'font-family': fontFamily
+      });
     $textStyleFontFamily.append($elm);
   }
   $textStyleFontFamily.change(updateTextLayer);
@@ -65,7 +65,7 @@ function getStyleFromElements() {
   var shadows = [];
   $('#shadows .shadow').each(function() {
     // basically just calls '.val()' on all elements with the class
-    var shadow = $(this).find('.text-style-shadow').map(function () {
+    var shadow = $(this).find('.text-style-shadow').map(function() {
       return $(this).val();
     }).get();
 
@@ -138,7 +138,7 @@ $(function() {
   initColorPickers('#text-style-color');
   initFontFamilies();
 
-  $('body').on('click', '.customize-add-shadow', function () {
+  $('body').on('click', '.customize-add-shadow', function() {
     var style = getStyleFromElements();
     style.shadow.push('0px 0px 0px #fff');
     createElementsFromStyle(style);
