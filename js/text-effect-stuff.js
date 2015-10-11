@@ -109,18 +109,16 @@ function createElementsFromStyle(style) {
       updateTextLayer();
     });
 
+    $shadow.on('click', '.customize-remove-shadow', function () {
+      var $parent = $(this).closest('.shadow');
+      $parent.hide('fade', 100, function () {
+        $parent.remove();
+        updateTextLayer();
+      });
+    });
+
     $shadowParent.append($shadow);
   }
-
-  $shadowParent.find('.customize-remove-shadow').on('click', function(e, p) {
-    $(this).closest('.shadow').remove();
-    updateTextLayer();
-  });
-
-  // TODO: if we want the add button on the bottom, just have to uncomment
-  // the template and uncomment this code
-  // var $shadowAdd = $($('#shadow-template-add-button').html());
-  // $shadowParent.append($shadowAdd)
 }
 
 function updateTextLayer() {

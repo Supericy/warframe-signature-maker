@@ -188,7 +188,7 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-          $("#nameToolbar").hide('slide', 250);
+          $("#name-toolbar").hide('fade', 250);
 
           // set opacity slider position
           $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
@@ -429,7 +429,7 @@ $.fn.extend({
               // "select" new guy
               $canvas.enableLayerHandles(layer, true);
 
-              $("#nameToolbar").show('slide', 250);
+              $("#name-toolbar").show('fade', 250);
 
               // set opacity slider position
               $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
@@ -441,7 +441,6 @@ $.fn.extend({
         // set layer to selected.
         layer = $canvas.getLayer("usernameText");
         layer.mousedown(layer);
-        $("#nameToolbar").show('slide', 250);
       }
 
 
@@ -697,7 +696,7 @@ $(document).ready(function() {
 
 
 
-  $("#nameToolbar").hide();
+  $("#name-toolbar").hide();
   $("#statsToolbar").hide();
 
 
@@ -1004,7 +1003,7 @@ function unserializeLayer(sLayer) {
       // "select" new guy
       $canvas.enableLayerHandles(layer, true);
 
-      $("#nameToolbar").hide('slide', 250);
+      $("#name-toolbar").hide();
 
       // set opacity slider position
       $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
