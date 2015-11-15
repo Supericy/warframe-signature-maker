@@ -181,6 +181,66 @@ var textEffectStyles = {
     }
   },
   "Chocolate": {
+    color: "#eee",
+    shadow: [
+      "0 0 1px #5C1F00",
+      "-1px 1px 0px #5C1F00",
+      "-2px 2px 2px #5C1F00",
+      "-15px 15px 2px #1A0900",
+      "-15px 15px 0px rgba(38,21,13,0.25)"
+    ],
+    font: {
+      family: 'Impact'
+    }
+  },
+  "SoftEmboss2": {
+    color: "rgba(88,0,0,0.6)",
+    shadow: [
+      "2px 8px 6px rgba(155,0,0,0.2)",
+      "0px -5px 35px rgba(255,255,255,0.3)"
+    ],
+    font: {
+      family: 'Impact'
+    }
+  },
+  "Reflection2": {
+    color: "#000",
+    shadow: [
+      "0px 36px 0px #eee"
+    ],
+    font: {
+      family: 'Impact'
+    }
+  },
+  "Flame22": {
+    color: "#ccc",
+    shadow: [
+      "0 0 4px #eee",
+      "0 -5px 4px #ff3",
+      "2px -10px 6px #fd3",
+      "-2px -15px 11px #f80",
+      "2px -18px 18px #eee"
+    ],
+    font: {
+      family: 'Impact'
+    }
+  },
+  "Other3D2": {
+    color: "rgba(0,80,0,0.6)",
+    shadow: [
+      "-1px -1px 0  #6E981B",
+      "-2px -2px 1px  #6E981B",
+      "-2px -2px 2px #6E981B",
+      "-2px -2px 0 7px #FCFCE8",
+      "-6px -6px 0 7px #AFAF9D",
+      "-7px -7px 4px 8px #70705C",
+      "-8px -8px 6px 9px #989881"
+    ],
+    font: {
+      family: 'Impact'
+    }
+  },
+  "Chocolate2": {
     color: "#662200",
     shadow: [
       "0 0 1px #5C1F00",
