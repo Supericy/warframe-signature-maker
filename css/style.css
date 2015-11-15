@@ -129,7 +129,9 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   /*height: 200px;*/
   /*width: 420px;*/
   /*border: 2px solid red;*/
+ 
 }
+
 #statsToolbar {
   width: 200px;
   height: 200px;
@@ -332,6 +334,9 @@ nav {
   padding: 4px;
   border: solid 2px black;
   background: rgba(0, 0, 0, 0.4);
+
+    overflow-y: scroll;
+  height: 252px;
 }
 #name-toolbar input[type=text] {
   border-radius: 4px;
