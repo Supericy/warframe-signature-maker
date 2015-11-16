@@ -727,7 +727,7 @@ $(document).ready(function() {
     console.log("contacting server");
     $.ajax({
       type: "POST",
-      url: "http://localhost:8888/warface/sigs/upload",
+      url: "http://localhost:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
       data: JSON.stringify(serializedCanvas),
       success: function(data) {
         console.log(data);

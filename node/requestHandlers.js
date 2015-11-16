@@ -2,7 +2,11 @@
 var querystring = require("querystring");
 var fs = require("fs");
 var formidable = require("formidable");
+var url = require("url");
 
+var jsdom = require('jsdom');
+var JQuery = require( 'jquery' );
+var JCanvas = require( 'jcanvas' );
 
 function start(response) {
 	console.log("Request handler 'start' was called.");
@@ -91,24 +95,31 @@ function warfaceSigUpload(response,request) {
 		request.addListener("end", function() {
 			//route(handle, pathname, response, postData);
 			console.log("All chunks recieved");
-			var MongoClient = require('mongodb').MongoClient;
-			
 
-			var url = 'mongodb://localhost:27017/test';
-			MongoClient.connect(url, function(err,db)  {
-				if(!err){
-					console.log("Connected correctly to server.");
-					insertUser(db, postData, function() {
-						db.close();
-					})
-				} else {
-					console.log(err);
-				}
+			var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
+  		
+  		
+	  		if(queryObject.userId)
+	  		{
+	  			console.log("Signature for '" + queryObject.userId + "' updated");
+
+
+				var MongoClient = require('mongodb').MongoClient;
 				
-			});
 
-
-
+				var url = 'mongodb://localhost:27017/test';
+				MongoClient.connect(url, function(err,db)  {
+					if(!err){
+						console.log("Connected correctly to server.");
+						upsertSignature(queryObject.userId,postData, db, function() {
+							db.close();
+						})
+					} else {
+						console.log(err);
+					}
+					
+				});
+			}
 
 			// STUPID FUCKING CORS
 			response.writeHead(200, {
@@ -136,34 +147,62 @@ function warfaceSigShow(response,request) {
 			'Access-Control-Allow-Origin' : '*'
 		});
 
-		
+		var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
+  		
+  		
+  		if(queryObject.userId)
+  		{
+  			console.log("Signature for '" + queryObject.userId + "' requested");
+  			//response.write(JSON.stringify(queryObject));
+  			//response.write("User data requested for: " + queryObject.userId);
+  			
 
-		var MongoClient = require('mongodb').MongoClient;
-		var url = 'mongodb://localhost:27017/test';
+  			var MongoClient = require('mongodb').MongoClient;
+			var dburl = 'mongodb://localhost:27017/test';
 
-		MongoClient.connect(url, function(err, db) 
-		{
-	  		if(!err){
+			MongoClient.connect(dburl, function(err, db) 
+			{
+		  		if(!err){
 
-	  			findUsers(db, function(cursor) {
+		  			findSignature(queryObject.userId, db, function(cursor) {
 
-	  				var array = cursor.toArray(function (err, result) {
-				     if (err) {
-				        console.log(err);
-				     } else if (result.length) {
-				        console.log('Found:', result);
-				        response.write(JSON.stringify(result));
-		  				response.end();
-		  				db.close();
-				     } else {
-				        console.log('No document(s) found with defined "find" criteria!');
-				     }
-				     });
+		  				var array = cursor.toArray(function (err, result) {
+					     if (err) {
+					        console.log(err);
+					     } else if (result.length) {
+					        console.log('Found:', result);
+					        console.log(result[0].signature);
+					        if(result[0].signature){
+					        	var signature = result[0].signature;
+					        	//response.write(signature);
 
-	  				
-	 		 	});
-	  		}
-		});
+					        	drawAndSendSignature(signature,response);
+
+			  					response.end();
+			  					db.close();
+
+
+
+
+
+
+					        }
+					        
+					     } else {
+					        console.log('No document(s) found with defined "find" criteria!');
+					    	response.write("No signature found for: " + queryObject.userId);
+					    	response.end();
+					     }
+					     });
+		  				
+
+		  				
+		 		 	});
+		  		}
+			});
+  			
+  		}  
+
 }
 
 
@@ -189,7 +228,99 @@ var findUsers = function(db, callback) {
  
 };
 
+var findSignature = function(userId, db, callback) {
+	var cursor = db.collection('users').find({"user_id":userId});
+	//console.log("Find sig cursor thing is: " + cursor);
+	callback(cursor);
 
+};
+
+var upsertSignature = function(userId, postData, db, callback) {
+   db.collection('users').update( 
+   
+      {"user_id": userId},
+      {$set:{
+      	"signature":postData
+      }},
+      {upsert:true}
+
+   , function(err, result) {
+    if(!err){
+    	console.log("Insert sucessful");
+    }
+    callback(result);
+  });
+};
+
+var drawAndSendSignature = function(signature, response) {
+
+	var html = '<html><body><canvas id="cx" width="400" height="300"></canvas></body></html>';
+
+	jsdom.env( html, function ( errors, window ) {
+	  if( errors ) console.log( errors );
+
+	  var $ = JQuery( window );   
+	  JCanvas( $, window );  
+
+
+	  var $c  = $( '<canvas>' );
+
+	  // hack required by width/height bug in jsdom/node-canvas integration
+	  $c[0].width = 600;
+	  $c[0].height = 300;
+
+
+	  var unserializedCanvas = unserializeCanvas(signature);
+	  for (var i = 0; i < unserializedCanvas.length; i++) {
+        $c.addLayer(unserializedCanvas[i]);
+      }
+      $c.drawLayers();
+
+
+
+
+	  // convert canvas and send
+	  var sig = $c.getCanvasImage( 'png' );
+	  response.write(sig);
+	});
+
+
+}
+
+
+
+function unserializeLayer(sLayer) {
+  console.log("unserializing: ", sLayer);
+  var layer = {
+    type: sLayer.type,
+    name: sLayer.name,
+    draggable: sLayer.draggable,
+    source: sLayer.source,
+    x: sLayer.x,
+    y: sLayer.y,
+    width: sLayer.width,
+    height: sLayer.height,
+    opacity: sLayer.opacity,
+    translateX: sLayer.translateX,
+    translateY: sLayer.translateY,
+    scaleY: sLayer.scaleY,
+    scaleX: sLayer.scaleX,
+    rotate: sLayer.rotate
+	};
+  return layer;
+}
+
+function unserializeCanvas(serializedCanvas) {
+
+  var unserialized = [];
+  console.log(serializedCanvas[0]);
+  for (var n = 0; n < serializedCanvas.length; n++) {
+    unserialized.push(unserializeLayer(serializedCanvas[n]));
+  }
+  return unserialized;
+
+
+}
 
 
 exports.start = start;
