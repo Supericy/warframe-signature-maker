@@ -591,6 +591,8 @@ $(document).ready(function() {
 
 
 
+
+
   $("#bg-list img").click(function() {
 
     $canvas.insertImage(this, "background");
@@ -722,6 +724,9 @@ $(document).ready(function() {
     console.log("serializing canvas");
     var serializedCanvas = serializeCanvas();
     console.log("serialized canvas:", serializedCanvas);
+
+    var unserializedCanvas = unserializeCanvas(serializedCanvas);
+    console.log("unserializedCanvas ", unserializedCanvas);
 
     // send msg to server
     console.log("contacting server");

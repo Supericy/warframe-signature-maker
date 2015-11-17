@@ -11,3 +11,4 @@ handle["/show"] = requestHandlers.show;
 handle["/warface/sigs/upload"] = requestHandlers.warfaceSigUpload;
 handle["/warface/sigs/show"] = requestHandlers.warfaceSigShow;
 server.start(router.route, handle);
+

@@ -178,7 +178,7 @@ function warfaceSigShow(response,request) {
 
 					        	drawAndSendSignature(signature,response);
 
-			  					response.end();
+			  					
 			  					db.close();
 
 
@@ -266,11 +266,16 @@ var drawAndSendSignature = function(signature, response) {
 	  var $c  = $( '<canvas>' );
 
 	  // hack required by width/height bug in jsdom/node-canvas integration
-	  $c[0].width = 600;
+	  $c[0].width = 400;
 	  $c[0].height = 300;
 
+	  $c.scaleCanvas({
+    		scale: 0.25
+  		});
 
-	  var unserializedCanvas = unserializeCanvas(signature);
+
+	  var unserializedCanvas = unserializeCanvas(JSON.parse(signature));
+	  //console.log("unserialized canvas : " + unserializedCanvas);
 	  for (var i = 0; i < unserializedCanvas.length; i++) {
         $c.addLayer(unserializedCanvas[i]);
       }
@@ -278,10 +283,11 @@ var drawAndSendSignature = function(signature, response) {
 
 
 
-
 	  // convert canvas and send
 	  var sig = $c.getCanvasImage( 'png' );
+	  console.log($c.getLayer(0));
 	  response.write(sig);
+	  response.end();
 	});
 
 
@@ -290,7 +296,7 @@ var drawAndSendSignature = function(signature, response) {
 
 
 function unserializeLayer(sLayer) {
-  console.log("unserializing: ", sLayer);
+  //console.log("unserializing: ", sLayer);
   var layer = {
     type: sLayer.type,
     name: sLayer.name,
@@ -307,13 +313,14 @@ function unserializeLayer(sLayer) {
     scaleX: sLayer.scaleX,
     rotate: sLayer.rotate
 	};
+	//console.log("unserailized layer : ", layer);
   return layer;
 }
 
 function unserializeCanvas(serializedCanvas) {
 
   var unserialized = [];
-  console.log(serializedCanvas[0]);
+  //console.log("Serialized canvas[0]", serializedCanvas[0]);
   for (var n = 0; n < serializedCanvas.length; n++) {
     unserialized.push(unserializeLayer(serializedCanvas[n]));
   }
