@@ -252,10 +252,13 @@ var upsertSignature = function(userId, postData, db, callback) {
   });
 };
 
+canvas = require('canvas');
+
 var drawAndSendSignature = function(signature, response) {
 
 	var html = '<html><body><canvas id="cx" width="400" height="300"></canvas></body></html>';
 
+	window.Image = canvas.Image;
 	jsdom.env( html, function ( errors, window ) {
 	  if( errors ) console.log( errors );
 

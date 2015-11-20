@@ -732,7 +732,8 @@ $(document).ready(function() {
     console.log("contacting server");
     $.ajax({
       type: "POST",
-      url: "http://localhost:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+      //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+      url: "http://localhost:8888/warface/sigs/upload?userId=" + "bill",
       data: JSON.stringify(serializedCanvas),
       success: function(data) {
         console.log(data);
@@ -754,6 +755,10 @@ $(document).ready(function() {
 
   $("#clearButton").click(function() {
 
+    //console.log($canvas.getCanvasImage('png'));
+    //var canvas  = document.getElementById("workspaceCanvas");
+    //var dataUrl = canvas.toDataURL();
+    //console.log(dataUrl);
     console.log("clearying canvaas");
     for (var i = 0; i < instructions.length; i++) {
       $canvas.removeLayer(instructions[i].name);

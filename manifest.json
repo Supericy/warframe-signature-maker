@@ -1,0 +1,44 @@
+{
+	"manifest_version":1,
+	"type":"WebApp",
+	"meta":{
+		"name":"Warface Sigs",
+		"version":"1.0.0",
+		"minimum-overwolf-version":"0.77.10",
+		"author":"Bennet Gigliotti",
+		"icon":"IconMouseOver.png",
+		"icon_gray":"IconMouseNormal.png",
+		"description":"Current Local Weather Conditions and 5 Day Forecast"
+	},
+	"permissions": ["GameInfo"],
+	"data": {
+		"start_window":"ProbeWindow",
+		"windows":{
+			"MainWindow":{
+					"file":"Files/sigMaker.html",
+					"transparent":true,
+					"resizable":false,
+					"size":{"width":1280, "height":720},
+					"in_game_only":false,
+					"show_in_taskbar":true
+					},
+				"ProbeWindow":{
+					"file":"Files/probe.html",
+					"transparent":true,
+					"resizable":false,
+					"size":{"width":256, "height":256},
+					"in_game_only":false,
+					"show_in_taskbar":false
+					}
+				},
+
+		"launch_events": [
+    	{
+        	"event": "GameLaunch",
+        	"event_data": {
+       	   		  "game_ids": [7784]
+        },
+        	"start_minimized": false
+    	}]		
+	}
+}
