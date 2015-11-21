@@ -252,7 +252,9 @@ $.fn.extend({
 
     return this.each(function() {
 
-      var username = $canvas.data("username");
+      var username = localStorage.getItem("username");
+      // FOR TESTING PURPOSES
+      if(username){}else{username="Supericy"};
 
       if ($canvas.getLayer("usernameText") !== undefined) {
         $canvas.setLayer("usernameText", {
@@ -660,9 +662,10 @@ $(document).ready(function() {
   registerHooksForToolbar($canvas.undoManager);
 
 
+  
   var username = localStorage.getItem("username");
-
-  $canvas.data("username", username);
+  //TESTING PURPOSES
+  if(username){}else{username="Supericy"};
 
   // setup text samples
 
