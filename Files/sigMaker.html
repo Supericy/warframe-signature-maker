@@ -11,6 +11,7 @@
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->
 
 	<script src="js/jquery.js"></script>
+	<script src="js/overwolfwindows.js"></script>
 	<script src="js/jquery-ui.js"></script>
 	<script src="js/awesomecursormin.js" type="text/javascript"></script>
 	<script src="js/jcanvas.js"></script>
@@ -23,7 +24,7 @@
 	<script src="js/stats-generator.js"></script>
 </head>
 
-<body>
+<body onmousedown="dragMove();">
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
@@ -570,7 +571,16 @@
 
 
 
-			
+			<div id="authWindow">
+				<div id="authText">
+					<div id="authTitle">Welcome to Warface Sigs!</div>
+					<div id ="authBody">
+						We couldn't verify your identify.<br>
+						Please login to Warface and try again.
+					</div>
+				</div>
+				<div id="authButton" onclick="authorizeUser()">Retry</div>
+			</div>
 			<div id="leftDoor">
 				<img src="./images/ui/leftdoor.jpg" width="640" height="720">
 			</div>

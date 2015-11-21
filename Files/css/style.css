@@ -269,6 +269,7 @@ p {
 nav {
   text-align: center;
 }
+
 #leftDoor {
   width: 50%;
   height: 100%;
@@ -520,4 +521,63 @@ nav {
 }
 .customize-remove-shadow {
   background: red;
+}
+
+
+#authWindow {
+  width: 640px;
+  height: 256px;
+  position: absolute;
+  top: 230px;
+  left: 320px;
+  z-index: 11;
+  background-color: rgba(51, 51, 51, .7);
+  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+  border-radius: 5px;
+
+}
+#authText {
+  font-family: 'Open Sans',sans-serif;
+    color: #c1c1c1;
+    font-size: 34px;
+    text-align: center;
+    padding-top:15px;
+
+}
+#authTitle {
+  border-bottom: solid 2px #c1c1c1;
+  width:410px;
+   margin:0 auto;
+}
+#authBody {
+  padding-top:25px;
+  padding-bottom:25px;
+}
+
+
+#authButton
+{
+    text-align: center;
+    width: 150px;
+    height: 50px;
+    color: white;
+    background: rgb(0,170,0);
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    border-radius: 7px;
+    font-size: 36px;
+    text-decoration: none;
+    cursor: default;
+    display:block;
+    position:relative;
+    margin:0 auto;
+
+
+}
+
+#authButton:hover {
+    background: rgb(0,210,0);
+}
+
+#authButton:active {
+    background: rgb(155,155,155);
 }

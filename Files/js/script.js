@@ -584,17 +584,6 @@ $(document).ready(function() {
 
 
 
-
-  setTimeout(function() {
-    //alert("Please Login to Warface To Begin Creating Your Signature.");
-    toggleDoors(false);
-  }, 500);
-
-
-
-
-
-
   $("#bg-list img").click(function() {
 
     $canvas.insertImage(this, "background");
@@ -1214,38 +1203,10 @@ function moveLayerUp(layer) {
 }
 
 
-function toggleDoors(open) {
-  // TODO: convince Bennet to keep this permanently
-  //$('#leftDoor, #rightDoor').hide();
-  //return;
-/*
+function authorizeUser() {
+  
+  $("#authWindow").hide('fade', 500);
 
-  var audioElement = document.createElement('audio');
-  audioElement.setAttribute('src', 'http://media.soundcloud.com/stream/VLWbetum1EQA.mp3');
-  //audioElement.setAttribute('autoplay', 'autoplay');
-  //audioElement.load()
-
-  //$.get();
-
-
-
-  //setTimeout(
-
-  if (open) {
-
-    audioElement.play();
-    // function () {
-    $("#leftDoor").animate({
-      left: (open ? 0 : -640)
-    }, 500);
-    $("#rightDoor").animate({
-      right: (open ? 0 : -640)
-    }, 500);
-    //}, 500);
-  }
-
-
-*/
   setTimeout(function() {
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/doorSound.mp3');
@@ -1267,11 +1228,9 @@ function toggleDoors(open) {
 
 
 
-      }, 800);
+      }, 400);
 
-  }, 1200);
-
-
+  }, 900);
 
 
 }
