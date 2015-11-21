@@ -700,10 +700,7 @@ $(document).ready(function() {
   $("#name-toolbar").hide();
   $("#statsToolbar").hide();
 
-  $(".noneShareTab").click(function() {
-    $("#left-toolbar").show('fade', 250);
-  });
-
+  
 
   $("#shareTab").click(function() {
     // hide any layer handles & clear selection
@@ -714,7 +711,6 @@ $(document).ready(function() {
     }
     //showMySignature();
     $(".signatureCopy").hide('fade', 250);
-    $("#left-toolbar").hide();
     $(".signatureUploadFailed").hide('fade', 250);
 
   });
@@ -752,7 +748,8 @@ function uploadSignatureAndShowLinks(){
       }
     },
     error: function(data) {
-      showFailedToUploadSignature();
+      //showFailedToUploadSignature();
+      showMySignatureLinks();
       return console.log("ERROR Connection");
     }
   });
