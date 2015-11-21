@@ -314,7 +314,8 @@ function createTextEffect(text, style) {
 
   var ctx = canvas.getContext('2d');
   ctx.save();
-  ctx.font = "100px " + style.font.family;
+  ctx.imageSmoothingEnabled = true;
+  ctx.font = "200px " + style.font.family;
   // absolute position of the text (within a translation state)
   var offsetX = 400;
   var offsetY = 400;

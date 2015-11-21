@@ -694,6 +694,7 @@ $(document).ready(function() {
   $("#name-list img").click(function() {
     $canvas.toggleText(this);
     var image = this;
+    image.src = createTextEffect();
     var layer = $canvas.selectedLayer;
     // doStuff();
     $canvas.undoManager.add({
