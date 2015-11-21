@@ -660,8 +660,7 @@ $(document).ready(function() {
   registerHooksForToolbar($canvas.undoManager);
 
 
-
-  var username = "SuperCoolGuy";
+  var username = localStorage.getItem("username");
 
   $canvas.data("username", username);
 
@@ -701,6 +700,10 @@ $(document).ready(function() {
   $("#name-toolbar").hide();
   $("#statsToolbar").hide();
 
+  $(".noneShareTab").click(function() {
+    $("#left-toolbar").show('fade', 250);
+  });
+
 
   $("#shareTab").click(function() {
     // hide any layer handles & clear selection
@@ -709,124 +712,93 @@ $(document).ready(function() {
       $canvas.selectedLayer = null;
       $canvas.enableLayerHandles(layer, false);
     }
+    //showMySignature();
+    $(".signatureCopy").hide('fade', 250);
+    $("#left-toolbar").hide();
+    $(".signatureUploadFailed").hide('fade', 250);
 
   });
+  $(".signatureCopy").hide('fade', 250);
 
-
-  var instructions = "";
-  //var serializedCanvas = null;
-  $("#getButton").click(function() {
-
-    console.log("got instructions");
-    instructions = $canvas.getLayers().slice(0).reverse();
-    //console.log(instructions);
-
-    console.log("serializing canvas");
-    var serializedCanvas = serializeCanvas();
-    console.log("serialized canvas:", serializedCanvas);
-
-    var unserializedCanvas = unserializeCanvas(serializedCanvas);
-    console.log("unserializedCanvas ", unserializedCanvas);
-
-    // send msg to server
-    console.log("contacting server");
-    $.ajax({
-      type: "POST",
-      //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
-      url: "http://localhost:8888/warface/sigs/upload?userId=" + "bill",
-      data: JSON.stringify(serializedCanvas),
-      success: function(data) {
-        console.log(data);
-        if (data) {
-          return console.log("SUCCESS Connection, instructions sent to server");
-        } else {
-          return console.log("Data isn't available");
-        }
-      },
-      error: function(data) {
-        return console.log("ERROR Connection");
-      }
-    });
-
-
-
-
-  });
-
-  $("#clearButton").click(function() {
-
-    //console.log($canvas.getCanvasImage('png'));
-    //var canvas  = document.getElementById("workspaceCanvas");
-    //var dataUrl = canvas.toDataURL();
-    //console.log(dataUrl);
-    console.log("clearying canvaas");
-    for (var i = 0; i < instructions.length; i++) {
-      $canvas.removeLayer(instructions[i].name);
-    }
-    $canvas.drawLayers();
-
-  });
-
-  $("#drawButton").click(function() {
-
-    //console.log("drawing on canvas");
-    /*
-    for (var i = 0; i < instructions.length; i++) {
-      $canvas.addLayer(instructions[i]);
-      $canvas.enableLayerHandles($canvas.getLayer(instructions[i].name), false);
-    }
-    $canvas.drawLayers();
-    */
-
-    console.log("fetching server instructions")
-    var unserializedCanvas = null;
-
-    $.ajax({
-      type: "GET",
-      url: "http://localhost:8888/warface/sigs/show",
-      success: function(data) {
-        //console.log(data);
-        if (data) {
-
-          var list = JSON.parse(data);
-          list = list[list.length - 1].signature;
-          //list = '"' + list + '"';
-          list = JSON.parse(list);
-          console.log(list);
-          unserializedCanvas = unserializeCanvas(list);
-          console.log("unserialized canvas:", unserializedCanvas);
-
-          console.log("drawing on canvas");
-          for (var i = 0; i < unserializedCanvas.length; i++) {
-            $canvas.addLayer(unserializedCanvas[i]);
-            $canvas.enableLayerHandles($canvas.getLayer(unserializedCanvas[i].name), false);
-          }
-          $canvas.drawLayers();
-
-          return console.log("SUCCESS Connection");
-        } else {
-          return console.log("Data isn't available");
-        }
-      },
-      error: function(data) {
-        return console.log("ERROR Connection");
-      }
-    });
-
-
-
-
-
-
-  });
-
-
-
-
-
-
+ 
 
 });
+
+
+function uploadSignatureAndShowLinks(){
+  //send the signature to server
+   var instructions = "";
+
+  instructions = $canvas.getLayers().slice(0).reverse();
+  //console.log(instructions);
+  console.log("serializing canvas");
+  var serializedCanvas = serializeCanvas();
+  console.log("serialized canvas:", serializedCanvas);
+
+  // send msg to server
+  console.log("contacting server");
+  $.ajax({
+    type: "POST",
+    //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+    url: "http://localhost:8888/warface/sigs/upload?userId=" + localStorage.getItem("username"),
+    data: JSON.stringify(serializedCanvas),
+    success: function(data) {
+      console.log(data);
+      if (data) {
+        showMySignatureLinks();
+        return console.log("SUCCESS Connection, signature sent to server");
+      } else {  
+        return console.log("Data isn't available");
+      }
+    },
+    error: function(data) {
+      showFailedToUploadSignature();
+      return console.log("ERROR Connection");
+    }
+  });
+   
+}
+
+function showFailedToUploadSignature() {
+  $(".signatureUploadFailed").show('fade', 250);
+  $(".signatureCopy").hide('fade', 250);
+}
+
+function showMySignatureLinks(){
+    $(".signatureCopy").show('fade', 250);
+    $(".signatureUploadFailed").hide('fade', 250);
+    //$("#SignatureId").attr("src", "http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username"));
+    //$("#SignatureId").show();
+
+    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username") style="border: none;"></a>')
+    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username")[/img][/url]')
+    $("#SignatureImageLink").val('<img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username") style="border:none;">')
+
+
+
+}
+
+
+function copyHtmlSig()
+{
+    overwolf.utils.placeOnClipboard(document.querySelector('#SignatureHTML').value);
+}
+
+function copyBBCodeSig()
+{
+    overwolf.utils.placeOnClipboard(document.querySelector('#SignatureBBCode').value);
+}
+
+function copyImageSig()
+{
+    overwolf.utils.placeOnClipboard(document.querySelector('#SignatureImageLink').value);
+}
+
+
+
+
+
+
 
 function serializeCanvas() {
   var canvasLayers = $canvas.getLayers().slice(0);

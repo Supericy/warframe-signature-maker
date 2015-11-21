@@ -23,6 +23,124 @@ body {
   margin-top: 8px !important;
 }
 
+#signatureUploadFailedText {
+  margin-left:64px;
+  margin-top:64px;
+  color:red;
+}
+#saveSignatureButton
+{
+    text-align: center;
+    width: 200px;
+    height: 60px;
+    color: White;
+    margin-left: 64px;
+    margin-top:64px; 
+    background: rgb(0,210,0);
+    border-radius: 3px;
+    color: #000;
+    font-size: 36px;
+    text-decoration: none;
+    cursor: default;
+}
+
+#saveSignatureButton:hover {
+    background: rgb(0,255,0);
+}
+
+#saveSignatureButton:active {
+    background: rgb(0,190,0);
+}
+
+
+.clearit
+{
+    height: 0 !important;
+}
+
+.Round_Green_Button
+{
+    text-align: center;
+    width: 60px;
+    height: 20px;
+    color: White;
+    margin-right: 8px; 
+    background: rgb(0,210,0);
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -khtml-border-radius: 3px;
+    border-radius: 3px;
+    color: #000;
+    font-size: 16px;
+    padding: 6px 10px 4px 10px;
+    text-decoration: none;
+  cursor: default;
+}
+
+.Round_Green_Button:hover {
+    background: rgb(0,255,0);
+}
+
+.Round_Green_Button:active {
+    background: rgb(0,190,0);
+}
+
+
+ .signatureCopy
+{
+    margin-left: 64px;
+    width: 100%;
+}
+
+ .signatureCopy h2
+{
+    color: #ccc;
+    font-size: 24px;
+    margin-bottom: 7px;
+    margin-left: 3px;
+}
+
+ .signatureCopy h2 span
+{
+    color: #999;
+    font-size: 13px;
+}
+
+.signatureCopy input
+{
+    width:82%;
+    height: 30px;
+}
+
+ .signatureCopyInside
+{
+    margin-top:5px;
+    
+}
+
+.signatureCopyInside input
+{
+    font-family: 'Open Sans',sans-serif;
+    float: left;
+    background-color: #333;
+    color: #999;
+    border: 0;
+    margin: 0;
+    padding: 5px;
+    height: 30px;
+    font-size: 20px;
+}
+
+.signatureCopyInside .CopyButton
+{
+    float:left;
+    margin-left:10px;
+    margin-right: 0px;
+    transition: background 0.25s linear;
+}
+.CopyButton:hover {
+    background-color: #CCCCCC;
+}
 
 .ui-tabs-panel, .ui-widget-content, .ui-corner-bottom, .ui-tabs .ui-tabs-panel {
   margin: 0px;

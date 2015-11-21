@@ -26,11 +26,11 @@
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
-				<li><a href="#background">Background</a></li>
-				<li><a href="#weapons">Weapons</a></li>
-				<li><a href="#extras">Extras</a></li>
-				<li><a href="#stats">Stats</a></li>
-				<li><a href="#name">Name</a></li>
+				<li><a href="#background" class="noneShareTab">Background</a></li>
+				<li><a href="#weapons" class="noneShareTab">Weapons</a></li>
+				<li><a href="#extras" class="noneShareTab">Extras</a></li>
+				<li><a href="#stats" class="noneShareTab">Stats</a></li>
+				<li><a href="#name" class="noneShareTab">Name</a></li>
 				<li><a href="#share" id="shareTab">Share</a></li>
 			</ul>
 
@@ -483,6 +483,47 @@
 
 
 				<div id="share" class="tab-body">
+
+					<div id="saveSignatureButton" onclick="uploadSignatureAndShowLinks()">Save Sig</div>
+					<div class="signatureCopy">
+	                <h2>HTMLCode</h2>
+	                <div id="divCopySignatureHtml" class="signatureCopyInside">
+	                    <input class="RoundCornersThree" id="SignatureHTML"/>
+	                    <div id="CopyHtmlContainer" style="position:relative;">
+	                        <div id="CopyHtml" class="CopyButton GrayButton Round_Green_Button" onclick="copyHtmlSig()">Copy</div>
+	                    </div>
+	                </div>
+	                <div class="clearit">
+	                </div>
+		            </div>
+		            
+
+		            <div class="signatureCopy">
+		                <br><h2>BBCode <span>(for phpBB forums)</span></h2>
+		                <div class="signatureCopyInside">
+		                    <input class="RoundCornersThree" id="SignatureBBCode"/>
+		                    <div id="copyBBCContainer" style="position:relative;">
+		                        <div id="copyBBCode" class="CopyButton GrayButton Round_Green_Button" onclick="copyBBCodeSig()">Copy</div>
+		                    </div>
+		                </div>
+		                <div class="clearit">
+		                </div>
+		            </div>
+		            <div class="signatureCopy">
+		                <br><h2>Image Link <span>(for forums that don't support links in signatures)</span></h2>
+		                <div class="signatureCopyInside">
+		                    <input class="RoundCornersThree" id="SignatureImageLink" />
+		                    <div id="copyImageLinkContainer" style="position:relative;">
+		                        <div id="copyImageLink" class="CopyButton GrayButton Round_Green_Button" onclick="copyImageSig()">Copy</div>
+		                    </div>
+		                </div>
+		                <div class="clearit">
+		                </div>
+		            </div>
+		            <div class="signatureUploadFailed">
+		            	<div id="signatureUploadFailedText">Sorry, failed to upload signature, please check your connection and try again.</div>
+		            </div>
+					<!--
 					<table class="image-list" id="share-list">
 						<tr>
 							<th>
@@ -500,6 +541,7 @@
 							</td>
 						</tr>
 					</table>
+				-->
 				</div>
 			</div>
 
