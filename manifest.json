@@ -32,6 +32,13 @@
 					}
 				},
 
+				"externally_connectable": {
+        "matches": [
+	    	"http://localhost",
+	    	"https://localhost"
+        	]
+    	},
+
 		"launch_events": [
     	{
         	"event": "GameLaunch",

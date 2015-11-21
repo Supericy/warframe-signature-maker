@@ -60,6 +60,10 @@ function checkIfWarfaceRunning(){
 
 
 $( document ).ready(function() {
+
+  var statsRecording = ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
+
+
 // warface game info events
 overwolf.games.onGameInfoUpdated.addListener(
     function (GameInfoChangeData) {
@@ -95,6 +99,32 @@ overwolf.games.events.onNewEvents.addListener(
 	    	{
 	    		var event = eventArray[i];
 	    		console.log("Event:", event.name);
+          console.log($.inArray(event.name, statsRecording));
+          if($.inArray(event.name, statsRecording)>=0){
+            $.ajax({
+              type: "POST",
+              //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+              url: "http://localhost/warface/stats/upload?userId=" + localStorage.getItem("username"),
+              data: event.name,
+              crossDomain:true,
+              success: function(data) {
+                console.log(data);
+                if (data) {
+                  return console.log("SUCCESS Connection, stat sent to server");
+                } else {
+                  return console.log("Data isn't available");
+                }
+              },
+              error: function(data) {
+                return console.log("ERROR Connection");
+              }
+            });
+
+          }
+
+
+
+
 	    	}
     	}
         

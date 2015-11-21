@@ -206,6 +206,69 @@ function warfaceSigShow(response,request) {
 }
 
 
+
+function warfaceStatUpload(response,request) {
+		console.log("Request handler 'warfaceStatUpload' was called.");
+	
+		var postData = "";
+		request.setEncoding("utf8");
+
+		request.addListener("data", function(postDataChunk) {
+			postData += postDataChunk;
+			console.log("Received POST data chunk '"+
+			postDataChunk + "'.");
+		});
+
+		request.addListener("end", function() {
+			//route(handle, pathname, response, postData);
+			console.log("All chunks recieved");
+
+			var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
+  		
+  		
+	  		if(queryObject.userId)
+	  		{
+	  			var statName = postData;
+	  			console.log(statName +" for '" + queryObject.userId + "' updated");
+
+	  			
+	  			
+
+				var MongoClient = require('mongodb').MongoClient;
+				
+
+				var url = 'mongodb://localhost:27017/test';
+				MongoClient.connect(url, function(err,db)  {
+					if(!err){
+						console.log("Connected correctly to server.");
+						upsertStat(queryObject.userId,statName, db, function() {
+							db.close();
+						})
+					} else {
+						console.log(err);
+					}
+					
+				});
+			}
+
+			// STUPID FUCKING CORS
+			response.writeHead(200, {
+				"Content-Type": "text/plain",
+				'Access-Control-Allow-Origin' : '*'
+			});
+
+
+			response.write("Hey I got your request."+"\n");
+			response.end();
+
+
+		});
+
+
+
+}
+
+
 var insertUser = function(db, postData, callback) {
    db.collection('users').insertOne( {
       //"username" : "SuperCoolGuy",
@@ -251,6 +314,28 @@ var upsertSignature = function(userId, postData, db, callback) {
     callback(result);
   });
 };
+
+var upsertStat = function(userId, statName, db, callback) {
+	var obj = {};
+	obj[statName] = 1 ;
+   db.collection('users').update( 
+   
+      {"user_id": userId},
+      {$inc:
+      	obj
+      },
+      {upsert:true}
+
+   , function(err, result) {
+    if(!err){
+    	console.log("Insert sucessful");
+    }
+    callback(result);
+  });
+};
+
+
+
 
 canvas = require('canvas');
 
@@ -339,3 +424,4 @@ exports.show = show;
 
 exports.warfaceSigUpload = warfaceSigUpload;
 exports.warfaceSigShow = warfaceSigShow;
+exports.warfaceStatUpload = warfaceStatUpload;
