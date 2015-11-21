@@ -23,6 +23,8 @@ body {
   margin-top: 8px !important;
 }
 
+
+
 #signatureUploadFailedText {
   margin-left:64px;
   margin-top:64px;
@@ -323,7 +325,7 @@ nav {
   /*margin-top:10px;*/
 }
 #tabs div {
-  color: white;
+  
 }
 #tabs {
   padding: 0px;
@@ -418,6 +420,14 @@ nav {
   width: 36px;
   height: 36px;
 }
+
+#statPageInfoText {
+  margin-left:64px;
+  margin-top:4px;
+  margin-bottom:14px;
+  color:#A4ADA7;
+}
+
 #weapon-list img {
   width: 200px;
   height: 65px;
