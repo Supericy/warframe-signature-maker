@@ -12,13 +12,13 @@
 	},
 	"permissions": ["GameInfo"],
 	"data": {
-		"start_window":"ProbeWindow",
+		"start_window":"MainWindow",
 		"windows":{
 			"MainWindow":{
 					"file":"Files/sigMaker.html",
 					"transparent":true,
 					"resizable":false,
-					"size":{"width":1280, "height":720},
+					"size":{"width":1350, "height":800},
 					"in_game_only":false,
 					"show_in_taskbar":true
 					},

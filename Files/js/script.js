@@ -588,7 +588,7 @@ $(document).ready(function() {
   setTimeout(function() {
     //alert("Please Login to Warface To Begin Creating Your Signature.");
     toggleDoors(false);
-  }, 0);
+  }, 500);
 
 
 
@@ -785,9 +785,9 @@ function showMySignatureLinks(){
     //$("#SignatureId").attr("src", "http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username"));
     //$("#SignatureId").show();
 
-    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username") style="border: none;"></a>')
-    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username")[/img][/url]')
-    $("#SignatureImageLink").val('<img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username") style="border:none;">')
+    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;"></a>')
+    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img][/url]')
+    $("#SignatureImageLink").val('<img alt="Warface Signature"' +'src="http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username")+'"' + 'style="border:none;">')
 
 
 
@@ -1216,8 +1216,8 @@ function moveLayerUp(layer) {
 
 function toggleDoors(open) {
   // TODO: convince Bennet to keep this permanently
-  $('#leftDoor, #rightDoor').hide();
-  return;
+  //$('#leftDoor, #rightDoor').hide();
+  //return;
 
 
   var audioElement = document.createElement('audio');
@@ -1260,7 +1260,9 @@ function toggleDoors(open) {
           right: (open ? 0 : -640)
         }, 1200, function() {
           audioElement.pause()
+          $('#leftDoor, #rightDoor').hide();
         });
+
 
 
       }, 800);

@@ -8,9 +8,9 @@ body {
   user-select: none;
 }
 #container {
-  background: url(../images/ui/background.jpg) repeat;
+  background: url(../images/ui/background.jpg);
   width: 1280px;
-  min-height: 720px;
+  height: 720px;
   position: relative;
 }
 
