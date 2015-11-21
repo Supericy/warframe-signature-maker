@@ -35,12 +35,11 @@ body {
     text-align: center;
     width: 200px;
     height: 50px;
-    color: White;
+    color: white;
     margin-left: 55px;
     margin-top:6px;
     background: rgb(0,210,0);
     border-radius: 3px;
-    color: #000;
     font-size: 36px;
     text-decoration: none;
     cursor: default;
@@ -65,14 +64,14 @@ body {
     text-align: center;
     width: 60px;
     height: 20px;
-    color: White;
+    color: white;
     margin-right: 8px;
     background: rgb(0,210,0);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -khtml-border-radius: 3px;
     border-radius: 3px;
-    color: #000;
+   
     font-size: 16px;
     padding: 6px 10px 4px 10px;
     text-decoration: none;
