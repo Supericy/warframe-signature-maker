@@ -1218,7 +1218,7 @@ function toggleDoors(open) {
   // TODO: convince Bennet to keep this permanently
   //$('#leftDoor, #rightDoor').hide();
   //return;
-
+/*
 
   var audioElement = document.createElement('audio');
   audioElement.setAttribute('src', 'http://media.soundcloud.com/stream/VLWbetum1EQA.mp3');
@@ -1245,7 +1245,9 @@ function toggleDoors(open) {
   }
 
 
+*/
   setTimeout(function() {
+    var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/doorSound.mp3');
     audioElement.play();
     open = false;
