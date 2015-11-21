@@ -35,7 +35,7 @@ body {
     height: 50px;
     color: White;
     margin-left: 55px;
-    margin-top:6px; 
+    margin-top:6px;
     background: rgb(0,210,0);
     border-radius: 3px;
     color: #000;
@@ -64,7 +64,7 @@ body {
     width: 60px;
     height: 20px;
     color: White;
-    margin-right: 8px; 
+    margin-right: 8px;
     background: rgb(0,210,0);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -115,7 +115,7 @@ body {
  .signatureCopyInside
 {
     margin-top:5px;
-    
+
 }
 
 .signatureCopyInside input
@@ -252,7 +252,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   /*height: 200px;*/
   /*width: 420px;*/
   /*border: 2px solid red;*/
- 
+
 }
 
 #statsToolbar {
@@ -392,13 +392,13 @@ nav {
 #name-list {
 
 }
-#name-list td {
+#name-list td, #stat-list td {
 
   padding: 4px;
   margin: 0px;
 }
 
-#name-list img {
+#name-list img, #stat-list img {
   width: 100%;
 }
 #extras-list td {
@@ -412,7 +412,7 @@ nav {
 #extras-list img {
   width: 95%;
   height: 90%;
-  
+
 }
 #stats-list img {
   width: 36px;

@@ -675,6 +675,20 @@ $(document).ready(function() {
     });
   });
 
+  $('.stat-icon-preset').each(function () {
+      var $this = $(this);
+      var type = STAT_TYPES[$this.data('stat-type')];
+      var value = $this.data('stat-value')
+
+      createStatIconImage(type, value, function (dataUrl) {
+          $this.attr('src', dataUrl);
+          $this.click(function () {
+              $canvas.insertImage($this[0]);
+          })
+          // todo: onclick insert
+      })
+  });
+
 
 
   $("#name-list img").click(function() {
@@ -700,7 +714,7 @@ $(document).ready(function() {
   $("#name-toolbar").hide();
   $("#statsToolbar").hide();
 
-  
+
 
   $("#shareTab").click(function() {
     // hide any layer handles & clear selection
@@ -716,7 +730,7 @@ $(document).ready(function() {
   });
   $(".signatureCopy").hide('fade', 250);
 
- 
+
 
 });
 
@@ -743,7 +757,7 @@ function uploadSignatureAndShowLinks(){
       if (data) {
         showMySignatureLinks();
         return console.log("SUCCESS Connection, signature sent to server");
-      } else {  
+      } else {
         return console.log("Data isn't available");
       }
     },
@@ -753,7 +767,7 @@ function uploadSignatureAndShowLinks(){
       return console.log("ERROR Connection");
     }
   });
-   
+
 }
 
 function showFailedToUploadSignature() {
