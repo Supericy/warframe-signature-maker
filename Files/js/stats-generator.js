@@ -33,7 +33,7 @@ function createStatIconImage(type, value, callback) {
 
     var img = new Image();
     img.src = type.icon;
-      
+
     img.onload = function() {
 
         var imgWidth = img.width;
@@ -44,7 +44,7 @@ function createStatIconImage(type, value, callback) {
         // var $statCanvas = $('<canvas width="300px" height="116px"></canvas>');
         var $statCanvas = $('<canvas id="statCanvas" height="116px" width="220px"/>');
         var can = $statCanvas[0];
-        var callback = callback || function(a) {};
+        // var callback = callback || function(a) {};
 
         // todo: make font look better
         var ctx = can.getContext('2d');
@@ -61,7 +61,7 @@ function createStatIconImage(type, value, callback) {
         ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
         var dataUrl = trim(can).toDataURL();
         //var dataUrl = can.toDataURL();
-        console.log(dataUrl);
+        // console.log(dataUrl);
         callback(dataUrl);
     };
 }

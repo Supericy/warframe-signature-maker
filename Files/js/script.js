@@ -651,7 +651,7 @@ $(document).ready(function() {
   registerHooksForToolbar($canvas.undoManager);
 
 
-  
+
   var username = localStorage.getItem("username");
   //TESTING PURPOSES
   if(username){}else{username="Supericy"};
@@ -667,17 +667,18 @@ $(document).ready(function() {
     });
   });
 
+  console.log('doing stat-icon stuff');
   $('.stat-icon-preset').each(function () {
       var $this = $(this);
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
 
       createStatIconImage(type, value, function (dataUrl) {
+          console.log($this);
           $this.attr('src', dataUrl);
           $this.click(function () {
               $canvas.insertImage($this[0]);
-          })
-          // todo: onclick insert
+          });
       })
   });
 
@@ -1204,7 +1205,7 @@ function moveLayerUp(layer) {
 
 
 function authorizeUser() {
-  
+
   $("#authWindow").hide('fade', 500);
 
   setTimeout(function() {
