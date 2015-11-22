@@ -29,39 +29,62 @@ var STAT_TYPES = {
     }
 };
 
+$(function () {
+
+    var a = new Image();
+    a.src = STAT_TYPES.KILL.icon;
+});
+
 function createStatIconImage(type, value, callback) {
+    var $statCanvas = $('<canvas height="116px" width="220px" />');
 
-    var img = new Image();
-    img.src = type.icon;
+    $statCanvas.drawText({
+        fillStyle: '#9cf',
+        strokeStyle: '#25a',
+        strokeWidth: 2,
+        x: 150, y: 50,
+        fontSize: 48,
+        fontFamily: 'Verdana, sans-serif',
+        text: value
+    });
 
-    img.onload = function() {
+    $statCanvas.drawImage({
+        source: type.icon,
+        x: 0,
+        y: 0,
+        width: 70,
+        height: 116,
+        fromCenter: false,
+        load: function () {
+            callback($statCanvas.getCanvasImage('png'));
+        }
+    });
 
-        var imgWidth = img.width;
-        var imgHeight = img.height;
-        var fontSize = 72;
-
-        // create our stat image
-        // var $statCanvas = $('<canvas width="300px" height="116px"></canvas>');
-        var $statCanvas = $('<canvas id="statCanvas" height="116px" width="220px"/>');
-        var can = $statCanvas[0];
-        // var callback = callback || function(a) {};
-
-        // todo: make font look better
-        var ctx = can.getContext('2d');
-        ctx.font = "72px serif";
-        ctx.fillStyle = "white";
-        // Specify the shadow colour.
-        ctx.shadowColor = "black";
-
-        // Specify the shadow offset.
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-        ctx.fillText(value, imgWidth, imgHeight-18);
-
-        ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
-        var dataUrl = trim(can).toDataURL();
-        //var dataUrl = can.toDataURL();
-        // console.log(dataUrl);
-        callback(dataUrl);
-    };
+        // var imgWidth = img.width;
+        // var imgHeight = img.height;
+        // var fontSize = 72;
+        //
+        // // create our stat image
+        // var $statCanvas = $('<canvas height="116px" width="220px" />');
+        // var can = $statCanvas[0];
+        // // var callback = callback || function(a) {};
+        //
+        // // todo: make font look better
+        // var ctx = can.getContext('2d');
+        // ctx.font = fontSize + "px serif";
+        // ctx.fillStyle = "white";
+        // // Specify the shadow colour.
+        // ctx.shadowColor = "black";
+        //
+        // // Specify the shadow offset.
+        // ctx.shadowOffsetX = 2;
+        // ctx.shadowOffsetY = 2;
+        // ctx.fillText(value, imgWidth, imgHeight-18);
+        //
+        // ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
+        // var dataUrl = trim(can).toDataURL();
+        // //var dataUrl = can.toDataURL();
+        // // console.log(dataUrl);
+        // callback(dataUrl);
+    // };
 }

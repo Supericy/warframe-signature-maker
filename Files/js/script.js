@@ -545,6 +545,9 @@ $.fn.extend({
 });
 
 $(document).ready(function() {
+    // todo: unhide doors n stuff
+    $('#authWindow, #leftDoor, #rightDoor').hide();
+
 
   $canvas = $('#workspaceCanvas');
 
@@ -1203,7 +1206,6 @@ function moveLayerUp(layer) {
 
 
 function authorizeUser() {
-
   $("#authWindow").hide('fade', 500);
 
   setTimeout(function() {

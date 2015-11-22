@@ -13,8 +13,8 @@ jsdom.env( html, function ( errors, window ) {
   if( errors ) console.log( errors );
   window.window = window;
   //window.Image = canvas.Image;
-  var $ = JQuery( window );   
-  JCanvas( $, window);  
+  var $ = JQuery( window );
+  JCanvas( $, window);
 
 
   var $c  = $( '<canvas>' );
@@ -24,7 +24,7 @@ jsdom.env( html, function ( errors, window ) {
   $c[0].height = 300;
   var document = window.document;
   Image = canvas.Image;
- 
+
     var img = new Image();
     img.src = '../../images/extras/extras-9.png';
 
@@ -36,11 +36,11 @@ jsdom.env( html, function ( errors, window ) {
       img = new Image;
       img.src = squid;
       ctx.drawImage(img, 0, 0, img.width, img.height);
-      console.warn( 'Paste the following as a url in your browser.' );
+    //   console.warn( 'Paste the following as a url in your browser.' );
       console.log(can.toDataURL());
 
   });
 
- 
+
 
 });
