@@ -667,14 +667,12 @@ $(document).ready(function() {
     });
   });
 
-  console.log('doing stat-icon stuff');
   $('.stat-icon-preset').each(function () {
       var $this = $(this);
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
 
       createStatIconImage(type, value, function (dataUrl) {
-          console.log($this);
           $this.attr('src', dataUrl);
           $this.click(function () {
               $canvas.insertImage($this[0]);
