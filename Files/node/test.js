@@ -1,7 +1,5 @@
-
-
 var jsdom = require('jsdom');
-
+var fs = require('fs');
 var JQuery = require( 'jquery' );
 var JCanvas = require( 'jcanvas' );
 
@@ -24,30 +22,25 @@ jsdom.env( html, function ( errors, window ) {
   // hack required by width/height bug in jsdom/node-canvas integration
   $c[0].width = 400;
   $c[0].height = 300;
+  var document = window.document;
+  Image = canvas.Image;
+ 
+    var img = new Image();
+    img.src = '../../images/extras/extras-9.png';
 
-  // Standard jCanvas
-  $c.scaleCanvas({
-    scale: 0.25
-  });// Create and draw a rectangle layer
+    var can = $c[0];
+    var ctx = can.getContext('2d');
 
-  $c.addLayer({
-  type: 'image',
-  source: 'images/extras/extras-9.jpg',
-  x: 50, y: 50,
-  width: 80,
-  height: 100,
-  fromCenter: false
-}).addLayer({
-  type: 'rectangle',
-  fillStyle: '#585',
-  x: 100, y: 100,
-  width: 100, height: 50
-})
-.drawLayers();
-    //console.log($c.getLayer(0));
+    fs.readFile(__dirname + '../../images/extras/extras-9.png', function(err, squid){
+    if (err) throw err;
+      img = new Image;
+      img.src = squid;
+      ctx.drawImage(img, 0, 0, img.width, img.height);
+      console.warn( 'Paste the following as a url in your browser.' );
+      console.log(can.toDataURL());
 
-  console.warn( 'Paste the following as a url in your browser.' );
-  console.log(  $c.getCanvasImage( 'png' ) );
-  
+  });
+
+ 
 
 });

@@ -232,7 +232,7 @@ $.fn.extend({
       $canvas.drawLayers();
       layer.mousedown(layer);
 
-      console.log(layer.x, layer.y);
+      console.log(layer);
 
 
 
