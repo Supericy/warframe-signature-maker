@@ -361,7 +361,7 @@ var drawAndSendSignature = function(signature, response) {
 	  // hack required by width/height bug in jsdom/node-canvas integration
 	  $c[0].width = 600;
 	  $c[0].height = 300;
-	  console.log("canvas height: " + $c[0].height);
+	  //console.log("canvas height: " + $c[0].height);
 	 
 	  var unserializedCanvas = unserializeCanvas(JSON.parse(signature));
 	  //console.log("unserialized canvas : " + unserializedCanvas);
@@ -383,6 +383,7 @@ var drawAndSendSignature = function(signature, response) {
 
 
 	  // convert canvas and send
+	  console.log("to data url being called now");
 	  var sig = $c.getCanvasImage( 'png' );
 	  //console.log(sig);
 	 
@@ -404,9 +405,12 @@ var drawAndSendSignature = function(signature, response) {
 
 
 function drawLayerManually($c, lay) {
-
+	console.log(lay.name.length);
 	if(lay.name === "usernameText"){
 		//var img = new Buffer(lay.source.replace("data:image/png;base64,",""), 'base64');
+		var img = new canvas.Image();
+		img.src = lay.source;
+	} else if (lay.name.length < 20) {
 		var img = new canvas.Image();
 		img.src = lay.source;
 	} else {
