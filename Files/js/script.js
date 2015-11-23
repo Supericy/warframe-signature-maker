@@ -659,6 +659,18 @@ $(document).ready(function() {
   //TESTING PURPOSES
   if(username){}else{username="Supericy"};
 
+  // Create a rectangle layer
+/*
+$('canvas').addLayer({
+  type: 'rectangle',
+  fillStyle: '#585',
+  x: 100, y: 100,
+  width: 100, height: 50
+})
+.drawLayers();
+*/
+
+
   // setup text samples
 
   $('.text-style-preset').each(function() {
@@ -745,7 +757,8 @@ function uploadSignatureAndShowLinks(){
   $.ajax({
     type: "POST",
     //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
-    url: "http://localhost:8888/warface/sigs/upload?userId=" + localStorage.getItem("username"),
+    //url: "http://localhost/warface/sigs/upload?userId=" + localStorage.getItem("username"),
+    url: "http://localhost/warface/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -758,7 +771,7 @@ function uploadSignatureAndShowLinks(){
     },
     error: function(data) {
       //showFailedToUploadSignature();
-      showMySignatureLinks();
+      showMySignatureLinks(); // FOR TESTING PURPOSES
       return console.log("ERROR Connection");
     }
   });

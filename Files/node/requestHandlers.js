@@ -142,10 +142,12 @@ function warfaceSigShow(response,request) {
 		console.log("Request handler 'warfaceSigShow' was called.");
 	
 		// STUPID FUCKING CORS
+		/*
 		response.writeHead(200, {
 			"Content-Type": "text/plain",
 			'Access-Control-Allow-Origin' : '*'
 		});
+		*/
 
 		var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
   		
@@ -170,8 +172,8 @@ function warfaceSigShow(response,request) {
 					     if (err) {
 					        console.log(err);
 					     } else if (result.length) {
-					        console.log('Found:', result);
-					        console.log(result[0].signature);
+					        console.log('Found signature for', queryObject.userId);
+					        //console.log(result[0].signature);
 					        if(result[0].signature){
 					        	var signature = result[0].signature;
 					        	//response.write(signature);
@@ -189,6 +191,10 @@ function warfaceSigShow(response,request) {
 					        }
 					        
 					     } else {
+					     	response.writeHead(200, {
+								"Content-Type": "text/plain",
+								'Access-Control-Allow-Origin' : '*'
+							});
 					        console.log('No document(s) found with defined "find" criteria!');
 					    	response.write("No signature found for: " + queryObject.userId);
 					    	response.end();
@@ -341,9 +347,8 @@ canvas = require('canvas');
 
 var drawAndSendSignature = function(signature, response) {
 
-	var html = '<html><body><canvas id="cx" width="400" height="300"></canvas></body></html>';
+	var html = '<html><body><canvas id="cx" width="600" height="300"></canvas></body></html>';
 
-	window.Image = canvas.Image;
 	jsdom.env( html, function ( errors, window ) {
 	  if( errors ) console.log( errors );
 
@@ -354,42 +359,86 @@ var drawAndSendSignature = function(signature, response) {
 	  var $c  = $( '<canvas>' );
 
 	  // hack required by width/height bug in jsdom/node-canvas integration
-	  $c[0].width = 400;
+	  $c[0].width = 600;
 	  $c[0].height = 300;
-
-	  $c.scaleCanvas({
-    		scale: 0.25
-  		});
-
-
+	  console.log("canvas height: " + $c[0].height);
+	 
 	  var unserializedCanvas = unserializeCanvas(JSON.parse(signature));
 	  //console.log("unserialized canvas : " + unserializedCanvas);
 	  for (var i = 0; i < unserializedCanvas.length; i++) {
-        $c.addLayer(unserializedCanvas[i]);
+	  	var layer = unserializedCanvas[i];
+	  	if(layer.type === 'image')
+	  	{
+	  		console.log("this layer has an image: " + layer + "drawing manually");
+	  		drawLayerManually($c, layer);// BUT THIS IS ASYNC?
+
+
+	  	} else {
+        	$c.addLayer(layer);
+        	//console.log($c.getLayer(0));
+    	}
       }
-      $c.drawLayers();
+      //$c.drawLayers();
 
 
 
 	  // convert canvas and send
 	  var sig = $c.getCanvasImage( 'png' );
-	  console.log($c.getLayer(0));
-	  response.write(sig);
-	  response.end();
+	  //console.log(sig);
+	 
+	
+	  // attempt to send an actual image instead of base 64 stuff
+	  var img = new Buffer(sig.replace("data:image/png;base64,",""), 'base64');
+	    response.writeHead(200, {
+	      //'Content-Type': 'image/png',
+	      'Access-Control-Allow-Origin' : '*',
+	      //'Content-Length': img.length
+	    });
+	    response.end(img);
+
+	  //response.end(sig);
 	});
 
 
 }
 
 
+function drawLayerManually($c, lay) {
+
+	if(lay.name === "usernameText"){
+		//var img = new Buffer(lay.source.replace("data:image/png;base64,",""), 'base64');
+		var img = new canvas.Image();
+		img.src = lay.source;
+	} else {
+	squid = fs.readFileSync(lay.source.replace(/^.*?(?=Files\/)/i, '../../'));//, function(err, squid) {
+        var img = new canvas.Image();
+        img.src = squid;
+    }
+        $c.drawImage({
+        	name:lay.name,
+            source: img,
+            x: lay.x,
+            y: lay.y,
+            width: lay.width,
+            height: lay.height,
+            draggable:lay.draggable,
+            opacity:lay.opacity,
+            translateX:lay.translateX,
+            translateY:lay.translateY,
+            scaleY:lay.scaleY,
+            scaleX:lay.scaleX,
+            rotate:lay.rotate
+         });
+	//});
+	
+}
+
 
 function unserializeLayer(sLayer) {
   //console.log("unserializing: ", sLayer);
   var layer = {
     type: sLayer.type,
-    name: sLayer.name,
     draggable: sLayer.draggable,
-    source: sLayer.source,
     x: sLayer.x,
     y: sLayer.y,
     width: sLayer.width,
@@ -401,6 +450,12 @@ function unserializeLayer(sLayer) {
     scaleX: sLayer.scaleX,
     rotate: sLayer.rotate
 	};
+	if(sLayer.name){
+		layer.name = sLayer.name;
+	}
+	if(sLayer.source){
+		layer.source = sLayer.source;
+	}
 	//console.log("unserailized layer : ", layer);
   return layer;
 }
