@@ -39,11 +39,16 @@ function takeScreenshot() {
 
 $.fn.extend({
 
-  insertImage: function(img, trait) {
+  insertImage: function(img, params) {
+      params = params || {};
+      params.isBackground = params.isBackground || false;
+      params.unique = params.unique || false;
+      params.name = params.name || img.src + (params.unique ? '' : new Date().getTime());
+
     return this.each(function() {
       var layer = {
         type: 'image',
-        name: img.src + new Date().getTime(),
+        name: params.name,
         draggable: true,
         source: img.src,
         x: $canvas.width() / 2,
@@ -199,13 +204,7 @@ $.fn.extend({
 
 
       /* test if its background */
-      if (trait === "background") {
-
-
-
-
-
-
+      if (params.isBackground) {
         layer.width = 600;
         layer.height = 200;
 
@@ -589,7 +588,9 @@ $(document).ready(function() {
 
   $("#bg-list img").click(function() {
 
-    $canvas.insertImage(this, "background");
+    $canvas.insertImage(this, {
+        isBackground: true
+    });
     var image = this;
     var layer = $canvas.selectedLayer;
 
@@ -690,7 +691,10 @@ $('canvas').addLayer({
       createStatIconImage(type, value, function (dataUrl) {
           $this.attr('src', dataUrl);
           $this.click(function () {
-              $canvas.insertImage($this[0]);
+              $canvas.insertImage($this[0], {
+                  unique: true,
+                  name: type.name
+              });
           });
       })
   });
