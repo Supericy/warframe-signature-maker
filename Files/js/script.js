@@ -218,7 +218,6 @@ $.fn.extend({
         $canvas.moveLayer(layer.name, 0);
         // hide handles
         $canvas.enableLayerHandles(layer, false);
-
         $canvas.drawLayers();
       } else {
 
@@ -231,7 +230,7 @@ $.fn.extend({
       $canvas.drawLayers();
       layer.mousedown(layer);
 
-      console.log(layer);
+      //console.log(layer);
 
 
 
@@ -826,9 +825,11 @@ function copyImageSig()
 function serializeCanvas() {
   var canvasLayers = $canvas.getLayers().slice(0);
   var serialized = [];
-  for (var n = 0; n < canvasLayers.length; n += 6) // += 6 to dodge the handles.
+  for (var n = 0; n < canvasLayers.length; n++) 
   {
+    if(canvasLayers[n].type ==='image'){ // best
     serialized.push(serializeLayer(canvasLayers[n]));
+    }
   }
   return serialized;
 }

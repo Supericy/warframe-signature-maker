@@ -361,6 +361,8 @@ var drawAndSendSignature = function(signature, response) {
 	  // hack required by width/height bug in jsdom/node-canvas integration
 	  $c[0].width = 600;
 	  $c[0].height = 300;
+
+
 	  //console.log("canvas height: " + $c[0].height);
 	 
 	  var unserializedCanvas = unserializeCanvas(JSON.parse(signature));
@@ -369,7 +371,7 @@ var drawAndSendSignature = function(signature, response) {
 	  	var layer = unserializedCanvas[i];
 	  	if(layer.type === 'image')
 	  	{
-	  		console.log("this layer has an image: " + layer + "drawing manually");
+	  		console.log("this layer has an image: " + layer.name + "drawing manually");
 	  		drawLayerManually($c, layer);// BUT THIS IS ASYNC?
 
 
@@ -405,7 +407,7 @@ var drawAndSendSignature = function(signature, response) {
 
 
 function drawLayerManually($c, lay) {
-	console.log(lay.name.length);
+	
 	if(lay.name === "usernameText"){
 		//var img = new Buffer(lay.source.replace("data:image/png;base64,",""), 'base64');
 		var img = new canvas.Image();
