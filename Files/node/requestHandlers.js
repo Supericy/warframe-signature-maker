@@ -177,17 +177,36 @@ function warfaceSigShow(response,request) {
 					        if(result[0].signature){
 					        	var signature = result[0].signature;
 					        	//response.write(signature);
+					        	var stats = {};
+					        	var results = result[0];//stupid shit
+					        	if(results.kill){
+					        		stats.kill = results.kill;
+					        	}
+					        	if(results.kill_grenade){
+					        		stats.kill_grenade = results.kill_grenade;
+					        	}
+					        	if(results.kill_in_slide){
+					        		stats.kill_in_slide = results.kill_in_slide;
+					        	}
+					        	if(results.kill_headshot){
+					        		stats.kill_headshot = results.kill_headshot;
+					        	}
+					        	if(results.kill_melee){
+					        		stats.kill_melee = results.kill_melee;
+					        	}
+					        	if(results.kill_headshot){
+					        		stats.kill_headshot = results.kill_headshot;
+					        	}
+					        	if(results.defibrillator_kill){
+					        		stats.defibrillator_kill = results.defibrillator_kill;
+					        	}
+					        	if(results.two_at_once_kill){
+					        		stats.two_at_once_kill = results.two_at_once_kill;
+					        	}
 
-					        	drawAndSendSignature(signature,response);
-
-			  					
+					        	drawAndSendSignature(signature,stats,response);
+	
 			  					db.close();
-
-
-
-
-
-
 					        }
 					        
 					     } else {
@@ -345,7 +364,7 @@ var upsertStat = function(userId, statName, db, callback) {
 
 canvas = require('canvas');
 
-var drawAndSendSignature = function(signature, response) {
+var drawAndSendSignature = function(signature, stats, response) {
 
 	var html = '<html><body><canvas id="cx" width="600" height="300"></canvas></body></html>';
 
@@ -372,7 +391,7 @@ var drawAndSendSignature = function(signature, response) {
 	  	if(layer.type === 'image')
 	  	{
 	  		console.log("this layer has an image: " + layer.name + "drawing manually");
-	  		drawLayerManually($c, layer);// BUT THIS IS ASYNC?
+	  		drawLayerManually($c, layer, stats, $);// BUT THIS IS ASYNC?
 
 
 	  	} else {
@@ -406,15 +425,82 @@ var drawAndSendSignature = function(signature, response) {
 }
 
 
-function drawLayerManually($c, lay) {
-	
+function createStatIconImage(type, value, callback) {
+    var $statCanvas = $('<canvas height="116px" width="220px" />');
+
+    $statCanvas.drawText({
+        fillStyle: '#9cf',
+        strokeStyle: '#25a',
+        strokeWidth: 2,
+        x: 150, y: 50,
+        fontSize: 48,
+        fontFamily: 'Verdana, sans-serif',
+        text: value
+    });
+
+    $statCanvas.drawImage({
+        source: type.icon,
+        x: 0,
+        y: 0,
+        width: 70,
+        height: 116,
+        fromCenter: false,
+        load: function () {
+            callback($statCanvas.getCanvasImage('png'));
+        }
+    });
+}
+function drawLayerManually($c, lay, stats, $) {
+	var statsRecording = ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
+
 	if(lay.name === "usernameText"){
 		//var img = new Buffer(lay.source.replace("data:image/png;base64,",""), 'base64');
 		var img = new canvas.Image();
 		img.src = lay.source;
-	} else if (lay.name.length < 20) {
-		var img = new canvas.Image();
-		img.src = lay.source;
+	} else if (statsRecording.indexOf(lay.name)>=0) {
+		var statName = lay.name;
+		console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats.statName);
+		console.log("stats are: ", stats);
+		console.log("the length of ", statName.length);
+		stats.statName = stats.statName ? stats.statName : 0;
+
+		var $statCanvas = $('<canvas height="116px" width="220px" />');
+
+		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
+        var img = new canvas.Image();
+        img.src = squid;
+    
+
+	    $statCanvas.drawText({
+	        fillStyle: '#9cf',
+	        strokeStyle: '#25a',
+	        strokeWidth: 2,
+	        x: 150, y: 50,
+	        fontSize: 48,
+	        fontFamily: 'Verdana, sans-serif',
+	        text: stats.statName
+	    });
+
+	    $statCanvas.drawImage({
+	        source: img,
+	        x: 0,
+	        y: 0,
+	        width: 70,
+	        height: 116,
+	        fromCenter: false
+	    });
+
+
+
+		squid = $statCanvas.getCanvasImage( 'png' );
+     
+        img.src = squid;
+
+
+
+
+
+
 	} else {
 	squid = fs.readFileSync(lay.source.replace(/^.*?(?=Files\/)/i, '../../'));//, function(err, squid) {
         var img = new canvas.Image();

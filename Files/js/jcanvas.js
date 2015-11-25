@@ -3897,6 +3897,11 @@ $.fn.drawImage = function drawImage( args ) {
 			_setGlobalProps( canvas, ctx, params );
 
 
+
+
+
+
+			
 			// Draw image
 			ctx.drawImage(
 				img,
@@ -3915,6 +3920,11 @@ $.fn.drawImage = function drawImage( args ) {
 
 			_transformShape( canvas, ctx, params, params.width, params.height );
 			_setGlobalProps( canvas, ctx, params );
+
+
+
+
+			
 
 			// Draw image on canvas
 			ctx.drawImage(
