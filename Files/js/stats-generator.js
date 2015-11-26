@@ -44,6 +44,14 @@ function createStatIconImage(type, value, fillStyle, strokwWidth, strokeStyle, f
     img.onload = function(){
 
         console.log("img loaded");
+        // change color test
+        var RGBColor = {
+          R: 255 * Math.random(),
+          G: 255 * Math.random(),
+          B: 255 * Math.random()
+         };
+        img.src = changeStatIconColor(img, RGBColor);
+
         var fontSize = 42;
        
         var numDigits = value.toString().length;
