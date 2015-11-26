@@ -25,18 +25,6 @@ function openSubWindow() {
   });
 };
 
-function takeScreenshot() {
-  overwolf.media.takeScreenshot(function(result) {
-    if (result.status == "success") {
-      var img = document.getElementById("screenshot");
-      img.src = result.url;
-      img.onload = function() {
-        overwolf.media.shareImage(img, "Screen Shot");
-      };
-    }
-  });
-}
-
 $.fn.extend({
 
   insertImage: function(img, params) {
@@ -196,7 +184,7 @@ $.fn.extend({
           $("#name-toolbar").hide('fade', 250);
 
           // set opacity slider position
-          $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
+          $('#opacitySlider').slider('value', 100 * layer.opacity);
 
         }
 
@@ -227,8 +215,9 @@ $.fn.extend({
 
       }
       // select it after placing it.
-      $canvas.drawLayers();
       layer.mousedown(layer);
+      $canvas.drawLayers();
+      
 
       //console.log(layer);
 
@@ -392,23 +381,11 @@ $.fn.extend({
                   $canvas.setLayer(layer.name, {
                     rotate: oldangle,
                   }).drawLayers();
-                  /*
-                  $canvas.setLayer($canvas.getLayer($canvas.getLayer(layer.name)._handles[4]).name, {
-                      x:oldhandlex,
-                      y:oldhandley
-                  }).drawLayers();
-                  */
                 },
                 redo: function() {
                   $canvas.setLayer(layer.name, {
                     rotate: newangle,
                   }).drawLayers();
-                  /*
-                  $canvas.setLayer($canvas.getLayer(layer._handles[4].name), {
-                      x:newhandlex,
-                      y:newhandley
-                  }).drawLayers();
-                  */
                 }
               });
               layer.mousedown(layer);
@@ -432,7 +409,7 @@ $.fn.extend({
               $("#name-toolbar").show('fade', 250);
 
               // set opacity slider position
-              $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
+              $('#opacitySlider').slider('value', 100 * layer.opacity);
             }
 
           })
@@ -441,6 +418,7 @@ $.fn.extend({
         // set layer to selected.
         layer = $canvas.getLayer("usernameText");
         layer.mousedown(layer);
+        $canvas.drawLayers();
       }
 
 
@@ -450,69 +428,6 @@ $.fn.extend({
 
     });
   },
-
-  addStat: function(text) {
-    return this.each(function() {
-
-
-
-    });
-  },
-
-
-
-  insertRect: function(x, y, width, height, fill, stroke, strokeWidth, name) {
-    return this.each(function() {
-
-
-      var layer = {
-        type: 'rectangle',
-        draggable: false,
-        name,
-        name,
-        fillStyle: fill,
-        x: x + width / 2,
-        y: y + height / 2,
-        width: width,
-        height: height,
-        strokeStyle: stroke,
-        strokeWidth: strokeWidth
-      };
-
-      // Add rectangle layer w/o drawing
-      $canvas.addLayer(layer)
-        .drawLayers();
-    });
-  },
-
-  drawHollowRect: function(x, y, width, height, stroke, strokewidth, name) {
-    return this.each(function() {
-
-      $('#workspaceCanvas').addLayer({
-          type: 'line',
-          name: name,
-          draggable: false,
-          intangible: true,
-          strokeStyle: stroke,
-          strokeWidth: strokewidth,
-          rounded: true,
-          x1: x,
-          y1: y,
-          x2: x,
-          y2: y + height,
-          x3: x + width,
-          y3: y + height,
-          x4: x + width,
-          y4: y,
-          x5: x,
-          y5: y
-
-        })
-        .drawLayers();
-
-    })
-  },
-
   enableLayerHandles: function(layer, enabled) {
     if (layer) {
       layer = $canvas.getLayer(layer.name);
@@ -878,142 +793,6 @@ function unserializeLayer(sLayer) {
       strokeStyle: '#c33',
       strokeWidth: 2,
       radius: 5
-    },
-    dragstart: function(layer) {
-      // code to run when dragging starts
-      layer.dragstartx = layer.x;
-      layer.dragstarty = layer.y;
-      layer.mousedown(layer);
-    },
-    dragstop: function(layer) {
-      // code to run when dragging starts
-      var dragstopx = layer.x;
-      var dragstopy = layer.y;
-      // pointlessly copy oh wait makes it work
-      var dragstartx = layer.dragstartx;
-      var dragstarty = layer.dragstarty;
-      console.log("values before undo are ", layer.dragstartx, layer.dragstarty);
-      $canvas.undoManager.add({
-        undo: function() {
-          console.log("undoing drag start  on ");
-          console.log("layer before moving in undo", layer);
-          console.log("values as i undo are ", dragstartx, dragstarty);
-          $canvas.setLayer(layer.name, {
-            x: dragstartx,
-            y: dragstarty
-          }).drawLayers();
-          console.log("layer after undo:", layer);
-        },
-        redo: function() {
-          console.log("restoring drag stop");
-          $canvas.setLayer(layer.name, {
-            x: dragstopx,
-            y: dragstopy
-          }).drawLayers();
-
-        }
-      });
-      layer.mousedown(layer);
-
-    },
-    handlestart: function(layer) {
-      // code to run when resizing starts
-      console.log("STARTED RESIZING");
-      layer.oldheight = layer.height;
-      layer.oldwidth = layer.width;
-      layer.oldx = layer.x;
-      layer.oldy = layer.y;
-
-    },
-
-    handlestop: function(layer) {
-      // code to run when resizing stops
-      console.log("STOPPED RESIZING");
-      var newheight = layer.height;
-      var newwidth = layer.width;
-      var newx = layer.x;
-      var newy = layer.y;
-
-      var oldheight = layer.oldheight;
-      var oldwidth = layer.oldwidth;
-      var oldx = layer.oldx;
-      var oldy = layer.oldy;
-      console.log(newwidth, newheight);
-      $canvas.undoManager.add({
-        undo: function() {
-          console.log("restoring old stuff");
-          $canvas.setLayer(layer.name, {
-            x: oldx,
-            y: oldy,
-            width: oldwidth,
-            height: oldheight
-          }).drawLayers();
-        },
-        redo: function() {
-          console.log("restoring new stuff");
-          $canvas.setLayer(layer.name, {
-            x: newx,
-            y: newy,
-            width: newwidth,
-            height: newheight
-          }).drawLayers();
-        }
-      });
-      layer.mousedown(layer);
-    },
-    rotatehandlestart: function(layer) {
-      // code to run when rotation starts
-      console.log("STARTED ROTATING");
-      layer.oldangle = layer.rotate;
-      layer.oldhandlex = layer._handles[4].x;
-      layer.oldhandley = layer._handles[4].y;
-
-    },
-    rotatehandlestop: function(layer) {
-      // code to run when rotation stops
-      console.log("STOPPED ROTATING");
-      var newangle = layer.rotate;
-      var newhandlex = layer._handles[4].x;
-      var newhandley = layer._handles[4].y;
-
-      var oldangle = layer.oldangle;
-      var oldhandlex = layer.oldhanlex;
-      var oldhandley = layer.oldhandley;
-      $canvas.undoManager.add({
-        undo: function() {
-          $canvas.setLayer(layer.name, {
-            rotate: oldangle,
-          }).drawLayers();
-
-        },
-        redo: function() {
-          $canvas.setLayer(layer.name, {
-            rotate: newangle,
-          }).drawLayers();
-        }
-      });
-      layer.mousedown(layer);
-
-    },
-    mousedown: function(layer) {
-      var previouslySelectedLayer = $canvas.selectedLayer;
-
-      console.log("You selected " + layer.name);
-      $canvas.selectedLayer = layer;
-
-      //clear previous "selection"
-      if (previouslySelectedLayer) {
-        $canvas.enableLayerHandles(previouslySelectedLayer, false);
-      }
-
-      // "select" new guy
-      $canvas.enableLayerHandles(layer, true);
-
-      $("#name-toolbar").hide();
-
-      // set opacity slider position
-      $('#opacitySlider').slider('value', 100 - 100 * layer.opacity);
-
     }
 
   };
