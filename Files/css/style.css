@@ -38,19 +38,22 @@ body {
     color: white;
     margin-left: 55px;
     margin-top:6px;
-    background: rgb(0,210,0);
-    border-radius: 3px;
+    background: rgb(0,180,0);
+    box-shadow: 0px 0px 0px 0px rgba(90, 111, 120, .4);
+    border:2px solid black;
+    border-radius: 7px;
     font-size: 36px;
     text-decoration: none;
-    cursor: default;
+    cursor: pointer;
 }
 
 #saveSignatureButton:hover {
-    background: rgb(0,255,0);
+    background: rgb(0,190,0);
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
 }
 
 #saveSignatureButton:active {
-    background: rgb(0,190,0);
+    background: rgb(0,150,30);
 }
 
 
@@ -66,24 +69,27 @@ body {
     height: 20px;
     color: white;
     margin-right: 8px;
-    background: rgb(0,210,0);
+    background: rgb(0,190,0);
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
     -khtml-border-radius: 3px;
-    border-radius: 3px;
-   
+    border-radius: 7px;
+    box-shadow: 0px 0px 0px 0px rgba(90, 111, 120, .4);
+    border:2px solid black;
     font-size: 16px;
     padding: 6px 10px 4px 10px;
     text-decoration: none;
-  cursor: default;
+  cursor: pointer;
 }
 
 .Round_Green_Button:hover {
-    background: rgb(0,255,0);
+    background: rgb(0,190,0);
+    box-shadow: inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
+
 }
 
 .Round_Green_Button:active {
-    background: rgb(0,190,0);
+    background: rgb(0,150,30);
 }
 
 
@@ -139,9 +145,7 @@ body {
     margin-right: 0px;
     transition: background 0.25s linear;
 }
-.CopyButton:hover {
-    background-color: #CCCCCC;
-}
+
 
 .ui-tabs-panel, .ui-widget-content, .ui-corner-bottom, .ui-tabs .ui-tabs-panel {
   margin: 0px;

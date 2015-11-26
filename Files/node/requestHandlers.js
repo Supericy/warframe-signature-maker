@@ -550,11 +550,6 @@ function unserializeCanvas(serializedCanvas) {
 
 }
 
-
-exports.start = start;
-exports.upload = upload;
-exports.show = show;
-
 exports.warfaceSigUpload = warfaceSigUpload;
 exports.warfaceSigShow = warfaceSigShow;
 exports.warfaceStatUpload = warfaceStatUpload;
