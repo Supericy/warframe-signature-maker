@@ -3583,6 +3583,7 @@ function _wrapText( ctx, params ) {
 		// Maximum line width ( optional )
 		maxWidth = params.maxWidth,
 		// Lines created by manual line breaks ( \n )
+
 		manualLines = allText.split( '\n' ),
 		// All lines created manually and by wrapping
 		allLines = [],

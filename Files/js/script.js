@@ -590,7 +590,7 @@ $(document).ready(function() {
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
 
-      createStatIconImage(type, value, function (dataUrl) {
+      createStatIconImage(type, value, 'black', '1', 'orange', 'Arial, sans-serif',function (dataUrl) {
           $this.attr('src', dataUrl);
           $this.click(function () {
               $canvas.insertImage($this[0], {

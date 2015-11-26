@@ -35,56 +35,50 @@ $(function () {
     a.src = STAT_TYPES.KILL.icon;
 });
 
-function createStatIconImage(type, value, callback) {
-    var $statCanvas = $('<canvas height="116px" width="220px" />');
+function createStatIconImage(type, value, fillStyle, strokwWidth, strokeStyle, fontFamily, callback) {
+    var $statCanvas = $('<canvas height="100px" width="220px" />');
 
-    $statCanvas.drawText({
-        fillStyle: '#9cf',
-        strokeStyle: '#25a',
-        strokeWidth: 2,
-        x: 150, y: 50,
-        fontSize: 48,
-        fontFamily: 'Verdana, sans-serif',
-        text: value
-    });
+    
+    var img = new Image();
+    img.src = type.icon;
+    img.onload = function(){
 
-    $statCanvas.drawImage({
-        source: type.icon,
-        x: 0,
-        y: 0,
-        width: 70,
-        height: 116,
-        fromCenter: false,
-        load: function () {
-            callback($statCanvas.getCanvasImage('png'));
-        }
-    });
+        console.log("img loaded");
+        var fontSize = 42;
+       
+        var numDigits = value.toString().length;
+        var padding = 15 * numDigits; // function of the # digits
+        var imgWidth = img.width*0.5;
+        var imgHeight = img.height*0.5;
+       
+        
+        var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
+        
 
-        // var imgWidth = img.width;
-        // var imgHeight = img.height;
-        // var fontSize = 72;
-        //
-        // // create our stat image
-        // var $statCanvas = $('<canvas height="116px" width="220px" />');
-        // var can = $statCanvas[0];
-        // // var callback = callback || function(a) {};
-        //
-        // // todo: make font look better
-        // var ctx = can.getContext('2d');
-        // ctx.font = fontSize + "px serif";
-        // ctx.fillStyle = "white";
-        // // Specify the shadow colour.
-        // ctx.shadowColor = "black";
-        //
-        // // Specify the shadow offset.
-        // ctx.shadowOffsetX = 2;
-        // ctx.shadowOffsetY = 2;
-        // ctx.fillText(value, imgWidth, imgHeight-18);
-        //
-        // ctx.drawImage(img, 0, 0, imgWidth, imgHeight);
-        // var dataUrl = trim(can).toDataURL();
-        // //var dataUrl = can.toDataURL();
-        // // console.log(dataUrl);
-        // callback(dataUrl);
-    // };
+        console.log("textwidth: for ", value + " is " , textWidth);
+        $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
+        $statCanvas[0].height = imgHeight;
+
+        $statCanvas.drawText({
+            fillStyle: fillStyle,
+            strokeStyle: strokeStyle,
+            strokeWidth: strokwWidth,
+            x: imgWidth+padding, y: $statCanvas[0].height/2,
+            fontSize: fontSize,
+            fontFamily: fontFamily,
+            text: value.toString()
+        });
+
+        $statCanvas.drawImage({
+            source: img,
+            x: 0,
+            y: 0,
+            width: imgWidth,
+            height: imgHeight,
+            fromCenter: false,
+            load: function () {
+                callback($statCanvas.getCanvasImage('png'));
+            }
+        });
+    };
 }
