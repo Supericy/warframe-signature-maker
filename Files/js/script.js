@@ -184,7 +184,7 @@ $.fn.extend({
           $("#name-toolbar").hide('fade', 250);
 
           // set opacity slider position
-          $('#opacitySlider').slider('value', 100 * layer.opacity);
+          $('#opacitySlider').slider('value', layer.opacity);
 
         }
 
@@ -409,7 +409,7 @@ $.fn.extend({
               $("#name-toolbar").show('fade', 250);
 
               // set opacity slider position
-              $('#opacitySlider').slider('value', 100 * layer.opacity);
+              $('#opacitySlider').slider('value', layer.opacity);
             }
 
           })
@@ -573,18 +573,6 @@ $(document).ready(function() {
   var username = localStorage.getItem("username");
   //TESTING PURPOSES
   if(username){}else{username="Supericy"};
-
-  // Create a rectangle layer
-/*
-$('canvas').addLayer({
-  type: 'rectangle',
-  fillStyle: '#585',
-  x: 100, y: 100,
-  width: 100, height: 50
-})
-.drawLayers();
-*/
-
 
   // setup text samples
 
@@ -902,17 +890,17 @@ function registerHooksForToolbar(undoManager) {
     step: 0.01,
     slide: function(event, ui) {
       if ($canvas.selectedLayer) {
-        setOpacity($canvas.selectedLayer, 1 - ui.value);
+        setOpacity($canvas.selectedLayer, ui.value);
       }
     },
     start: function(event, ui) {
       if ($canvas.selectedLayer) {
-        $canvas.selectedLayer.oldOpacity = 1 - ui.value;
+        $canvas.selectedLayer.oldOpacity = ui.value;
       }
     },
     stop: function(event, ui) {
       if ($canvas.selectedLayer) {
-        var newOpacity = 1 - ui.value;
+        var newOpacity = ui.value;
         var oldOpacity = $canvas.selectedLayer.oldOpacity;
 
         undoManager.add({
