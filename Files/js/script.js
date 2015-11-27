@@ -723,7 +723,7 @@ function copyImageSig()
 
 
 
-// TO DO: add layer.groups = ['background']; to serialization and unserialization
+
 
 function serializeCanvas() {
   var canvasLayers = $canvas.getLayers().slice(0);
@@ -754,6 +754,7 @@ function serializeLayer(layer) {
   sLayer.rotate = layer.rotate;
   sLayer.scaleX = layer.scaleX;
   sLayer.scaleY = layer.scaleY;
+  sLayer.groups = layer.groups;
   return sLayer;
 
 }
@@ -974,7 +975,7 @@ function authorizeUser() {
 
                //console.log("drawing on canvas");
                 for (var i = 0; i < unserializedCanvas.length; i++) {
-                  console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
+                 // console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
                   $canvas.addLayer(unserializedCanvas[i]);
                   $canvas.enableLayerHandles($canvas.getLayer(unserializedCanvas[i].name), false);
                 }
@@ -1169,7 +1170,8 @@ function unserializeLayer(sLayer) {
               }
 
               // "select" new guy
-              $canvas.enableLayerHandles(layer, true);
+              if(layer.groups[0] === 'background'){}else{
+              $canvas.enableLayerHandles(layer, true);}
 
               if(layer.name === "usernameText"){
                 $("#name-toolbar").show('fade', 250);
@@ -1184,6 +1186,11 @@ function unserializeLayer(sLayer) {
           
 
   };
+
+  if(sLayer.groups){
+    layer.groups = sLayer.groups.slice(0);
+  }
+
   return layer;
 }
 
