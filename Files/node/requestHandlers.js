@@ -445,11 +445,12 @@ function drawLayerManually($c, lay, stats, $) {
 		img.src = lay.source;
 	} else if (statsRecording.indexOf(lay.name)>=0) {
 		var statName = lay.name;
-		console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats.statName);
+		console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats[statName]);
 		console.log("stats are: ", stats);
 		console.log("the length of ", statName.length);
-		stats.statName = stats.statName ? stats.statName : 0;
-
+		var statValue = stats[statName];
+		var value = statValue ? statValue : 0;
+		console.log("value is : ", value);
 		var $statCanvas = $('<canvas height="116px" width="220px" />');
 
 		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
@@ -464,7 +465,7 @@ function drawLayerManually($c, lay, stats, $) {
 	        x: 150, y: 50,
 	        fontSize: 48,
 	        fontFamily: 'Verdana, sans-serif',
-	        text: stats.statName
+	        text: value
 	    });
 
 	    $statCanvas.drawImage({
