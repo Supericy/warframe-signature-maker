@@ -63,7 +63,7 @@ function initFontFamilies() {
 function getStyleFromElements() {
   var usernameLayer = $canvas.getLayer("usernameText");
   var shadows = [];
-  $('#shadows .shadow').each(function() {
+  $('#textShadows .shadow').each(function() {
     // basically just calls '.val()' on all elements with the class
     var shadow = $(this).find('.text-style-shadow').map(function() {
       return $(this).val();
@@ -89,7 +89,7 @@ function getStyleFromElements() {
 function createElementsFromStyle(style) {
 
   console.log("creating elements from style: " + style);
-  var $shadowParent = $('#shadows');
+  var $shadowParent = $('#textShadows');
   var $shadowBase = $($('#shadow-template').html());
 
   $shadowParent.empty();

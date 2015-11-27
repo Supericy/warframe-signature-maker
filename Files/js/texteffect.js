@@ -391,7 +391,7 @@ function trim(c) {
       bottom: null
     },
     x, y;
-    console.log(c.width);
+   // console.log(c.width);
   for (i = 0; i < l; i += 4) {
     if (pixels.data[i + 3] !== 0) {
       x = (i / 4) % c.width;

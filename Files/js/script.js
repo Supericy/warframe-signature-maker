@@ -182,7 +182,15 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-          $("#name-toolbar").hide('fade', 250);
+          
+         
+          if(statsRecording.indexOf(layer.name)>=0){
+            $("#stat-toolbar").show('fade', 250);
+            $("#name-toolbar").hide();
+          } else {
+            $("#stat-toolbar").hide('fade', 250);
+            $("#name-toolbar").hide('fade', 250);
+          }
 
           // set opacity slider position
           $('#opacitySlider').slider('value', layer.opacity);
@@ -414,6 +422,7 @@ $.fn.extend({
               $canvas.enableLayerHandles(layer, true);
 
               $("#name-toolbar").show('fade', 250);
+              $("#stat-toolbar").hide();
 
               // set opacity slider position
               $('#opacitySlider').slider('value', layer.opacity);
@@ -465,7 +474,7 @@ $.fn.extend({
 
 
 });
-
+var statsRecording = ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
 $(document).ready(function() {
     // todo: unhide doors n stuff
    // $('#authWindow, #leftDoor, #rightDoor').hide();
@@ -611,17 +620,20 @@ $(document).ready(function() {
             $canvas.undoManager.add({
               undo: function() {
                 deleteLayer(layer);
+                $("#stat-toolbar").hide();
+
               },
               redo: function() {
                 $canvas.addLayer(layer).drawLayers();
                 $canvas.enableLayerHandles($canvas.selectedLayer, false);
                 $canvas.selectedLayer = layer;
+                 $("#stat-toolbar").show();
             }
            });
 
 
           });
-      })
+      });
   });
 
 
@@ -632,11 +644,13 @@ $(document).ready(function() {
     $canvas.undoManager.add({
       undo: function() {
         deleteLayer(layer);
+        $("#name-toolbar").hide();
       },
       redo: function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
+        $("#name-toolbar").show();    
       }
     });
   });
@@ -644,7 +658,7 @@ $(document).ready(function() {
 
 
   $("#name-toolbar").hide();
-  $("#statsToolbar").hide();
+  $("#stat-toolbar").hide();
 
 
 
@@ -947,6 +961,12 @@ function deleteLayer(layer) {
     $canvas.removeLayer(layer.name);
     $canvas.drawLayers();
     $canvas.selectedLayer = null;
+    if(layer.name === "usernameText"){
+                      $("#name-toolbar").hide();
+    }
+    if(statsRecording.indexOf(layer.name)>=0){
+                      $("#stat-toolbar").hide();
+    }
   }
 }
 
@@ -1196,8 +1216,13 @@ function unserializeLayer(sLayer) {
 
               if(layer.name === "usernameText"){
                 $("#name-toolbar").show('fade', 250);
+                $("#stat-toolbar").hide();
                 createElementsFromStyle(layer.style);
+              } else if(statsRecording.indexOf(layer.name)>=0){
+                $("#stat-toolbar").show('fade', 250);
+                $("#name-toolbar").hide();
               } else {
+                $("#stat-toolbar").hide('fade', 250);
                 $("#name-toolbar").hide('fade', 250);
               }
 
