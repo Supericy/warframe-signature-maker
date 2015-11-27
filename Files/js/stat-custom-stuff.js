@@ -5,7 +5,7 @@ function initStatColorPickers(selector, color) {
     var $this = $(this);
 
     $this.spectrum({
-      color: color || "#fff",
+      color: color || tinycolor('green'),
       containerClassName: "color-picker-popup",
       className: "color-picker-button",
       showInitial: true,
@@ -15,7 +15,7 @@ function initStatColorPickers(selector, color) {
       maxSelectionSize: 10,
       chooseText: "Done",
       cancelText: "",
-      preferredFormat: "rgba",
+      preferredFormat: "rgb",
       localStorageKey: "spectrum.demo",
 
       move: function(color) {
@@ -94,48 +94,24 @@ $(function() {
 
 function updateStatLayer() {
   // use the specified style, or create it from the elements
+  console.log("updating stat layer");
   var layer = $canvas.selectedLayer;
   var style = getStatStyleFromElements();
   layer.style = style;
-  var type = layer.name;
+  var type = STAT_TYPES[layer.name];
   var value = 10; // to do this sucks
-  layer.source = createStatIconImage(type, value, style,function (dataUrl) {
-          $this.attr('src', dataUrl);
-          $this.click(function () {
-
-
-              $canvas.insertImage($this[0], {
-                  unique: true,
-                  name: type.name,
-                  style: style
-              });
-            var layer = $canvas.selectedLayer;
-            $canvas.undoManager.add({
-              undo: function() {
-                deleteLayer(layer);
-                $("#stat-toolbar").hide();
-
-              },
-              redo: function() {
-                $canvas.addLayer(layer).drawLayers();
-                $canvas.enableLayerHandles($canvas.selectedLayer, false);
-                $canvas.selectedLayer = layer;
-                 $("#stat-toolbar").show();
-            }
-           });
-
-
-          });
-      });
+  createStatIconImage(type, value, style, function(dataURL){
+    layer.source = dataURL;
+    $canvas.drawLayers();
+    console.log("after update draw");
+  });
   
-  $canvas.drawLayers();
 }
-
 
 
 function changeStatIconColor(img, color){
   // assumes the icon is already loaded
-  var $statCanvas = $('<canvas height="100px" width="220px" />');
+   var $statCanvas = $('<canvas height="100px" width="220px" />');
   $statCanvas[0].width = img.width;
   $statCanvas[0].height = img.height;
 
@@ -155,7 +131,7 @@ function changeStatIconColor(img, color){
   img.onload = null;
 
  // if(!originalPixels) return; // Check if image has loaded
-  var newColor = color;//hexToRGB(document.getElementById("color").value);
+  var newColor = tinyToRGB(color);
 
   for(var I = 0, L = originalPixels.data.length; I < L; I += 4)
   {
@@ -171,12 +147,13 @@ function changeStatIconColor(img, color){
   return canvas.toDataURL("image/png");
 }
 
-function hexToRGB(hex)
+function tinyToRGB(tiny)
 {
-  var long = parseInt(hex.replace(/^#/, ""), 16);
+  //var long = parseInt(hex.replace(/^#/, ""), 16);
+  var test = tiny.toRgb();
   return {
-      R: (long >>> 16) & 0xff,
-      G: (long >>> 8) & 0xff,
-      B: long & 0xff
+      R: test.r,//(long >>> 16) & 0xff,
+      G: test.g,//(long >>> 8) & 0xff,
+      B: test.b,//long & 0xff
   };
 }

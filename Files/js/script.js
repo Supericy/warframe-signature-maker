@@ -599,13 +599,12 @@ $(document).ready(function() {
       var $this = $(this);
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
-
       var style = {
-        fillStyle: 'black', 
+        fillStyle: tinycolor('orange'), 
         strokeWidth: '1', 
-        strokeStyle: 'orange', 
+        strokeStyle: tinycolor('black'), 
         font: {family:'Arial, sans-serif'},
-        iconColor:"orange"
+        iconColor:tinycolor('gray')
       };
       createStatIconImage(type, value, style,function (dataUrl) {
           $this.attr('src', dataUrl);
