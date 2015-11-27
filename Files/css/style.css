@@ -538,9 +538,13 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   padding: 2px;
 }
 
-#stat-style-fontFamily {
+#stat-style-font-family {
   width: 100%;
   font-size: 14px;
+}
+#stat-style-strokeWidth {
+  width: 55px;
+
 }
 
 

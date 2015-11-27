@@ -50,7 +50,8 @@ function createStatIconImage(type, value, style, callback) {
           G: 255 * Math.random(),
           B: 255 * Math.random()
          };
-        img.src = changeStatIconColor(img, RGBColor);
+         console.log(style.iconColor);
+        img.src = changeStatIconColor(img, style.iconColor);
 
         var fontSize = 42;
        

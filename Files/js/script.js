@@ -604,7 +604,8 @@ $(document).ready(function() {
         fillStyle: 'black', 
         strokeWidth: '1', 
         strokeStyle: 'orange', 
-        fontFamily: 'Arial, sans-serif'
+        font: {family:'Arial, sans-serif'},
+        iconColor:"orange"
       };
       createStatIconImage(type, value, style,function (dataUrl) {
           $this.attr('src', dataUrl);
