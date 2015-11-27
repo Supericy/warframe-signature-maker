@@ -269,8 +269,8 @@ function createTextEffect(text, style) {
   // style.font = style.font || {
   //   family: 'Impact'
   // };
-  var width = 1200;
-  var height = 1200;
+  var width = 2200;
+  var height = 2200;
   var layer = $canvas.getLayer("usernameText");
 
   if(layer)
@@ -391,7 +391,7 @@ function trim(c) {
       bottom: null
     },
     x, y;
-
+    console.log(c.width);
   for (i = 0; i < l; i += 4) {
     if (pixels.data[i + 3] !== 0) {
       x = (i / 4) % c.width;
