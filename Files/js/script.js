@@ -249,7 +249,7 @@ $.fn.extend({
       if ($canvas.getLayer("usernameText") !== undefined) {
         $canvas.setLayer("usernameText", {
           //fontFamily: $(span).css("font-family")
-          source: createTextEffect(username, style, "Arial")
+          source: createTextEffect(username, style)
         });
         $canvas.drawLayers();
 
@@ -326,6 +326,12 @@ $.fn.extend({
             },
 
             handlestop: function(layer) {
+
+              // redraw the text effect at the new dimensions
+              console.log(layer.style);
+              var username = localStorage.getItem("username");
+              layer.source = createTextEffect(username, layer.style);
+
               // code to run when resizing stops
               var newheight = layer.height;
               var newwidth = layer.width;
@@ -411,6 +417,8 @@ $.fn.extend({
 
               // set opacity slider position
               $('#opacitySlider').slider('value', layer.opacity);
+              //console.log(layer.style);
+              //createElementsFromStyle(layer.style); // to do : figure out why this doesnt work
             }
 
           })
@@ -565,7 +573,7 @@ $(document).ready(function() {
 
   var username = localStorage.getItem("username");
   //TESTING PURPOSES
-  if(username){}else{username="Supericy"};
+  if(username){}else{username="Supericy";localStorage.setItem("username","Supericy")};
 
   // setup text samples
 
@@ -592,11 +600,26 @@ $(document).ready(function() {
       createStatIconImage(type, value, style,function (dataUrl) {
           $this.attr('src', dataUrl);
           $this.click(function () {
+
+
               $canvas.insertImage($this[0], {
                   unique: true,
                   name: type.name,
                   style: style
               });
+            var layer = $canvas.selectedLayer;
+            $canvas.undoManager.add({
+              undo: function() {
+                deleteLayer(layer);
+              },
+              redo: function() {
+                $canvas.addLayer(layer).drawLayers();
+                $canvas.enableLayerHandles($canvas.selectedLayer, false);
+                $canvas.selectedLayer = layer;
+            }
+           });
+
+
           });
       })
   });
@@ -605,10 +628,7 @@ $(document).ready(function() {
 
   $("#name-list img").click(function() {
     $canvas.toggleText(this);
-    var image = this;
-    image.src = createTextEffect();
     var layer = $canvas.selectedLayer;
-    // doStuff();
     $canvas.undoManager.add({
       undo: function() {
         deleteLayer(layer);
@@ -617,7 +637,6 @@ $(document).ready(function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
-        // doStuff();
       }
     });
   });
@@ -654,12 +673,12 @@ function uploadSignatureAndShowLinks(){
 
   instructions = $canvas.getLayers().slice(0).reverse();
   //console.log(instructions);
-  console.log("serializing canvas");
+  //console.log("serializing canvas");
   var serializedCanvas = serializeCanvas();
-  console.log("serialized canvas:", serializedCanvas);
+  //console.log("serialized canvas:", serializedCanvas);
 
   // send msg to server
-  console.log("contacting server");
+  //console.log("contacting server");
   $.ajax({
     type: "POST",
     //url: "http://107.170.105.215sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
@@ -958,7 +977,7 @@ function authorizeUser() {
 
 
   // fetch any signatures they might already have
-  console.log("fetching server instructions")
+  //console.log("fetching server instructions")
     var unserializedCanvas = null;
 
     $.ajax({
@@ -977,8 +996,9 @@ function authorizeUser() {
                //console.log("drawing on canvas");
                 for (var i = 0; i < unserializedCanvas.length; i++) {
                  // console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
-                  $canvas.addLayer(unserializedCanvas[i]);
-                  $canvas.enableLayerHandles($canvas.getLayer(unserializedCanvas[i].name), false);
+                  var layer = unserializedCanvas[i];
+                  $canvas.addLayer(layer);
+                  $canvas.enableLayerHandles($canvas.getLayer(layer.name), false);
                 }
                 $canvas.drawLayers();
 
@@ -1176,6 +1196,7 @@ function unserializeLayer(sLayer) {
 
               if(layer.name === "usernameText"){
                 $("#name-toolbar").show('fade', 250);
+                createElementsFromStyle(layer.style);
               } else {
                 $("#name-toolbar").hide('fade', 250);
               }

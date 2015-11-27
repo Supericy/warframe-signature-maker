@@ -43,7 +43,7 @@ function createStatIconImage(type, value, style, callback) {
     img.src = type.icon;
     img.onload = function(){
 
-        console.log("img loaded");
+        //console.log("img loaded");
         // change color test
         var RGBColor = {
           R: 255 * Math.random(),
@@ -59,11 +59,11 @@ function createStatIconImage(type, value, style, callback) {
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
        
-        
+        // to do get this stuff from a temp canvas as its not going to work after all
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
         
 
-        console.log("textwidth: for ", value + " is " , textWidth);
+        //console.log("textwidth: for ", value + " is " , textWidth);
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
 

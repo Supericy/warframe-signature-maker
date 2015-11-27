@@ -59,7 +59,7 @@ function initFontFamilies() {
   }
   $textStyleFontFamily.change(updateTextLayer);
 }
-
+/*
 function getStyleFromElements() {
   var usernameLayer = $canvas.getLayer("usernameText");
   var shadows = [];
@@ -85,7 +85,8 @@ function getStyleFromElements() {
   return style;
 }
 
-function createElementsFromStyle(style) {
+//function createElementsFromStyle(style) {
+  /*
   var $shadowParent = $('#shadows');
   var $shadowBase = $($('#shadow-template').html());
 
@@ -118,21 +119,23 @@ function createElementsFromStyle(style) {
     });
 
     $shadowParent.append($shadow);
+    
   }
-}
+  */
+//}
 
-function updateTextLayer() {
+//function updateTextLayer() {
   // use the specified style, or create it from the elements
-  var style = getStyleFromElements();
+ // var style = getStyleFromElements();
 
-  var usernameLayer = $canvas.getLayer("usernameText");
-  usernameLayer.source = createTextEffect($canvas.data("username"), style);
-  $canvas.drawLayers();
-}
+  //var usernameLayer = $canvas.getLayer("usernameText");
+ //usernameLayer.source = createTextEffect($canvas.data("username"), style);
+  //$canvas.drawLayers();
+//}
 
 $(function() {
   var $canvas = $('#workspaceCanvas');
-
+/*
   initColorPickers('#text-style-color');
   initFontFamilies();
 
@@ -141,6 +144,7 @@ $(function() {
     style.shadow.push('0px 0px 0px #fff');
     createElementsFromStyle(style);
   });
+*/
 });
 
 

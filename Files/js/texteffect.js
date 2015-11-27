@@ -269,18 +269,31 @@ function createTextEffect(text, style) {
   // style.font = style.font || {
   //   family: 'Impact'
   // };
+  var width = 1200;
+  var height = 1200;
+  var layer = $canvas.getLayer("usernameText");
 
+  if(layer)
+  {
+     layer.style = style;
+    //width = layer.width;
+    //height = layer.height;
+    // to do figure out why this fucks it up
+  }
+
+  //console.log(width);
+  //console.log(height);
   var canvas = document.createElement('CANVAS');
-  canvas.width = 1200;
-  canvas.height = 1200;
+  canvas.width = width;
+  canvas.height = height;
   var metrics = {
     direction: 'ltr',
     top: 0,
     em: 40,
     middle: 0,
     bottom: 0,
-    height: 1200,
-    width: 1200
+    height: width,
+    width: height
   };
 
   function parseShadow(shadows) {

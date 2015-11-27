@@ -85,7 +85,10 @@ function getStyleFromElements() {
   return style;
 }
 
+
 function createElementsFromStyle(style) {
+
+  console.log("creating elements from style: " + style);
   var $shadowParent = $('#shadows');
   var $shadowBase = $($('#shadow-template').html());
 
@@ -123,11 +126,14 @@ function createElementsFromStyle(style) {
 
 function updateTextLayer() {
   // use the specified style, or create it from the elements
-  var style = getStyleFromElements();
-
   var usernameLayer = $canvas.getLayer("usernameText");
-  usernameLayer.source = createTextEffect($canvas.data("username"), style);
+  var style = getStyleFromElements();
+  var username = localStorage.getItem("username");
+  console.log("style is : " + style);
   usernameLayer.style = style;
+  console.log("update text layer calling create");
+  usernameLayer.source = createTextEffect(username, style);
+  
   $canvas.drawLayers();
 }
 
@@ -137,9 +143,13 @@ $(function() {
   initColorPickers('#text-style-color');
   initFontFamilies();
 
+
+
   $('body').on('click', '.customize-add-shadow', function() {
+    var usernameLayer = $canvas.getLayer("usernameText");
     var style = getStyleFromElements();
     style.shadow.push('0px 0px 0px #fff');
     createElementsFromStyle(style);
+    layer.style = style;
   });
 });
