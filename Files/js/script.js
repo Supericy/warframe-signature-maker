@@ -32,6 +32,7 @@ $.fn.extend({
       params.isBackground = params.isBackground || false;
       params.unique = params.unique || false;
       params.name = params.name || img.src + (params.unique ? '' : new Date().getTime());
+      params.style = params.style || {};
 
     return this.each(function() {
       var layer = {
@@ -190,6 +191,10 @@ $.fn.extend({
 
       };
 
+      if(params.style){
+        layer.style = params.style;
+      }
+
 
       /* test if its background */
       if (params.isBackground) {
@@ -208,8 +213,6 @@ $.fn.extend({
         $canvas.enableLayerHandles(layer, false);
         $canvas.drawLayers();
       } else {
-
-
 
         $canvas.addLayer(layer);
 
@@ -259,10 +262,8 @@ $.fn.extend({
         var INITIAL_NAME_HEIGHT = 100;
 
         $('#workspaceCanvas').addLayer({
+            style: style,
             type: 'image',
-            //fillStyle: $(span).css("color"),
-            //fontFamily: $(span).css("font-family"),
-            //text: username,
             name: "usernameText",
             draggable: true,
             type: 'image',
@@ -557,15 +558,7 @@ $(document).ready(function() {
 
   });
 
-  // terrible stats thing
-
-  $("#stats-list td").click(function() {
-
-    $canvas.addStat("Testing");
-
-  });
-
-
+  
   registerHooksForToolbar($canvas.undoManager);
 
 
@@ -590,12 +583,19 @@ $(document).ready(function() {
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
 
-      createStatIconImage(type, value, 'black', '1', 'orange', 'Arial, sans-serif',function (dataUrl) {
+      var style = {
+        fillStyle: 'black', 
+        strokeWidth: '1', 
+        strokeStyle: 'orange', 
+        fontFamily: 'Arial, sans-serif'
+      };
+      createStatIconImage(type, value, style,function (dataUrl) {
           $this.attr('src', dataUrl);
           $this.click(function () {
               $canvas.insertImage($this[0], {
                   unique: true,
-                  name: type.name
+                  name: type.name,
+                  style: style
               });
           });
       })
@@ -755,6 +755,7 @@ function serializeLayer(layer) {
   sLayer.scaleX = layer.scaleX;
   sLayer.scaleY = layer.scaleY;
   sLayer.groups = layer.groups;
+  sLayer.style = layer.style;
   return sLayer;
 
 }
@@ -1190,6 +1191,9 @@ function unserializeLayer(sLayer) {
   if(sLayer.groups){
     layer.groups = sLayer.groups.slice(0);
   }
+  if(sLayer.style){
+    layer.style = sLayer.style;
+  }
 
   return layer;
 }
@@ -1197,7 +1201,7 @@ function unserializeLayer(sLayer) {
 function unserializeCanvas(serializedCanvas) {
 
   var unserialized = [];
-  console.log(serializedCanvas[0]);
+  //console.log(serializedCanvas[0]);
   for (var n = 0; n < serializedCanvas.length; n++) {
     unserialized.push(unserializeLayer(serializedCanvas[n]));
   }

@@ -35,7 +35,7 @@ $(function () {
     a.src = STAT_TYPES.KILL.icon;
 });
 
-function createStatIconImage(type, value, fillStyle, strokwWidth, strokeStyle, fontFamily, callback) {
+function createStatIconImage(type, value, style, callback) {
     var $statCanvas = $('<canvas height="100px" width="220px" />');
 
     
@@ -68,12 +68,12 @@ function createStatIconImage(type, value, fillStyle, strokwWidth, strokeStyle, f
         $statCanvas[0].height = imgHeight;
 
         $statCanvas.drawText({
-            fillStyle: fillStyle,
-            strokeStyle: strokeStyle,
-            strokeWidth: strokwWidth,
+            fillStyle: style.fillStyle,
+            strokeStyle: style.strokeStyle,
+            strokeWidth: style.strokwWidth,
             x: imgWidth+padding, y: $statCanvas[0].height/2,
             fontSize: fontSize,
-            fontFamily: fontFamily,
+            fontFamily: style.fontFamily,
             text: value.toString()
         });
 

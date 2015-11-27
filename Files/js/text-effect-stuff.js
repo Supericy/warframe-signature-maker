@@ -127,6 +127,7 @@ function updateTextLayer() {
 
   var usernameLayer = $canvas.getLayer("usernameText");
   usernameLayer.source = createTextEffect($canvas.data("username"), style);
+  usernameLayer.style = style;
   $canvas.drawLayers();
 }
 

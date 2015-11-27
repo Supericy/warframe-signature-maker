@@ -511,17 +511,22 @@ nav {
 
 .customize-add-shadow, .customize-remove-shadow {
   border-radius: 4px;
-  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+ 
   border:2px solid black;
   width:30px;
   height:30px;
+  cursor:pointer;
 }
 .customize-add-shadow {
   background: green;
-  width:60px;
+  width:55px;
+  height:35px;
 }
 .customize-remove-shadow {
   background: red;
+}
+.customize-add-shadow:hover, .customize-remove-shadow:hover{
+   box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
 }
 
 
