@@ -459,7 +459,7 @@ $.fn.extend({
 
 $(document).ready(function() {
     // todo: unhide doors n stuff
-    $('#authWindow, #leftDoor, #rightDoor').hide();
+   // $('#authWindow, #leftDoor, #rightDoor').hide();
 
 
   $canvas = $('#workspaceCanvas');
@@ -662,9 +662,9 @@ function uploadSignatureAndShowLinks(){
   console.log("contacting server");
   $.ajax({
     type: "POST",
-    //url: "http://107.170.105.215:8888/warface/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
-    //url: "http://localhost/warface/sigs/upload?userId=" + localStorage.getItem("username"),
-    url: "http://localhost/warface/sigs/upload?userId=bill",
+    //url: "http://107.170.105.215sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+    //url: "http://localhost/sigs/upload?userId=" + localStorage.getItem("username"),
+    url: "http://localhost/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -695,9 +695,9 @@ function showMySignatureLinks(){
     //$("#SignatureId").attr("src", "http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username"));
     //$("#SignatureId").show();
 
-    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;"></a>')
-    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img][/url]')
-    $("#SignatureImageLink").val('<img alt="Warface Signature"' +'src="http://localhost/warface/sigs/show?userId=' + localStorage.getItem("username")+'"' + 'style="border:none;">')
+    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;"></a>')
+    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img][/url]')
+    $("#SignatureImageLink").val('<img alt="Warface Signature"' +'src="http://localhost/sigs/show?userId=' + localStorage.getItem("username")+'"' + 'style="border:none;">')
 
 
 
@@ -723,7 +723,7 @@ function copyImageSig()
 
 
 
-
+// TO DO: add layer.groups = ['background']; to serialization and unserialization
 
 function serializeCanvas() {
   var canvasLayers = $canvas.getLayers().slice(0);
@@ -758,46 +758,6 @@ function serializeLayer(layer) {
 
 }
 
-function unserializeLayer(sLayer) {
-  console.log("unserializing: ", sLayer);
-  var layer = {
-    type: sLayer.type,
-    name: sLayer.name,
-    draggable: sLayer.draggable,
-    source: sLayer.source,
-    x: sLayer.x,
-    y: sLayer.y,
-    width: sLayer.width,
-    height: sLayer.height,
-    opacity: sLayer.opacity,
-    translateX: sLayer.translateX,
-    translateY: sLayer.translateY,
-    scaleY: sLayer.scaleY,
-    scaleX: sLayer.scaleX,
-    rotate: sLayer.rotate,
-    handlePlacement: 'corners&rotational',
-    handle: {
-      type: 'arc',
-      strokeStyle: '#c33',
-      strokeWidth: 2,
-      radius: 5
-    }
-
-  };
-  return layer;
-}
-
-function unserializeCanvas(serializedCanvas) {
-
-  var unserialized = [];
-  console.log(serializedCanvas[0]);
-  for (var n = 0; n < serializedCanvas.length; n++) {
-    unserialized.push(unserializeLayer(serializedCanvas[n]));
-  }
-  return unserialized;
-
-
-}
 
 
 
@@ -991,6 +951,48 @@ function moveLayerUp(layer) {
 
 
 function authorizeUser() {
+
+  // To:do check if user is has warface open or not and if so store username in local storage
+
+
+  // fetch any signatures they might already have
+  console.log("fetching server instructions")
+    var unserializedCanvas = null;
+
+    $.ajax({
+       type:"GET",
+       url: "http://localhost/sigs/data?userId=bill", // to do make username from local storage 
+       success: function (data) {
+        
+           if(data)
+           {   
+
+               var list = JSON.parse(data);
+               list = JSON.parse(list);
+               unserializedCanvas = unserializeCanvas(list);
+               //console.log("unserialized canvas:", unserializedCanvas);
+
+               //console.log("drawing on canvas");
+                for (var i = 0; i < unserializedCanvas.length; i++) {
+                  console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
+                  $canvas.addLayer(unserializedCanvas[i]);
+                  $canvas.enableLayerHandles($canvas.getLayer(unserializedCanvas[i].name), false);
+                }
+                $canvas.drawLayers();
+
+               return console.log("SUCCESS Connection");
+           } else {
+               return console.log("No past signature for available.");
+           }
+       },
+       error: function (data) {
+           return console.log("ERROR Connection");
+       }
+   });
+
+
+
+  // open doors
   $("#authWindow").hide('fade', 500);
 
   setTimeout(function() {
@@ -1021,42 +1023,178 @@ function authorizeUser() {
 
 }
 
+function unserializeLayer(sLayer) {
+  //console.log("unserializing: ", sLayer);
+  var layer = {
+    type: sLayer.type,
+    name: sLayer.name,
+    draggable: sLayer.draggable,
+    source: sLayer.source,
+    x: sLayer.x,
+    y: sLayer.y,
+    width: sLayer.width,
+    height: sLayer.height,
+    opacity: sLayer.opacity,
+    translateX: sLayer.translateX,
+    translateY: sLayer.translateY,
+    scaleY: sLayer.scaleY,
+    scaleX: sLayer.scaleX,
+    rotate: sLayer.rotate,
+    handlePlacement: 'corners&rotational',
+    handle: {
+      type: 'arc',
+      strokeStyle: '#c33',
+      strokeWidth: 2,
+      radius: 5
+    },
+            dragstart: function(layer) {
+              // code to run when dragging starts
+              layer.dragstartx = layer.x;
+              layer.dragstarty = layer.y;
+            },
+            dragstop: function(layer) {
+              // code to run when dragging starts
+              var dragstopx = layer.x;
+              var dragstopy = layer.y;
+              // pointlessly copy oh wait makes it work
+              var dragstartx = layer.dragstartx;
+              var dragstarty = layer.dragstarty;
+
+              $canvas.undoManager.add({
+                undo: function() {
+                  console.log("undoing drag start");
+                  console.log("old values are ", layer.dragstartx, layer.dragstarty);
+                  $canvas.setLayer(layer.name, {
+                    x: dragstartx,
+                    y: dragstarty
+                  }).drawLayers();
+                },
+                redo: function() {
+                  console.log("restoring drag stop");
+                  $canvas.setLayer(layer.name, {
+                    x: dragstopx,
+                    y: dragstopy
+                  }).drawLayers();
+
+                }
+              });
+              layer.mousedown(layer);
+
+            },
+            handlestart: function(layer) {
+              // code to run when resizing starts
+              layer.oldheight = layer.height;
+              layer.oldwidth = layer.width;
+              layer.oldx = layer.x;
+              layer.oldy = layer.y;
+            },
+
+            handlestop: function(layer) {
+              // code to run when resizing stops
+              var newheight = layer.height;
+              var newwidth = layer.width;
+              var newx = layer.x;
+              var newy = layer.y;
+
+              var oldheight = layer.oldheight;
+              var oldwidth = layer.oldwidth;
+              var oldx = layer.oldx;
+              var oldy = layer.oldy;
 
 
+              $canvas.undoManager.add({
+                undo: function() {
+                  console.log("restoring old stuff");
+                  $canvas.setLayer(layer.name, {
+                    x: oldx,
+                    y: oldy,
+                    width: oldwidth,
+                    height: oldheight
+                  }).drawLayers();
+                },
+                redo: function() {
+                  console.log("restoring new stuff");
+                  $canvas.setLayer(layer.name, {
+                    x: newx,
+                    y: newy,
+                    width: newwidth,
+                    height: newheight
+                  }).drawLayers();
+                }
+              });
+              layer.mousedown(layer);
 
+            },
+            rotatehandlestart: function(layer) {
+              // code to run when rotation starts
+              layer.oldangle = layer.rotate;
+              layer.oldhandlex = layer._handles[4].x;
+              layer.oldhandley = layer._handles[4].y;
 
+            },
+            rotatehandlestop: function(layer) {
+              // code to run when rotation stops
+              var newangle = layer.rotate;
+              var newhandlex = layer._handles[4].x;
+              var newhandley = layer._handles[4].y;
 
+              var oldangle = layer.oldangle;
+              var oldhandlex = layer.oldhanlex;
+              var oldhandley = layer.oldhandley;
+              $canvas.undoManager.add({
+                undo: function() {
+                  $canvas.setLayer(layer.name, {
+                    rotate: oldangle,
+                  }).drawLayers();
+                },
+                redo: function() {
+                  $canvas.setLayer(layer.name, {
+                    rotate: newangle,
+                  }).drawLayers();
+                }
+              });
+              layer.mousedown(layer);
 
+            },
 
+            mousedown: function(layer) {
+              var previouslySelectedLayer = $canvas.selectedLayer;
 
-function previewFile() {
-  var imgElement = new Image();
-  var file = document.querySelector('input[type=file]').files[0]; //sames as here
-  var reader = new FileReader();
+              console.log("You selected " + layer.name);
+              $canvas.selectedLayer = layer;
 
-  reader.onloadend = function() {
-    imgElement.src = reader.result;
-    // create a new entry for the image
-    $('#customImagesTable tr:last').after("<tr><td><img src=\"\"></td></tr>");
+              //clear previous "selection"
+              if (previouslySelectedLayer) {
+                $canvas.enableLayerHandles(previouslySelectedLayer, false);
+              }
 
-    $('#customImagesTable tr:last td img').attr("src", imgElement.src);
+              // "select" new guy
+              $canvas.enableLayerHandles(layer, true);
 
-  }
+              if(layer.name === "usernameText"){
+                $("#name-toolbar").show('fade', 250);
+              } else {
+                $("#name-toolbar").hide('fade', 250);
+              }
 
-  if (file) {
-    reader.readAsDataURL(file); //reads the data as a URL
-  } else {
-    imgElement.src = "";
-  }
+              // set opacity slider position
+              $('#opacitySlider').slider('value', layer.opacity);
+            }
 
+          
 
+  };
+  return layer;
 }
 
+function unserializeCanvas(serializedCanvas) {
+
+  var unserialized = [];
+  console.log(serializedCanvas[0]);
+  for (var n = 0; n < serializedCanvas.length; n++) {
+    unserialized.push(unserializeLayer(serializedCanvas[n]));
+  }
+  return unserialized;
 
 
-
-
-function downloadCanvas(link, canvasId, filename) {
-  link.href = document.getElementById(canvasId).toDataURL();
-  link.download = filename;
 }

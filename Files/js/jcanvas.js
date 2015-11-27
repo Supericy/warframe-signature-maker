@@ -3831,6 +3831,16 @@ $.fn.measureText = function measureText( args ) {
 };
 
 /* Image API */
+function scaleIt(source, scaleFactor){
+  var c=document.createElement('canvas');
+  var ctx=c.getContext('2d');
+  var w=source.width*scaleFactor;
+  var h=source.height*scaleFactor;
+  c.width=w;
+  c.height=h;
+  ctx.drawImage(source,0,0,w,h);
+  return(c);
+}
 
 // Draws image on canvas
 $.fn.drawImage = function drawImage( args ) {
@@ -3838,6 +3848,7 @@ $.fn.drawImage = function drawImage( args ) {
 		params, layer,
 		img, imgCtx, source,
 		imageCache = caches.imageCache;
+
 
 	// Draw image function
 	function draw( canvas, ctx, data, params, layer ) {
@@ -3897,11 +3908,6 @@ $.fn.drawImage = function drawImage( args ) {
 			_transformShape( canvas, ctx, params, params.width, params.height );
 			_setGlobalProps( canvas, ctx, params );
 
-
-
-
-
-
 			
 			// Draw image
 			ctx.drawImage(
@@ -3922,8 +3928,20 @@ $.fn.drawImage = function drawImage( args ) {
 			_transformShape( canvas, ctx, params, params.width, params.height );
 			_setGlobalProps( canvas, ctx, params );
 
-
-
+				if(img.width > params.width * 2){
+				// resize using step magic to avoid pixelation
+				//console.log("starting img w/h: " + img.width + " " + img.height);
+				//console.log("target w/h: " + params.width + " " + params.height);
+	
+				var numSteps = Math.ceil(((img.width+1)/(params.width+1))/Math.log(2));
+				//console.log("resizing with : ", numSteps + "steps");
+				var scaleFactor = 0.85;
+				for(var i = 1; i < numSteps; i++){
+					var scaled = scaleIt(img, scaleFactor);
+					img = scaled;
+				}
+				//console.log("new img w/h: " + img.width + " " + img.height);
+			}
 
 			
 
@@ -3957,6 +3975,8 @@ $.fn.drawImage = function drawImage( args ) {
 	function onload( canvas, ctx, data, params, layer ) {
 		return function () {
 			var $canvas = $( canvas );
+
+
 			draw( canvas, ctx, data, params, layer );
 			if ( params.layer ) {
 				// Trigger 'load' event for layers
@@ -3987,6 +4007,7 @@ $.fn.drawImage = function drawImage( args ) {
 
 			data = _getCanvasData( $canvases[ e ] );
 			params = new jCanvasObject( args );
+
 			layer = _addLayer( $canvases[ e ], params, args, drawImage );
 			if ( params.visible ) {
 
