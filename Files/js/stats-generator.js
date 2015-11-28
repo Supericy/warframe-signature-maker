@@ -43,7 +43,7 @@ function createStatIconImage(type, value, style, callback) {
     img.onload = function(){
 
         console.log("icon color" +style.iconColor);
-        var newColor = style.iconColor || tinyColor('gray');
+        var newColor = style.iconColor || tinycolor('gray');
 
         img.src = changeStatIconColor(img, style.iconColor);
 

@@ -6,6 +6,7 @@ var url = require("url");
 var jsdom = require('jsdom');
 var JQuery = require( 'jquery' );
 var JCanvas = require( 'jcanvas' );
+var canvas = require('canvas');
 
 function warfaceSigUpload(response,request) {
 		console.log("Request handler 'warfaceSigUpload' was called.");
@@ -348,11 +349,10 @@ var upsertStat = function(userId, statName, db, callback) {
 
 
 
-canvas = require('canvas');
 
 var drawAndSendSignature = function(signature, stats, response) {
 
-	var html = '<html><body><canvas id="cx" width="600" height="300"></canvas></body></html>';
+	var html = '<html><body><canvas id="cx" width="600" height="200"></canvas></body></html>';
 
 	jsdom.env( html, function ( errors, window ) {
 	  if( errors ) console.log( errors );
@@ -365,7 +365,7 @@ var drawAndSendSignature = function(signature, stats, response) {
 
 	  // hack required by width/height bug in jsdom/node-canvas integration
 	  $c[0].width = 600;
-	  $c[0].height = 300;
+	  $c[0].height = 200;
 
 
 	  //console.log("canvas height: " + $c[0].height);
@@ -456,37 +456,84 @@ function drawLayerManually($c, lay, stats, $) {
 		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
         var img = new canvas.Image();
         img.src = squid;
-    
+    	
+    	var style = lay.style;
+    	console.log(style);
 
-	    $statCanvas.drawText({
-	        fillStyle: '#9cf',
-	        strokeStyle: '#25a',
-	        strokeWidth: 2,
-	        x: 150, y: 50,
-	        fontSize: 48,
-	        fontFamily: 'Verdana, sans-serif',
-	        text: value
-	    });
+    	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
-	    $statCanvas.drawImage({
-	        source: img,
-	        x: 0,
-	        y: 0,
-	        width: 70,
-	        height: 116,
-	        fromCenter: false
-	    });
+        var fontSize = 42;
+       
+        var numDigits = value.toString().length;
+        var padding = 15 * numDigits; // function of the # digits
+        var imgWidth = img.width*0.5;
+        var imgHeight = img.height*0.5;
+       
+        // to do get this stuff from a temp canvas as its not going to work after all
+        var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
+        
+        //imgWidth = lay.width - textWidth - padding;
+        //imgHeight = lay.height;
+
+        //console.log("textwidth: for ", value + " is " , textWidth);
+        $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
+        $statCanvas[0].height = imgHeight;
+
+        //canvas.width = textWidth + imgWidth + padding;//todo make these relative
+        //canvas.height = imgHeight;
+
+        if(style.fillStyle)
+        {
+            style.fillStyle = tinyToRGBString(style.fillStyle);
+        }
+        if(style.strokeStyle)
+        {
+            style.strokeStyle = tinyToRGBString(style.strokeStyle);
+        }
+        //console.log(style.strokeStyle);
+        $statCanvas.drawText({
+            fillStyle: style.fillStyle || 'orange',
+            strokeStyle:style.strokeStyle || 'black',
+            strokeWidth: style.strokeWidth || 2,
+            x: imgWidth+padding, y: $statCanvas[0].height/2, 
+            fontSize: fontSize,
+            fontFamily: style.font.family || 'Impact',
+            text: value
+        });
+
+		img.src = changeStatIconColor(img, style.iconColor, $);
+		
+        $statCanvas.drawImage({
+            source: img,
+            x: 0,
+            y: 0,
+            //width: imgWidth,
+            //height: imgHeight,
+            width:300,
+            height:100,
+            fromCenter: false,
+        });
 
 
 
 		squid = $statCanvas.getCanvasImage( 'png' );
-     
         img.src = squid;
+     
 
 
 
 
-
+        // fuck you js dom
+        //lay.width = 600;
+        //lay.height = 200;
+        // THIS MAKES NO SENSE WHY DOESN'T IT DRAW IT IN THE RIGHT SPOT
+        //console.log(lay.x + "," + lay.y);
+        lay.x = lay.x + lay.width; // somehow this works
+        lay.y = lay.y + lay.height;  // somehow this works
+        lay.width = lay.width * 3;
+        lay.height = lay.height * 3;
+      
+       
 
 	} else {
 	squid = fs.readFileSync(lay.source.replace(/^.*?(?=Files\/)/i, '../../'));//, function(err, squid) {
@@ -508,10 +555,70 @@ function drawLayerManually($c, lay, stats, $) {
             scaleX:lay.scaleX,
             rotate:lay.rotate
          });
+ 
 	//});
 	
 }
 
+
+
+function changeStatIconColor(img, color,$){
+  // assumes the icon is already loaded
+
+  var $statCanvas2 = $('<canvas id="2" height="100px" width="220px" />');
+  $statCanvas2[0].width = img.width;
+  $statCanvas2[0].height = img.height;
+
+  var canvas2 = $statCanvas2[0];
+  var ctx = canvas2.getContext("2d");
+  var originalPixels = null;
+  var currentPixels = null;
+
+  ctx.drawImage(img, 0, 0, img.width, img.height);// 0, 0, img.width, img.height);
+  originalPixels = ctx.getImageData(0, 0, img.width, img.height);
+  currentPixels = ctx.getImageData(0, 0, img.width, img.height);
+
+  var newColor = tinyToRGB(color);
+
+  for(var I = 0, L = originalPixels.data.length; I < L; I += 4)
+  {
+      if(currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
+      {
+      	
+          currentPixels.data[I] = originalPixels.data[I] / 255 * newColor.R;
+          currentPixels.data[I + 1] = originalPixels.data[I + 1] / 255 * newColor.G;
+          currentPixels.data[I + 2] = originalPixels.data[I + 2] / 255 * newColor.B;
+      }
+  }
+
+  ctx.putImageData(currentPixels, 0, 0);
+  //console.log(canvas.toDataURL("image/png"));
+  return $statCanvas2.getCanvasImage( 'png' );
+}
+
+function tinyToRGB(tiny)
+{
+  //var long = parseInt(hex.replace(/^#/, ""), 16);
+  var test = tiny;//.toRgb(); god damn node
+  
+  return {
+      R: test._r,//(long >>> 16) & 0xff,
+      G: test._g,//(long >>> 8) & 0xff,
+      B: test._b,//long & 0xff
+  };
+}
+
+function tinyToRGBString(tiny)
+{
+	return tiny;
+  //var long = parseInt(hex.replace(/^#/, ""), 16);
+  console.log(tiny);
+  var test = tiny;//.toRgb(); god damn node
+  if(test){
+  return "rgb(" + test._r + "," + test._g + "," + test.b + ")";}
+  else return null;
+  
+}
 
 function unserializeLayer(sLayer) {
   //console.log("unserializing: ", sLayer);
@@ -535,6 +642,9 @@ function unserializeLayer(sLayer) {
 	if(sLayer.source){
 		layer.source = sLayer.source;
 	}
+	if(sLayer.style){
+    layer.style = sLayer.style;
+  }
 	//console.log("unserailized layer : ", layer);
   return layer;
 }

@@ -107,7 +107,7 @@ function updateStatToolbar() {
   var layer = $canvas.selectedLayer;
   var style = layer.style;
   console.log("updating toolbar for layer" + layer.name);
-  console.log(style.iconColor);
+  console.log(style);
 
   $('#stat-style-color').spectrum('set', style.iconColor);
   $('#stat-style-fillStyle').spectrum('set', style.fillStyle);
@@ -144,6 +144,7 @@ function updateStatLayer() {
 
 function changeStatIconColor(img, color){
   // assumes the icon is already loaded
+
    var $statCanvas = $('<canvas height="100px" width="220px" />');
   $statCanvas[0].width = img.width;
   $statCanvas[0].height = img.height;
