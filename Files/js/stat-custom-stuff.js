@@ -5,7 +5,7 @@ function initStatColorPickers(selector, color) {
     var $this = $(this);
 
     $this.spectrum({
-      color: color || tinycolor('green'),
+      color: color || tinycolor('gray'),
       containerClassName: "color-picker-popup",
       className: "color-picker-button",
       showInitial: true,
@@ -30,7 +30,7 @@ function initStatColorPickers(selector, color) {
 
 function initStatFontFamilies() {
   var fontTypes = [
-    'Impact',
+      'Impact',
     'Georgia, serif',
     '"Palatino Linotype", "Book Antiqua", Palatino, serif',
     '"Times New Roman", Times, serif',
@@ -67,9 +67,9 @@ function getStatStyleFromElements() {
     iconColor: $('#stat-style-color').spectrum('get'),
     fillStyle: $('#stat-style-fillStyle').spectrum('get'),
     strokeStyle: $('#stat-style-strokeStyle').spectrum('get'),
-    strokWidth:$('#text-style-strokeWidth').val(),
+    strokeWidth:$('#stat-style-strokeWidth').slider("option", "value"),
     font: {
-      family: $('#text-style-font-family').val()
+      family: $('#stat-style-font-family').val()
     }
   };
 
@@ -88,9 +88,35 @@ $(function() {
   initStatFontFamilies();
 
 
+  var $strokeWidthSlider = $('#stat-style-strokeWidth');
+  $strokeWidthSlider.slider({
+    min: 0,
+    max: 10,
+    step: 1,
+    slide: function(event, ui) {
+      updateStatLayer();
+    }
+  });
+
+
  
 });
 
+function updateStatToolbar() {
+
+  var layer = $canvas.selectedLayer;
+  var style = layer.style;
+  console.log("updating toolbar for layer" + layer.name);
+  console.log(style.iconColor);
+
+  $('#stat-style-color').spectrum('set', style.iconColor);
+  $('#stat-style-fillStyle').spectrum('set', style.fillStyle);
+  $('#stat-style-strokeStyle').spectrum('set', style.strokeStyle);
+  $('#stat-style-strokeWidth').slider("value", style.strokeWidth);
+  $('#stat-style-font-family').val(style.font.family);
+    
+
+}
 
 function updateStatLayer() {
   // use the specified style, or create it from the elements
@@ -99,11 +125,18 @@ function updateStatLayer() {
   var style = getStatStyleFromElements();
   layer.style = style;
   var type = STAT_TYPES[layer.name];
-  var value = 10; // to do this sucks
+  var $element = $('.stat-icon-preset');
+  var value = 10;
+  for(var i = 0; i <$element.length; i++){
+    var $test = $($element[i]);
+    if($test.data('stat-type') === layer.name){
+      value = $test.data('stat-value');
+    }
+  }
   createStatIconImage(type, value, style, function(dataURL){
     layer.source = dataURL;
     $canvas.drawLayers();
-    console.log("after update draw");
+    //console.log("after update draw");
   });
   
 }
@@ -132,6 +165,7 @@ function changeStatIconColor(img, color){
 
  // if(!originalPixels) return; // Check if image has loaded
   var newColor = tinyToRGB(color);
+  //console.log("new color");console.log(newColor);
 
   for(var I = 0, L = originalPixels.data.length; I < L; I += 4)
   {

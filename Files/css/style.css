@@ -234,6 +234,7 @@ body {
   border: solid 2px black;
 }
 
+
 span.ui-slider-handle.ui-state-default.ui-corner-all {
   background: rgba(255, 255, 255, 0.7);
   box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
@@ -542,9 +543,12 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   width: 100%;
   font-size: 14px;
 }
-#stat-style-strokeWidth {
-  width: 55px;
 
+
+#stat-style-strokeWidth{
+  width:110px;
+  border: solid 2px black;
+  float:right;
 }
 
 

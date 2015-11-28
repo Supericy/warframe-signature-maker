@@ -187,6 +187,7 @@ $.fn.extend({
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
             $("#name-toolbar").hide();
+            updateStatToolbar();
           } else {
             $("#stat-toolbar").hide('fade', 250);
             $("#name-toolbar").hide('fade', 250);
@@ -603,7 +604,7 @@ $(document).ready(function() {
         fillStyle: tinycolor('orange'), 
         strokeWidth: '1', 
         strokeStyle: tinycolor('black'), 
-        font: {family:'Arial, sans-serif'},
+        font: {family:'Impact'},
         iconColor:tinycolor('gray')
       };
       createStatIconImage(type, value, style,function (dataUrl) {
@@ -672,6 +673,8 @@ $(document).ready(function() {
     //showMySignature();
     $(".signatureCopy").hide('fade', 250);
     $(".signatureUploadFailed").hide('fade', 250);
+    $("#name-toolbar").hide('fade', 250);
+    $("#stat-toolbar").hide('fade', 250);
 
   });
   $(".signatureCopy").hide('fade', 250);
@@ -1221,6 +1224,7 @@ function unserializeLayer(sLayer) {
               } else if(statsRecording.indexOf(layer.name)>=0){
                 $("#stat-toolbar").show('fade', 250);
                 $("#name-toolbar").hide();
+                updateStatToolbar();
               } else {
                 $("#stat-toolbar").hide('fade', 250);
                 $("#name-toolbar").hide('fade', 250);

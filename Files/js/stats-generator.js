@@ -42,7 +42,9 @@ function createStatIconImage(type, value, style, callback) {
     img.src = type.icon;
     img.onload = function(){
 
-        console.log(style.iconColor);
+        console.log("icon color" +style.iconColor);
+        var newColor = style.iconColor || tinyColor('gray');
+
         img.src = changeStatIconColor(img, style.iconColor);
 
         var fontSize = 42;
@@ -71,10 +73,10 @@ function createStatIconImage(type, value, style, callback) {
         $statCanvas.drawText({
             fillStyle: style.fillStyle || 'orange',
             strokeStyle: style.strokeStyle || 'black',
-            strokeWidth: style.strokwWidth || 2,
+            strokeWidth: style.strokeWidth || 2,
             x: imgWidth+padding, y: $statCanvas[0].height/2,
             fontSize: fontSize,
-            fontFamily: style.fontFamily || 'Arial',
+            fontFamily: style.font.family || 'Impact',
             text: value.toString()
         });
 

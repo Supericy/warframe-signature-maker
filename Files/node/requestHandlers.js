@@ -447,10 +447,10 @@ function drawLayerManually($c, lay, stats, $) {
 		var statName = lay.name;
 		console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats[statName]);
 		console.log("stats are: ", stats);
-		console.log("the length of ", statName.length);
+		//console.log("the length of ", statName.length);
 		var statValue = stats[statName];
 		var value = statValue ? statValue : 0;
-		console.log("value is : ", value);
+		//console.log("value is : ", value);
 		var $statCanvas = $('<canvas height="116px" width="220px" />');
 
 		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
