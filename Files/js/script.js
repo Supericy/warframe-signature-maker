@@ -187,6 +187,7 @@ $.fn.extend({
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
             $("#name-toolbar").hide();
+            $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
             updateStatToolbar();
           } else {
             $("#stat-toolbar").hide('fade', 250);
@@ -456,7 +457,7 @@ $.fn.extend({
           $canvas.setLayerGroup(layer._handles, {
             visible: enabled
           });
-
+          console.log(enabled);
           var background = $canvas.getLayerGroup("background");
 
           if (background) {
@@ -602,10 +603,10 @@ $(document).ready(function() {
       var value = $this.data('stat-value')
       var style = {
         fillStyle: tinycolor('orange'), 
-        strokeWidth: '1', 
+        strokeWidth: '2', 
         strokeStyle: tinycolor('black'), 
         font: {family:'Impact'},
-        iconColor:tinycolor('gray')
+        iconColor:tinycolor('silver')
       };
       createStatIconImage(type, value, style,function (dataUrl) {
           $this.attr('src', dataUrl);
@@ -618,6 +619,7 @@ $(document).ready(function() {
                   style: style
               });
             var layer = $canvas.selectedLayer;
+            $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
             $canvas.undoManager.add({
               undo: function() {
                 deleteLayer(layer);
@@ -626,7 +628,7 @@ $(document).ready(function() {
               },
               redo: function() {
                 $canvas.addLayer(layer).drawLayers();
-                $canvas.enableLayerHandles($canvas.selectedLayer, false);
+                $canvas.enableLayerHandles($canvas.selectedLayer, false); 
                 $canvas.selectedLayer = layer;
                  $("#stat-toolbar").show();
             }
@@ -1222,6 +1224,7 @@ function unserializeLayer(sLayer) {
                 $("#stat-toolbar").hide();
                 createElementsFromStyle(layer.style);
               } else if(statsRecording.indexOf(layer.name)>=0){
+                $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
                 $("#stat-toolbar").show('fade', 250);
                 $("#name-toolbar").hide();
                 updateStatToolbar();

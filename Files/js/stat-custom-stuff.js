@@ -172,9 +172,9 @@ function changeStatIconColor(img, color){
   {
       if(currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
       {
-          currentPixels.data[I] = originalPixels.data[I] / 255 * newColor.R;
-          currentPixels.data[I + 1] = originalPixels.data[I + 1] / 255 * newColor.G;
-          currentPixels.data[I + 2] = originalPixels.data[I + 2] / 255 * newColor.B;
+          currentPixels.data[I] = /*originalPixels.data[I] / 255 **/ newColor.R;
+          currentPixels.data[I + 1] = /*originalPixels.data[I + 1] / 255 **/ newColor.G;
+          currentPixels.data[I + 2] = /*originalPixels.data[I + 2] / 255 **/ newColor.B;
       }
   }
 

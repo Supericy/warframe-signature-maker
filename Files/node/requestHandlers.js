@@ -524,14 +524,20 @@ function drawLayerManually($c, lay, stats, $) {
 
 
         // fuck you js dom
-        //lay.width = 600;
-        //lay.height = 200;
+        lay.width = 600;
+        lay.height = 200;
         // THIS MAKES NO SENSE WHY DOESN'T IT DRAW IT IN THE RIGHT SPOT
         //console.log(lay.x + "," + lay.y);
+
+        lay.x = lay.x + 230;
+        lay.y = lay.y + 75;
+        /*
         lay.x = lay.x + lay.width; // somehow this works
         lay.y = lay.y + lay.height;  // somehow this works
+        
         lay.width = lay.width * 3;
         lay.height = lay.height * 3;
+        */
       
        
 
@@ -566,8 +572,8 @@ function changeStatIconColor(img, color,$){
   // assumes the icon is already loaded
 
   var $statCanvas2 = $('<canvas id="2" height="100px" width="220px" />');
-  $statCanvas2[0].width = img.width;
-  $statCanvas2[0].height = img.height;
+  $statCanvas2[0].width = img.width*0.5;
+  $statCanvas2[0].height = img.height*0.5;
 
   var canvas2 = $statCanvas2[0];
   var ctx = canvas2.getContext("2d");
@@ -585,9 +591,9 @@ function changeStatIconColor(img, color,$){
       if(currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
       {
       	
-          currentPixels.data[I] = originalPixels.data[I] / 255 * newColor.R;
-          currentPixels.data[I + 1] = originalPixels.data[I + 1] / 255 * newColor.G;
-          currentPixels.data[I + 2] = originalPixels.data[I + 2] / 255 * newColor.B;
+          currentPixels.data[I] = /*originalPixels.data[I] / 255 **/ newColor.R;
+          currentPixels.data[I + 1] = /*originalPixels.data[I + 1] / 255 **/ newColor.G;
+          currentPixels.data[I + 2] = /*originalPixels.data[I + 2] /255 **/  newColor.B;
       }
   }
 
