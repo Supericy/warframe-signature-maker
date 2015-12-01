@@ -12,9 +12,9 @@
 	},
 	"permissions": ["GameInfo"],
 	"data": {
-		"start_window":"MainWindow",
+		"start_window":"IndexWindow",
 		"windows":{
-			"MainWindow":{
+			"SigMakerWindow":{
 					"file":"Files/sigMaker.html",
 					"transparent":true,
 					"resizable":false,
@@ -29,6 +29,14 @@
 					"size":{"width":256, "height":256},
 					"in_game_only":false,
 					"show_in_taskbar":false
+					},
+				"IndexWindow":{
+					"file":"Files/index.html",
+					"transparent":true,
+					"resizable":false,
+					"size":{"width":256, "height":256},
+					"in_game_only":false,
+					"show_in_taskbar":true
 					}
 				},
 

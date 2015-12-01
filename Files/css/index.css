@@ -1,0 +1,81 @@
+html {
+  
+  /*overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);*/
+
+}
+
+#indexWindow {
+    margin-top:25px;
+    margin-left:10px;
+    width:242px;
+    height:130px;
+
+  background-color: rgba(51, 51, 51, .7);
+  /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);*/
+  border-radius: 5px;
+
+  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 12px 5px rgb(0,0,0);
+
+}
+#indexWindowTitle {
+  text-align: center;
+  border-bottom: solid 2px #a1a1a1;
+  margin:0 auto;
+   font-family: 'Open Sans',sans-serif;
+    color: #e1e1e1;
+    font-size: 24px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+#indexWindowPrompt {
+  font-family: 'Open Sans',sans-serif;
+    color: #d1d1d1;
+    font-size: 24px;
+    text-align: center;
+    padding-top:7px;
+    padding-bottom:7px;
+
+}
+.indexButton
+{
+    text-align: center;
+    margin-top:5px;
+    color: white;
+    background: rgb(0,170,0);
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    border-radius: 7px;
+    font-size: 20px;
+    text-decoration: none;
+    cursor: pointer;
+    display:inline-block;
+    width:60px;
+    outline:none;
+
+
+
+}
+#indexNoButton {
+    margin-left:55px;
+    background: rgb(130,0,0);
+
+}
+
+#indexYesButton {
+    margin-left:25px;
+    background: rgb(0,130,0);
+}
+
+#indexYesButton:hover {
+    background: rgb(0,210,0);
+}
+
+#indexNoButton:hover {
+    background: rgb(210,0,0);
+}
+
+.indexButton:active {
+    background: rgb(155,155,155);
+}
