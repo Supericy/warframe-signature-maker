@@ -20,7 +20,13 @@ jsdom.env( html, function ( errors, window ) {
 
   var $statCanvas = $('<canvas height="116px" width="220px" />');
 
-    squid = fs.readFileSync(__dirname + '/images/extras/extras-9.png');//, function(err, squid) {
+  $statCanvas[0].width = 200;
+  $statCanvas[0].height = 200;
+
+  canvas.width = 200;
+  canvas.height = 200;
+
+    squid = fs.readFileSync(__dirname + '../../images/extras/extras-9.png');//, function(err, squid) {
         $statCanvas.drawText({
             fillStyle: '#9cf',
             strokeStyle: '#25a',
@@ -34,8 +40,8 @@ jsdom.env( html, function ( errors, window ) {
         console.log('attempting to draw image');
         var img = new canvas.Image();
         img.src = squid;
-        var cx = window.document.getElementsByTagName( 'canvas' )[ 0 ];
-        cx.setAttribute( 'width', 700 );
+        //var cx = window.document.getElementsByTagName( 'canvas' )[ 0 ];
+        //cx.setAttribute( 'width', 700 );
         $statCanvas.drawImage({
             source: img,
             x: 0,
@@ -44,7 +50,7 @@ jsdom.env( html, function ( errors, window ) {
             height: 116,
             fromCenter: false,
             load: function () {
-                console.log($statCanvas.getCanvasImage('png'));
+                $statCanvas.getCanvasImage('png');
                 // console.log($statCanvas[0].toDataURL());
             }
         })
