@@ -26,7 +26,7 @@ jsdom.env( html, function ( errors, window ) {
   // canvas.width = 200;
   // canvas.height = 200;
 
-    squid = fs.readFileSync(__dirname + '/images/extras/extras-9.png');//, function(err, squid) {
+    squid = fs.readFileSync(__dirname + '../../images/extras/extras-9.png');//, function(err, squid) {
         $statCanvas.drawText({
             fillStyle: '#9cf',
             strokeStyle: '#25a',
