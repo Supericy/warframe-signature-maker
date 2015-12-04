@@ -619,7 +619,7 @@ $(document).ready(function() {
                   style: style
               });
             var layer = $canvas.selectedLayer;
-            $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
+            $canvas.enableLayerHandles(layer, true);// stats no longer resizeable/rotatable until jsdom bug fixed.
             $canvas.undoManager.add({
               undo: function() {
                 deleteLayer(layer);
@@ -1224,7 +1224,7 @@ function unserializeLayer(sLayer) {
                 $("#stat-toolbar").hide();
                 createElementsFromStyle(layer.style);
               } else if(statsRecording.indexOf(layer.name)>=0){
-                $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
+                $canvas.enableLayerHandles(layer, true);// stats no longer resizeable/rotatable until jsdom bug fixed.
                 $("#stat-toolbar").show('fade', 250);
                 $("#name-toolbar").hide();
                 updateStatToolbar();

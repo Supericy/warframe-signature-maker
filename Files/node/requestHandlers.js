@@ -410,32 +410,6 @@ var drawAndSendSignature = function(signature, stats, response) {
 
 }
 
-
-function createStatIconImage(type, value, callback) {
-    var $statCanvas = $('<canvas height="116px" width="220px" />');
-
-    $statCanvas.drawText({
-        fillStyle: '#9cf',
-        strokeStyle: '#25a',
-        strokeWidth: 2,
-        x: 150, y: 50,
-        fontSize: 48,
-        fontFamily: 'Verdana, sans-serif',
-        text: value
-    });
-
-    $statCanvas.drawImage({
-        source: type.icon,
-        x: 0,
-        y: 0,
-        width: 70,
-        height: 116,
-        fromCenter: false,
-        load: function () {
-            callback($statCanvas.getCanvasImage('png'));
-        }
-    });
-}
 function drawLayerManually($c, lay, stats, $) {
 	var statsRecording = ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
 
@@ -451,7 +425,7 @@ function drawLayerManually($c, lay, stats, $) {
 		var statValue = stats[statName];
 		var value = statValue ? statValue : 0;
 		//console.log("value is : ", value);
-		var $statCanvas = $('<canvas height="116px" width="220px" />');
+		//var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + '220px" />');
 
 		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
         var img = new canvas.Image();
@@ -469,13 +443,14 @@ function drawLayerManually($c, lay, stats, $) {
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
        
-        // to do get this stuff from a temp canvas as its not going to work after all
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
         
-        //imgWidth = lay.width - textWidth - padding;
-        //imgHeight = lay.height;
+      
 
-        //console.log("textwidth: for ", value + " is " , textWidth);
+        // FIXING THINGS
+        //lay.height =  imgHeight;
+        lay.width = textWidth + imgWidth + padding;
+        var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + '220px" />');
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
 
@@ -507,10 +482,10 @@ function drawLayerManually($c, lay, stats, $) {
             source: img,
             x: 0,
             y: 0,
-            //width: imgWidth,
-            //height: imgHeight,
-            width:300,
-            height:100,
+            width: imgWidth,
+            height: imgHeight,
+            //width:300,
+            //height:100,
             fromCenter: false,
         });
 
@@ -524,20 +499,12 @@ function drawLayerManually($c, lay, stats, $) {
 
 
         // fuck you js dom
-        lay.width = 600;
-        lay.height = 200;
-        // THIS MAKES NO SENSE WHY DOESN'T IT DRAW IT IN THE RIGHT SPOT
-        //console.log(lay.x + "," + lay.y);
+        //lay.width = 600;
+        //lay.height = 200;
 
-        lay.x = lay.x + 230;
-        lay.y = lay.y + 75;
-        /*
-        lay.x = lay.x + lay.width; // somehow this works
-        lay.y = lay.y + lay.height;  // somehow this works
-        
-        lay.width = lay.width * 3;
-        lay.height = lay.height * 3;
-        */
+        //lay.x = lay.x + 230;
+        //lay.y = lay.y + 75;
+      
       
        
 
@@ -571,9 +538,9 @@ function drawLayerManually($c, lay, stats, $) {
 function changeStatIconColor(img, color,$){
   // assumes the icon is already loaded
 
-  var $statCanvas2 = $('<canvas id="2" height="100px" width="220px" />');
-  $statCanvas2[0].width = img.width*0.5;
-  $statCanvas2[0].height = img.height*0.5;
+  var $statCanvas2 = $('<canvas height=' + img.height + 'px width=' + img.width + '220px" />');
+  $statCanvas2[0].width = img.width;
+  $statCanvas2[0].height = img.height;
 
   var canvas2 = $statCanvas2[0];
   var ctx = canvas2.getContext("2d");
