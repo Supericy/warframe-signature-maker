@@ -23,9 +23,7 @@ jsdom.env( html, function ( errors, window ) {
   $statCanvas[0].width = 200;
   $statCanvas[0].height = 200;
 
-  canvas.width = 200;
-  canvas.height = 200;
-
+ 
     squid = fs.readFileSync(__dirname + '../../images/extras/extras-9.png');//, function(err, squid) {
         $statCanvas.drawText({
             fillStyle: '#9cf',
@@ -50,7 +48,7 @@ jsdom.env( html, function ( errors, window ) {
             height: 116,
             fromCenter: false,
             load: function () {
-                $statCanvas.getCanvasImage('png');
+                console.log($statCanvas.getCanvasImage('png'));
                 // console.log($statCanvas[0].toDataURL());
             }
         })
