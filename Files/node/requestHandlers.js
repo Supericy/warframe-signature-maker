@@ -445,13 +445,13 @@ function drawLayerManually($c, lay, stats, $) {
         var imgHeight = lay.height;//img.height*0.5;
        
 
-        var fontSize = imgHeight - 18;//42;
+        var fontSize = imgHeight - 7;//42;
 
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
         
       	var vTextOffset = fontSize/15;
 
-      	var padding = imgWidth/8 * numDigits;
+      	var padding = 15 * numDigits;
 
         // FIXING THINGS
         lay.height =  imgHeight;
