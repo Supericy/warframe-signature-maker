@@ -722,7 +722,7 @@ function uploadSignatureAndShowLinks(){
     type: "POST",
     //url: "http://107.170.105.215/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
     //url: "http://localhost/sigs/upload?userId=bill", //;+ localStorage.getItem("username"),
-    url: "http://107.170.105.215/sigs/upload?userId=bill",
+    url: "http://warfacesigs.me/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -778,7 +778,20 @@ function copyImageSig()
 }
 
 
+function openHelpDialog(){
 
+  //alert("the subwindow will only be visible inside a game");
+    console.log("opening helpwindow");
+  overwolf.windows.obtainDeclaredWindow("HelpWindow", function(result) {
+    if (result.status == "success") {
+      overwolf.windows.restore(result.window.id, function(result) {
+        console.log(result);
+      });
+    }
+  });
+
+
+}
 
 
 
@@ -1026,7 +1039,7 @@ function authorizeUser() {
 
     $.ajax({
        type:"GET",
-       url: "http://107.170.105.215/sigs/data?userId=bill", // to do make username from local storage
+       url: "http://warfacesigs.me/sigs/data?userId=bill", // to do make username from local storage
        success: function (data) {
 
            if(data)

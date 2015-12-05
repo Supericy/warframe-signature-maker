@@ -24,27 +24,54 @@ body {
 
 #helpButton {
   color:white;
-  width:20px;
+  width:40px;
   border:none;
   outline:none;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgb(130,130,0);
   text-align: center;
   padding:0;
   float:right;
-  margin-top:3px;
+  margin-top:5px;
+  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  font-size: 16px;
+  height:20px;
+  cursor:pointer;
+}
+
+#helpButton:hover {
+    background: rgb(210,210,0);
+}
+
+#helpButton:active {
+    background: rgb(155,155,155);
 }
 
 #closeButton {
-  margin-top:3px;
+  margin-top:5px;
   color:white;
-  width:20px;
+  width:40px;
   border:none;
   outline:none;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgb(130,0,0);
   text-align: center;
   padding:0;
   float:right;
+  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  font-size: 16px;
+  height:20px;
+  cursor:pointer;
+  margin-left:10px;
+  margin-right:5px;
 }
+
+#closeButton:hover {
+    background: rgb(210,0,0);
+}
+
+#closeButton:active {
+    background: rgb(155,155,155);
+}
+
 
 #titleText {
    font-family: 'Open Sans',sans-serif;

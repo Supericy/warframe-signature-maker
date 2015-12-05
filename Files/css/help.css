@@ -1,0 +1,78 @@
+html {
+  
+  /*overflow: hidden;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);*/
+
+}
+
+#helpWindow {
+    margin-top:5px;
+    margin-left:10px;
+    width:1000px;
+    height:700px;
+
+  background-color: rgba(51, 51, 51, .7);
+  /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);*/
+  border-radius: 5px;
+
+  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 12px 5px rgb(0,0,0);
+
+}
+#helpWindowTitle {
+  text-align: center;
+  border-bottom: solid 2px #a1a1a1;
+  margin:0 auto;
+   font-family: 'Open Sans',sans-serif;
+    color: #e1e1e1;
+    font-size: 24px;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-top:5px;
+}
+span{
+  font-family: 'Open Sans',sans-serif;
+    color: #d1d1d1;
+    font-size: 24px;
+    text-align: center;
+}
+
+#helpCloseButton
+{
+  color:white;
+  width:40px;
+  border:none;
+  outline:none;
+  background: rgb(130,0,0);
+  text-align: center;
+  padding:0;
+  float:right;
+  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  font-size: 16px;
+  height:20px;
+  cursor:pointer;
+  margin-top:0px;
+  margin-right:5px;
+
+}
+
+#helpCloseButton:hover {
+    background: rgb(210,0,0);
+}
+
+#helpCloseButton:active {
+    background: rgb(155,155,155);
+}
+
+#helptable {
+  margin-top:15px;
+  margin-left:15px;
+}
+#helpTable tr {
+  width:900px;
+  padding:5px;
+}
+#helpTable tr {
+  width:900px;
+}

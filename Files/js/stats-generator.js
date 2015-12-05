@@ -103,8 +103,6 @@ function updateIntermediateStatIcon(lay, callback){
 
             var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
-            
-           
             var numDigits = value.toString().length;
             //var padding = 15 * numDigits; // function of the # digits
 

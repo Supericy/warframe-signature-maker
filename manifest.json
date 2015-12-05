@@ -37,7 +37,15 @@
 					"size":{"width":256, "height":256},
 					"in_game_only":false,
 					"show_in_taskbar":true
-					}
+					},
+				"HelpWindow":{
+				"file":"Files/help.html",
+				"transparent":true,
+				"resizable":false,
+				"size":{"width":1100, "height":800},
+				"in_game_only":false,
+				"show_in_taskbar":false
+				}
 				},
 
 				"externally_connectable": {
