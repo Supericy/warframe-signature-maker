@@ -121,7 +121,7 @@ $.fn.extend({
               console.log(dataUrl);
               $canvas.drawLayers();
             });
-           
+
 
 
           }
@@ -198,8 +198,8 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-          
-         
+
+
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
             $("#name-toolbar").hide();
@@ -248,7 +248,7 @@ $.fn.extend({
       // select it after placing it.
       layer.mousedown(layer);
       $canvas.drawLayers();
-      
+
 
       //console.log(layer);
 
@@ -597,7 +597,7 @@ $(document).ready(function() {
 
   });
 
-  
+
   registerHooksForToolbar($canvas.undoManager);
 
 
@@ -622,9 +622,9 @@ $(document).ready(function() {
       var type = STAT_TYPES[$this.data('stat-type')];
       var value = $this.data('stat-value')
       var style = {
-        fillStyle: tinycolor('orange'), 
-        strokeWidth: '2', 
-        strokeStyle: tinycolor('black'), 
+        fillStyle: tinycolor('orange'),
+        strokeWidth: '2',
+        strokeStyle: tinycolor('black'),
         font: {family:'Impact'},
         iconColor:tinycolor('silver')
       };
@@ -648,7 +648,7 @@ $(document).ready(function() {
               },
               redo: function() {
                 $canvas.addLayer(layer).drawLayers();
-                $canvas.enableLayerHandles($canvas.selectedLayer, false); 
+                $canvas.enableLayerHandles($canvas.selectedLayer, false);
                 $canvas.selectedLayer = layer;
                  $("#stat-toolbar").show();
             }
@@ -673,7 +673,7 @@ $(document).ready(function() {
         $canvas.addLayer(layer).drawLayers();
         $canvas.enableLayerHandles($canvas.selectedLayer, false);
         $canvas.selectedLayer = layer;
-        $("#name-toolbar").show();    
+        $("#name-toolbar").show();
       }
     });
   });
@@ -786,7 +786,7 @@ function copyImageSig()
 function serializeCanvas() {
   var canvasLayers = $canvas.getLayers().slice(0);
   var serialized = [];
-  for (var n = 0; n < canvasLayers.length; n++) 
+  for (var n = 0; n < canvasLayers.length; n++)
   {
     if(canvasLayers[n].type ==='image'){ // best
     serialized.push(serializeLayer(canvasLayers[n]));
@@ -947,11 +947,8 @@ function registerHooksForToolbar(undoManager) {
 
 function setOpacity(layer, value) {
   if (layer) {
-    $canvas.animateLayer(layer.name, {
-
-      opacity: value
-
-    }, 0);
+    layer.opacity = value;
+    $canvas.drawLayers();
   }
 }
 
@@ -961,12 +958,11 @@ function flipLayerVertical(layer) {
     if (layer.scaleY === -1) {
       value = 1;
     }
-
+    var style = layer.style;
     $canvas.animateLayer(layer.name, {
-
       scaleY: value
-
     }, 200);
+    layer.style = style;
   }
 }
 
@@ -976,12 +972,11 @@ function flipLayerHorizontal(layer) {
     if (layer.scaleX === -1) {
       value = 1;
     }
-
+    var style = layer.style;
     $canvas.animateLayer(layer.name, {
-
       scaleX: value
-
     }, 200);
+    layer.style = style;
   }
 }
 
@@ -1031,11 +1026,11 @@ function authorizeUser() {
 
     $.ajax({
        type:"GET",
-       url: "http://localhost/sigs/data?userId=bill", // to do make username from local storage 
+       url: "http://localhost/sigs/data?userId=bill", // to do make username from local storage
        success: function (data) {
-        
+
            if(data)
-           {   
+           {
 
                var list = JSON.parse(data);
                list = JSON.parse(list);
@@ -1172,7 +1167,7 @@ function unserializeLayer(sLayer) {
               var oldx = layer.oldx;
               var oldy = layer.oldy;
 
-              
+
               $canvas.undoManager.add({
                 undo: function() {
                   console.log("restoring old stuff");
@@ -1261,7 +1256,7 @@ function unserializeLayer(sLayer) {
               $('#opacitySlider').slider('value', layer.opacity);
             }
 
-          
+
 
   };
 
