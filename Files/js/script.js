@@ -477,7 +477,7 @@ $.fn.extend({
           $canvas.setLayerGroup(layer._handles, {
             visible: enabled
           });
-          console.log(enabled);
+          //console.log(enabled);
           var background = $canvas.getLayerGroup("background");
 
           if (background) {
@@ -722,7 +722,7 @@ function uploadSignatureAndShowLinks(){
     type: "POST",
     //url: "http://107.170.105.215sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
     //url: "http://localhost/sigs/upload?userId=" + localStorage.getItem("username"),
-    url: "http://localhost/sigs/upload?userId=bill",
+    url: "http://warfacesigs.me/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -753,9 +753,9 @@ function showMySignatureLinks(){
     //$("#SignatureId").attr("src", "http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username"));
     //$("#SignatureId").show();
 
-    $("#SignatureHTML").val('<a href="http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums"><img alt="Warface Signature" src="http://localhost/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;"></a>')
-    $("#SignatureBBCode").val('[url=http://www.overwolf.com/?utm_source=forums&utm_medium=signatures&utm_campaign=signature%2Bin%2Bforums][img]"http://localhost/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img][/url]')
-    $("#SignatureImageLink").val('<img alt="Warface Signature"' +'src="http://localhost/sigs/show?userId=' + localStorage.getItem("username")+'"' + 'style="border:none;">')
+    $("#SignatureHTML").val('<img alt="Warface Signature" src="http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;">');
+    $("#SignatureBBCode").val('[img]"http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img]');
+    $("#SignatureImageLink").val('http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username"));
 
 
 
