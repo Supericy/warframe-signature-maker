@@ -80,7 +80,7 @@ function getStatStyleFromElements() {
 
 
 $(function() {
- var $canvas = $('#workspaceCanvas');
+  //var $canvas = $('#workspaceCanvas');
 
   initStatColorPickers('#stat-style-fillStyle');
   initStatColorPickers('#stat-style-strokeStyle');

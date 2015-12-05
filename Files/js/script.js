@@ -198,12 +198,13 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-
+          if(params.style){
+            layer.style = params.style;
+          }
 
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
             $("#name-toolbar").hide();
-            //$canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
             updateStatToolbar();
           } else {
             $("#stat-toolbar").hide('fade', 250);
@@ -219,9 +220,7 @@ $.fn.extend({
 
       };
 
-      if(params.style){
-        layer.style = params.style;
-      }
+      
 
 
       /* test if its background */
@@ -246,8 +245,9 @@ $.fn.extend({
 
       }
       // select it after placing it.
+       $canvas.drawLayers();
       layer.mousedown(layer);
-      $canvas.drawLayers();
+     
 
 
       //console.log(layer);
@@ -722,7 +722,7 @@ function uploadSignatureAndShowLinks(){
     type: "POST",
     //url: "http://107.170.105.215sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
     //url: "http://localhost/sigs/upload?userId=" + localStorage.getItem("username"),
-    url: "http://warfacesigs.me/sigs/upload?userId=bill",
+    url: "http://107.170.105.215/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -1026,7 +1026,7 @@ function authorizeUser() {
 
     $.ajax({
        type:"GET",
-       url: "http://localhost/sigs/data?userId=bill", // to do make username from local storage
+       url: "http://warfacesigs.me/sigs/data?userId=bill", // to do make username from local storage
        success: function (data) {
 
            if(data)
