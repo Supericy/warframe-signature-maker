@@ -436,26 +436,34 @@ function drawLayerManually($c, lay, stats, $) {
 
     	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
-        var fontSize = 42;
+        
        
         var numDigits = value.toString().length;
-        var padding = 15 * numDigits; // function of the # digits
-        var imgWidth = img.width*0.5;
-        var imgHeight = img.height*0.5;
+        //var padding = 15 * numDigits; // function of the # digits
+
+        var imgWidth = lay.height * (img.width/img.height);//img.width*0.5;
+        var imgHeight = lay.height;//img.height*0.5;
        
+
+        var fontSize = imgHeight - 18;//42;
+
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
         
-      
+      	var vTextOffset = fontSize/15;
+
+      	var padding = imgWidth/8 * numDigits;
 
         // FIXING THINGS
-        //lay.height =  imgHeight;
+        lay.height =  imgHeight;
         lay.width = textWidth + imgWidth + padding;
-        var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + '220px" />');
+        var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + 'px" />');
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
-
-        //canvas.width = textWidth + imgWidth + padding;//todo make these relative
-        //canvas.height = imgHeight;
+    
+     	if(numDigits > 2){
+     		lay.x = lay.x + padding/2;
+     	}
+     	
 
         if(style.fillStyle)
         {
@@ -470,7 +478,7 @@ function drawLayerManually($c, lay, stats, $) {
             fillStyle: style.fillStyle || 'orange',
             strokeStyle:style.strokeStyle || 'black',
             strokeWidth: style.strokeWidth || 2,
-            x: imgWidth+padding, y: $statCanvas[0].height/2, 
+            x: imgWidth+padding, y: lay.height/2-vTextOffset, 
             fontSize: fontSize,
             fontFamily: style.font.family || 'Impact',
             text: value
@@ -480,13 +488,11 @@ function drawLayerManually($c, lay, stats, $) {
 		
         $statCanvas.drawImage({
             source: img,
-            x: 0,
+            x: 0 ,
             y: 0,
             width: imgWidth,
             height: imgHeight,
-            //width:300,
-            //height:100,
-            fromCenter: false,
+            fromCenter: false
         });
 
 
@@ -538,7 +544,7 @@ function drawLayerManually($c, lay, stats, $) {
 function changeStatIconColor(img, color,$){
   // assumes the icon is already loaded
 
-  var $statCanvas2 = $('<canvas height=' + img.height + 'px width=' + img.width + '220px" />');
+  var $statCanvas2 = $('<canvas height=' + img.height + 'px width=' + img.width + 'px" />');
   $statCanvas2[0].width = img.width;
   $statCanvas2[0].height = img.height;
 

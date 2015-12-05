@@ -111,7 +111,22 @@ $.fn.extend({
           var oldwidth = layer.oldwidth;
           var oldx = layer.oldx;
           var oldy = layer.oldy;
-          console.log(newwidth, newheight);
+          //console.log(newwidth, newheight);
+
+          if(statsRecording.indexOf(layer.name)>=0){
+            console.log(layer.source);
+            console.log("beautifying");
+            updateIntermediateStatIcon(layer, function(dataUrl){
+              layer.source = dataUrl;
+              console.log(dataUrl);
+              $canvas.drawLayers();
+            });
+           
+
+
+          }
+
+
           $canvas.undoManager.add({
             undo: function() {
               console.log("restoring old stuff");
@@ -172,6 +187,7 @@ $.fn.extend({
           var previouslySelectedLayer = $canvas.selectedLayer;
 
           console.log("You selected " + layer.name);
+          console.log(layer);
           $canvas.selectedLayer = layer;
 
           //clear previous "selection"
@@ -187,7 +203,7 @@ $.fn.extend({
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
             $("#name-toolbar").hide();
-            $canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
+            //$canvas.enableLayerHandles(layer, false);// stats no longer resizeable/rotatable until jsdom bug fixed.
             updateStatToolbar();
           } else {
             $("#stat-toolbar").hide('fade', 250);
@@ -196,6 +212,8 @@ $.fn.extend({
 
           // set opacity slider position
           $('#opacitySlider').slider('value', layer.opacity);
+
+
 
         }
 
@@ -341,6 +359,8 @@ $.fn.extend({
               console.log(layer.style);
               var username = localStorage.getItem("username");
               layer.source = createTextEffect(username, layer.style);
+
+
 
               // code to run when resizing stops
               var newheight = layer.height;
@@ -618,8 +638,8 @@ $(document).ready(function() {
                   name: type.name,
                   style: style
               });
-            var layer = $canvas.selectedLayer;
-            $canvas.enableLayerHandles(layer, true);// stats no longer resizeable/rotatable until jsdom bug fixed.
+            //var layer = $canvas.selectedLayer;
+            //$canvas.enableLayerHandles(layer, true);// stats no longer resizeable/rotatable until jsdom bug fixed.
             $canvas.undoManager.add({
               undo: function() {
                 deleteLayer(layer);
@@ -776,6 +796,9 @@ function serializeCanvas() {
 }
 
 function serializeLayer(layer) {
+
+  console.log("style", layer.style);
+
   var sLayer = {};
 
   sLayer.name = layer.name;
@@ -795,6 +818,7 @@ function serializeLayer(layer) {
   sLayer.groups = layer.groups;
   sLayer.style = layer.style;
   return sLayer;
+
 
 }
 
@@ -1148,7 +1172,7 @@ function unserializeLayer(sLayer) {
               var oldx = layer.oldx;
               var oldy = layer.oldy;
 
-
+              
               $canvas.undoManager.add({
                 undo: function() {
                   console.log("restoring old stuff");

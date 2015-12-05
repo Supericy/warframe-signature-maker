@@ -93,3 +93,102 @@ function createStatIconImage(type, value, style, callback) {
         });
     };
 }
+
+
+function updateIntermediateStatIcon(lay, callback){
+       
+        var img = new Image();
+        img.source = STAT_TYPES[lay.name].icon;
+        img.onload = function(){
+
+            var newColor = style.iconColor || {_r:152, _g:152, _b:152};
+
+            
+           
+            var numDigits = value.toString().length;
+            //var padding = 15 * numDigits; // function of the # digits
+
+            var imgWidth = lay.height * (img.width/img.height);//img.width*0.5;
+            var imgHeight = lay.height;//img.height*0.5;
+           
+
+            var fontSize = imgHeight - 18;//42;
+
+            var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
+            
+            var vTextOffset = fontSize/15;
+
+            var padding = imgWidth/8 * numDigits;
+
+            // FIXING THINGS
+            lay.height =  imgHeight;
+            lay.width = textWidth + imgWidth + padding;
+            var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + 'px" />');
+            $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
+            $statCanvas[0].height = imgHeight;
+        
+            if(numDigits > 2){
+                lay.x = lay.x + padding/2;
+            }
+            
+
+            if(style.fillStyle)
+            {
+                style.fillStyle = tinyToRGBString(style.fillStyle);
+            }
+            if(style.strokeStyle)
+            {
+                style.strokeStyle = tinyToRGBString(style.strokeStyle);
+            }
+            //console.log(style.strokeStyle);
+            $statCanvas.drawText({
+                fillStyle: style.fillStyle || 'orange',
+                strokeStyle:style.strokeStyle || 'black',
+                strokeWidth: style.strokeWidth || 2,
+                x: imgWidth+padding, y: lay.height/2-vTextOffset, 
+                fontSize: fontSize,
+                fontFamily: style.font.family || 'Impact',
+                text: value
+            });
+
+            img.src = changeStatIconColor(img, style.iconColor, $);
+            
+            $statCanvas.drawImage({
+                source: img,
+                x: 0 ,
+                y: 0,
+                width: imgWidth,
+                height: imgHeight,
+                fromCenter: false,
+                load: function () {
+                    callback($statCanvas.getCanvasImage('png'));
+                }
+            });
+        }
+
+}
+
+
+function tinyToRGB(tiny)
+{
+  //var long = parseInt(hex.replace(/^#/, ""), 16);
+  var test = tiny;//.toRgb(); god damn node
+  
+  return {
+      R: test._r,//(long >>> 16) & 0xff,
+      G: test._g,//(long >>> 8) & 0xff,
+      B: test._b,//long & 0xff
+  };
+}
+
+function tinyToRGBString(tiny)
+{
+    return tiny;
+  //var long = parseInt(hex.replace(/^#/, ""), 16);
+  console.log(tiny);
+  var test = tiny;//.toRgb(); god damn node
+  if(test){
+  return "rgb(" + test._r + "," + test._g + "," + test.b + ")";}
+  else return null;
+  
+}
