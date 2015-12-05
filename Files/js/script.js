@@ -720,8 +720,8 @@ function uploadSignatureAndShowLinks(){
   //console.log("contacting server");
   $.ajax({
     type: "POST",
-    //url: "http://107.170.105.215sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
-    //url: "http://localhost/sigs/upload?userId=" + localStorage.getItem("username"),
+    //url: "http://107.170.105.215/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
+    //url: "http://localhost/sigs/upload?userId=bill", //;+ localStorage.getItem("username"),
     url: "http://107.170.105.215/sigs/upload?userId=bill",
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
@@ -1026,7 +1026,7 @@ function authorizeUser() {
 
     $.ajax({
        type:"GET",
-       url: "http://warfacesigs.me/sigs/data?userId=bill", // to do make username from local storage
+       url: "http://107.170.105.215/sigs/data?userId=bill", // to do make username from local storage
        success: function (data) {
 
            if(data)
