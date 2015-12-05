@@ -25,7 +25,13 @@
 	<script src="js/stat-custom-stuff.js"></script>
 </head>
 
-<body onmousedown="dragMove();">
+<body >
+	<div id="topBar" onmousedown="dragMove();">
+		<span id="titleText"> Warface Sigs </span>
+		<button id="closeButton" class="Round_Green_Button" onmousedown="closeSigMakerWindow();">X</button>
+		<button id="helpButton" class="Round_Green_Button" onmousedown="openHelpDialog();">?</button>
+		
+	</div>
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
@@ -447,7 +453,7 @@
 				</div>
 				<div id="stats" class="tab-body">
 					<div class="statPageInfo">
-		            	<div id="statPageInfoText">Note: Stat values shown are representative values only. Real values will be used when signature goes live.</div>
+		            	<div id="statPageInfoText">Note: Stat values shown are placeholder values. Your personal stats will be used and updated as you play.</div>
 		            </div>
 					<table class="image-list" id="stat-list">
 						<tr>
