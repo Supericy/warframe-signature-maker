@@ -11,7 +11,7 @@
 		"icon_gray":"IconMouseNormal.png",
 		"description":"Create your own custom Warface Signature, complete with live updating game stats!"
 	},
-	"permissions": ["GameInfo"],
+	"permissions": ["GameInfo", "Hotkeys"],
 	"data": {
 		"start_window":"IndexWindow",
 		"windows":{
@@ -57,6 +57,6 @@
        	   		  "game_ids": [7784]
         },
         	"start_minimized": false
-    	}]		
+    	}]
 	}
 }

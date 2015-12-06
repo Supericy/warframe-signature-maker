@@ -104,7 +104,7 @@ $(function() {
 
 function updateStatToolbar() {
 
-  var layer = $canvas.selectedLayer;
+  var layer = $canvas.getLayer($canvas.selectedLayer);
   var style = layer.style;
   console.log("updating toolbar for layer" + layer.name);
   console.log(style);
@@ -121,7 +121,7 @@ function updateStatToolbar() {
 function updateStatLayer() {
   // use the specified style, or create it from the elements
   console.log("updating stat layer");
-  var layer = $canvas.selectedLayer;
+  var layer = $canvas.getLayer($canvas.selectedLayer);
   var style = getStatStyleFromElements();
   layer.style = style;
   var type = STAT_TYPES[layer.name];

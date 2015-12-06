@@ -183,7 +183,7 @@ function tinyToRGBString(tiny)
 {
     return tiny;
   //var long = parseInt(hex.replace(/^#/, ""), 16);
-  console.log(tiny);
+  //console.log(tiny);
   var test = tiny;//.toRgb(); god damn node
   if(test){
   return "rgb(" + test._r + "," + test._g + "," + test.b + ")";}

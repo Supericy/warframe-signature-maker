@@ -189,7 +189,8 @@ $.fn.extend({
           console.log("You selected " + layer.name);
           console.log(layer);
           $canvas.selectedLayer = layer;
-
+          console.log("after I set it:");
+          console.log($canvas.selectedLayer);
           //clear previous "selection"
           if (previouslySelectedLayer) {
             $canvas.enableLayerHandles(previouslySelectedLayer, false);
@@ -234,6 +235,9 @@ $.fn.extend({
         // remove any old backgrounds
         $canvas.removeLayerGroup('background');
         $canvas.addLayer(layer);
+
+        var theL = $canvas.getLayer(layer.name);
+        theL.mousedown(theL);
         // move background to end
         $canvas.moveLayer(layer.name, 0);
         // hide handles
@@ -242,24 +246,15 @@ $.fn.extend({
       } else {
 
         $canvas.addLayer(layer);
+        var theL = $canvas.getLayer(layer.name);
+        theL.mousedown(theL);
 
       }
       // select it after placing it.
-       $canvas.drawLayers();
-      layer.mousedown(layer);
+      $canvas.enableLayerHandles(layer, true);
+      $canvas.drawLayers();
+      //layer.mousedown(layer);
      
-
-
-      //console.log(layer);
-
-
-
-
-
-
-
-
-
     });
 
   },
@@ -448,8 +443,6 @@ $.fn.extend({
 
               // set opacity slider position
               $('#opacitySlider').slider('value', layer.opacity);
-              //console.log(layer.style);
-              //createElementsFromStyle(layer.style); // to do : figure out why this doesnt work
             }
 
           })
@@ -599,8 +592,7 @@ $(document).ready(function() {
 
 
   registerHooksForToolbar($canvas.undoManager);
-
-
+  
 
   var username = localStorage.getItem("username");
   //TESTING PURPOSES
@@ -847,7 +839,10 @@ function serializeLayer(layer) {
 function registerHooksForToolbar(undoManager) {
 
   $("#flipVert").click(function() {
+    console.log("when I went to access it");
+    console.log($canvas.selectedLayer);
     var layer = $canvas.selectedLayer;
+    layer.mousedown(layer);
     flipLayerVertical(layer);
     undoManager.add({
       undo: function() {
@@ -862,6 +857,7 @@ function registerHooksForToolbar(undoManager) {
 
   $("#flipHoriz").click(function() {
     var layer = $canvas.selectedLayer;
+    layer.mousedown(layer);
     flipLayerHorizontal(layer);
     undoManager.add({
       undo: function() {
@@ -877,6 +873,7 @@ function registerHooksForToolbar(undoManager) {
 
   $("#upLayer").click(function() {
     var layer = $canvas.selectedLayer;
+    layer.mousedown(layer);
     moveLayerUp(layer);
     undoManager.add({
       undo: function() {
@@ -891,6 +888,7 @@ function registerHooksForToolbar(undoManager) {
 
   $("#downLayer").click(function() {
     var layer = $canvas.selectedLayer;
+    layer.mousedown(layer);
     moveLayerDown(layer);
     undoManager.add({
       undo: function() {
@@ -908,6 +906,7 @@ function registerHooksForToolbar(undoManager) {
   $("#delete").click(function() {
 
     var layer = $canvas.selectedLayer;
+    layer.mousedown(layer);
     deleteLayer(layer);
 
     undoManager.add({
@@ -933,6 +932,7 @@ function registerHooksForToolbar(undoManager) {
     step: 0.01,
     slide: function(event, ui) {
       if ($canvas.selectedLayer) {
+        layer.mousedown($canvas.selectedLayer);
         setOpacity($canvas.selectedLayer, ui.value);
       }
     },
@@ -966,6 +966,7 @@ function registerHooksForToolbar(undoManager) {
 
 function setOpacity(layer, value) {
   if (layer) {
+    layer.mousedown(layer);
     layer.opacity = value;
     $canvas.drawLayers();
   }
@@ -973,6 +974,7 @@ function setOpacity(layer, value) {
 
 function flipLayerVertical(layer) {
   if (layer) {
+    layer.mousedown(layer);
     var value = -1;
     if (layer.scaleY === -1) {
       value = 1;
@@ -987,6 +989,7 @@ function flipLayerVertical(layer) {
 
 function flipLayerHorizontal(layer) {
   if (layer) {
+    layer.mousedown(layer);
     var value = -1;
     if (layer.scaleX === -1) {
       value = 1;
@@ -1001,6 +1004,7 @@ function flipLayerHorizontal(layer) {
 
 function deleteLayer(layer) {
   if (layer) {
+    layer.mousedown(layer);
     $canvas.removeLayer(layer.name);
     $canvas.drawLayers();
     $canvas.selectedLayer = null;
@@ -1015,6 +1019,7 @@ function deleteLayer(layer) {
 
 function moveLayerDown(layer) {
   if (layer) {
+    layer.mousedown(layer);
     if (layer.index !== 0) {
       $canvas.moveLayer(layer.name, layer.index - 6);
       $canvas.drawLayers();
@@ -1024,6 +1029,7 @@ function moveLayerDown(layer) {
 
 function moveLayerUp(layer) {
   if (layer) {
+    layer.mousedown(layer);
     var numLayers = $canvas.getLayers().length;
     if (layer.index !== (numLayers - 6)) {
       $canvas.moveLayer(layer.name, (layer.index + 6));
@@ -1265,15 +1271,16 @@ function unserializeLayer(sLayer) {
               }
 
               // "select" new guy
-              if(layer.groups[0] === 'background'){}else{
-              $canvas.enableLayerHandles(layer, true);}
+              if(layer.groups[0] === 'background'){}
+                else{
+                $canvas.enableLayerHandles(layer, true);
+              }
 
               if(layer.name === "usernameText"){
                 $("#name-toolbar").show('fade', 250);
                 $("#stat-toolbar").hide();
                 createElementsFromStyle(layer.style);
               } else if(statsRecording.indexOf(layer.name)>=0){
-                $canvas.enableLayerHandles(layer, true);// stats no longer resizeable/rotatable until jsdom bug fixed.
                 $("#stat-toolbar").show('fade', 250);
                 $("#name-toolbar").hide();
                 updateStatToolbar();

@@ -138,8 +138,7 @@ function updateTextLayer() {
 }
 
 $(function() {
-  var $canvas = $('#workspaceCanvas');
-
+ 
   initColorPickers('#text-style-color');
   initFontFamilies();
 
