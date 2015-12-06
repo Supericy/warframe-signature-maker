@@ -1038,11 +1038,16 @@ function authorizeUser() {
 
   
   $('#authWindow').hide('fade', 500);
+  //checkIfWarfaceRunning();  // to do un comment this
+
   var name = localStorage.getItem('username') ;
   var running = localStorage.getItem('warfaceRunning');
+
   var shouldOpen = name && running;
+  console.log(name);
+  console.log(running);
   console.log(shouldOpen);
-  if(!shouldOpen)
+  if(shouldOpen || true)  //to do remove this true
   {
     console.log("the if was true");
     console.log(localStorage.getItem('username') );

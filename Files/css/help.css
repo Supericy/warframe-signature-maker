@@ -11,7 +11,7 @@ html {
     margin-top:5px;
     margin-left:10px;
     width:1000px;
-    height:700px;
+    height:720px;
 
   background-color: rgba(35, 35, 35, .95);
   /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);*/
@@ -36,6 +36,9 @@ span{
     color: #d1d1d1;
     font-size: 24px;
     text-align: center;
+}
+img {
+  padding:3px;
 }
 
 #helpCloseButton
@@ -66,13 +69,14 @@ span{
 }
 
 #helptable {
-  margin-top:15px;
+  margin-top:5px;
   margin-left:15px;
 }
 #helpTable tr {
   width:900px;
   padding:5px;
+
 }
-#helpTable tr {
-  width:900px;
+#helpTable td {
+  padding-bottom:10px;
 }

@@ -678,7 +678,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
 #authText {
   font-family: 'Open Sans',sans-serif;
     color: #c1c1c1;
-    font-size: 34px;
+    font-size: 27px;
     text-align: center;
     padding-top:15px;
 
@@ -710,7 +710,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
     position: :relative;
     outline:none;
     margin:0 auto;
-    margin-left:275px;
+    margin-left:245px;
 
 
 }

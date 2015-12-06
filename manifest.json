@@ -5,10 +5,11 @@
 		"name":"Warface Sigs",
 		"version":"1.0.0",
 		"minimum-overwolf-version":"0.77.10",
-		"author":"Bennet Gigliotti",
+		"author":"Bennet Gigliotti & Chad Kosie",
+		"dock_button_title":"Warface Sigs",
 		"icon":"IconMouseOver.png",
 		"icon_gray":"IconMouseNormal.png",
-		"description":"Current Local Weather Conditions and 5 Day Forecast"
+		"description":"Create your own custom Warface Signature, complete with live updating game stats!"
 	},
 	"permissions": ["GameInfo"],
 	"data": {
@@ -20,7 +21,8 @@
 					"resizable":false,
 					"size":{"width":1450, "height":800},
 					"in_game_only":false,
-					"show_in_taskbar":false
+					"show_in_taskbar":true,
+					"desktop_only":true
 					},
 				"IndexWindow":{
 					"file":"Files/index.html",
@@ -43,8 +45,8 @@
 
 				"externally_connectable": {
         "matches": [
-	    	"http://localhost",
-	    	"https://localhost"
+	    	"http://warfacesigs.me",
+	    	"https://warfacesigs.me"
         	]
     	},
 

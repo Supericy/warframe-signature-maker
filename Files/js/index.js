@@ -23,9 +23,10 @@ function openSigMakerWindow() {
 
 
 function checkIfWarfaceRunning(callback){
-  //callback = callback || function(a){};
+  callback = callback || function(a){};
   console.log('checking if warface is running');
   overwolf.games.getRunningGameInfo(function(GameInfo){
+    console.log("call back being run with gameinfo:", GameInfo);
     if(GameInfo){
         if(GameInfo.id === 77843) // warface
         {
@@ -36,11 +37,17 @@ function checkIfWarfaceRunning(callback){
             callback(true);
           } else {
             console.log("Warface is NOT running!");
-            localStorage.setItem("warfaceRunning", false);
-            localStorage.setItem("username", null);
+            localStorage.removeItem("warfaceRunning");
+            localStorage.removeItem("username");
             callback(false);
           }
         }
+      }
+      else {
+        console.log("Warface is NOT running!");
+        localStorage.removeItem("warfaceRunning");
+        localStorage.removeItem("username");
+        callback(false);
       }
   });
 }
@@ -68,8 +75,8 @@ $( document ).ready(function() {
             } else {
               console.log("Warface has STOPPED!");
               // close ourselves likely.
-              localStorage.setItem("warfaceRunning", false);
-              localStorage.setItem("username", null);
+              localStorage.removeItem("warfaceRunning");
+              localStorage.removeItem("username");
             }
           }
         }
@@ -117,6 +124,7 @@ $( document ).ready(function() {
   // warface actual game info?
   overwolf.games.events.onInfoUpdates.addListener(
       function (JSONObject) {
+        console.log("username event fired", JSONObject);
         if(JSONObject.info)
         {
           //console.log("Info array: ", JSONObject.info);
@@ -140,8 +148,8 @@ $( document ).ready(function() {
   
 
 
-  localStorage.setItem('warfaceRunning', false);
-  localStorage.setItem('username', null);
+  localStorage.removeItem("warfaceRunning");
+  localStorage.removeItem("username");
   $('#indexWindow').show();
   checkIfWarfaceRunning();
   
@@ -149,8 +157,8 @@ $( document ).ready(function() {
     console.log('restoring index window');
     $('#indexWindow').show();
     checkIfWarfaceRunning();
-    localStorage.setItem('warfaceRunning', false);
-    localStorage.setItem('username', null);
+    localStorage.removeItem("warfaceRunning");
+    localStorage.removeItem("username");
   })
 });
 
