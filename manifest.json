@@ -18,7 +18,7 @@
 					"file":"Files/sigMaker.html",
 					"transparent":true,
 					"resizable":false,
-					"size":{"width":1350, "height":800},
+					"size":{"width":1450, "height":800},
 					"in_game_only":false,
 					"show_in_taskbar":true
 					},
@@ -26,7 +26,7 @@
 					"file":"Files/probe.html",
 					"transparent":true,
 					"resizable":false,
-					"size":{"width":256, "height":256},
+					"size":{"width":276, "height":275},
 					"in_game_only":false,
 					"show_in_taskbar":false
 					},
@@ -44,7 +44,8 @@
 				"resizable":false,
 				"size":{"width":1100, "height":800},
 				"in_game_only":false,
-				"show_in_taskbar":false
+				"show_in_taskbar":false,
+				"topmost":true
 				}
 				},
 

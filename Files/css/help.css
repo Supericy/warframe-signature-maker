@@ -13,9 +13,9 @@ html {
     width:1000px;
     height:700px;
 
-  background-color: rgba(51, 51, 51, .7);
+  background-color: rgba(35, 35, 35, .8);
   /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);*/
-  border-radius: 5px;
+  
 
   box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 12px 5px rgb(0,0,0);
 
@@ -52,8 +52,8 @@ span{
   font-size: 16px;
   height:20px;
   cursor:pointer;
-  margin-top:0px;
-  margin-right:5px;
+  margin-top:-5px;
+  margin-right:0px;
 
 }
 

@@ -25,13 +25,8 @@
 	<script src="js/stat-custom-stuff.js"></script>
 </head>
 
-<body >
-	<div id="topBar" onmousedown="dragMove();">
-		<span id="titleText"> Warface Sigs </span>
-		<button id="closeButton" onmousedown="closeSigMakerWindow();">X</button>
-		<button id="helpButton" onmousedown="openHelpDialog();">?</button>
-		
-	</div>
+<body onmousedown="dragMove();">
+	
 	<div id="container">
 		<div id="tabs">
 			<ul id="nav">
@@ -42,6 +37,9 @@
 				<li><a href="#name" class="noneShareTab">Name</a></li>
 				<li><a href="#share" id="shareTab">Share</a></li>
 			</ul>
+			<button id="closeButton" onmousedown="closeSigMakerWindow();">X</button>
+				<button id="helpButton" onmousedown="openHelpDialog();">?</button>
+			
 
 			<div class="container-body">
 				<div class="container-body-section">
@@ -181,24 +179,6 @@
 					</div>
 					</div>
 				</div>
-<!--
-				<div class="container-body-section">
-					<table id="statsToolbar">
-						<tr>
-							<td>Stats</td>
-						</tr>
-					</table>
-				</div>
-			-->
-
-
-
-
-
-
-
-
-
 
 				<div id="background" class="container-body-section">
 					<table class="image-list" id="bg-list">
