@@ -1039,7 +1039,7 @@ function moveLayerUp(layer) {
 
 }
 
-
+authorizationAttempts = 0;
 function authorizeUser() {
 
   
@@ -1055,6 +1055,7 @@ function authorizeUser() {
   console.log(shouldOpen);
   if(shouldOpen || true)  //to do remove this true
   {
+    authorizationAttempts = 0;
     console.log("the if was true");
     console.log(localStorage.getItem('username') );
   console.log(localStorage.getItem('warfaceRunning'));
@@ -1119,6 +1120,11 @@ function authorizeUser() {
     }, 900);
 
   } else {
+    if(authorizationAttempts > 3)
+    {
+      $("#authBody").text("Having trouble getting verified? Try restarting Warface Sigs, then restarting Warface, and be sure to press 'Play'.");
+    }
+    authorizationAttempts++;
     $('#authWindow').show('fade', 500);
   }
 
