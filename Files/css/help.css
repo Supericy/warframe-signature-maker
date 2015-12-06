@@ -13,11 +13,11 @@ html {
     width:1000px;
     height:700px;
 
-  background-color: rgba(35, 35, 35, .8);
+  background-color: rgba(35, 35, 35, .95);
   /*box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);*/
   
 
-  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 4px 1px rgba(0,0,0,0.75);
 
 }
 #helpWindowTitle {
@@ -48,7 +48,7 @@ span{
   text-align: center;
   padding:0;
   float:right;
-  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow:0px 0px 4px 1px rgba(0,0,0,0.75);
   font-size: 16px;
   height:20px;
   cursor:pointer;

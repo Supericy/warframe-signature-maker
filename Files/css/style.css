@@ -12,7 +12,7 @@ body {
   width: 1280px;
   height: 720px;
   position: relative;
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 0px 0px 3px 5px rgba(10,10,10,0.6), 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 0px 0px 3px 5px rgba(10,10,10,0.6);
   margin-top:10px;
 }
 
@@ -26,7 +26,7 @@ body {
   text-align: center;
   padding:0;
   float:right;
-  box-shadow: 0px 0px 6px 2px rgb(0,0,0);
+  box-shadow:0px 0px 4px 1px rgba(0,0,0,0.75);
   font-size: 16px;
   height:20px;
   cursor:pointer;
@@ -41,6 +41,7 @@ display:inline-block;
 
 #helpButton:active {
     background: rgb(155,155,155);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4)
 }
 
 #closeButton {
@@ -52,7 +53,7 @@ display:inline-block;
   text-align: center;
   padding:0;
   float:right;
-  box-shadow: 0px 0px 6px 2px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   font-size: 16px;
   height:20px;
   cursor:pointer;
@@ -67,6 +68,7 @@ display:inline-block;
 
 #closeButton:active {
     background: rgb(155,155,155);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4)
 }
 
 
@@ -100,8 +102,8 @@ display:inline-block;
     color: white;
     margin-left: 55px;
     margin-top:6px;
-    background: rgb(0,170,0);
-    box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+    background: rgb(0,130,0);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
     border-radius: 7px;
     font-size: 36px;
     text-decoration: none;
@@ -109,8 +111,8 @@ display:inline-block;
 }
 
 #saveSignatureButton:hover {
-    background: rgb(0,190,0);
-    box-shadow: 0px 0px 12px 5px rgb(0,0,0), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
+    background: rgb(0,150,0);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
 }
 
 #saveSignatureButton:active {
@@ -133,7 +135,7 @@ display:inline-block;
     background: rgb(0,190,0);
     border-radius: 7px;
        background: rgb(0,170,0);
-    box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
     
     font-size: 16px;
     padding: 6px 10px 4px 10px;
@@ -143,7 +145,7 @@ display:inline-block;
 
 .Round_Green_Button:hover {
     background: rgb(0,190,0);
-    box-shadow: 0px 0px 12px 5px rgb(0,0,0), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
 
 }
 
@@ -172,7 +174,7 @@ display:inline-block;
 {
     width:82%;
     height: 30px;
-       box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+       box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
 }
 
  .signatureCopyInside
@@ -210,7 +212,7 @@ display:inline-block;
 
 .image-list {
   background: rgba(0, 0, 0, 0.4);
-     box-shadow: 0px 0px 12px 3px rgb(0,0,0);
+     box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
 
 }
 .image-list td, th {
@@ -230,7 +232,7 @@ display:inline-block;
   height: 63px;
   padding: 0px;
   margin: 0px;
-  box-shadow: 0px 0px 12px 3px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
 }
 #bg-list img {
   padding: 4px;
@@ -239,7 +241,7 @@ display:inline-block;
   margin-left: 10px;
 }*/
 #workspaceCanvas {
-  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   /*display: inline-block;*/
   /*vertical-align: top;*/
   margin-left:5px;
@@ -252,7 +254,7 @@ display:inline-block;
   width: 600px;
   
   background: rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   margin-left:5px;
   margin-bottom:20px;
 }
@@ -268,11 +270,15 @@ display:inline-block;
   background: #363941;
   border:none;
   outline:none;
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
-  border-radius: 5px;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+  
 }
 #left-toolbar button:hover {
   cursor: pointer;
+}
+#left-toolbar button:active {
+  background: rgb(155,155,155);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
 }
 #left-toolbar button:hover span {
   color: orange;
@@ -292,19 +298,19 @@ display:inline-block;
   width: 240px;
   border:none;
   outline:none;
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
 }
 
 
 span.ui-slider-handle.ui-state-default.ui-corner-all {
   background: rgba(255, 255, 255, 0.7);
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0),inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
   border-radius: 5px;
   border: none;
 }
 .ui-slider-horizontal {
   background: #363941;
-  box-shadow: inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+  box-shadow: inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
   border-radius: 5px;
 }
 
@@ -390,7 +396,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   /* bevel */
   /*-moz-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);
     -webkit-box-shadow: inset 2px 2px 2px rgba(255, 255, 255, .4), inset -2px -2px 2px rgba(0, 0, 0, .4);*/
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   /* round corners */
   
   /* font stuff */
@@ -412,11 +418,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   color: orange;
   /* crazy glow */
   text-shadow: 0 0 0 #000, 0 0 5px #000, 0 0 10px #000, 0 0 15px #000, 0 0 20px #000, 0 0 30px #fe0, 0 0 40px #000;
-   box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
+   box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
    cursor:pointer;
 }
 #nav li a:active {
-  background: rgba(155,155,155,0.2);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
 }
 /*hide outline */
 
@@ -519,14 +525,14 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   display: inline-block;
   vertical-align: top;
   padding: 4px;
-  box-shadow: 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   background: rgba(0, 0, 0, 0.4);
   overflow-y: auto;
   height: 270px;
 }
 #name-toolbar input[type=text] {
   border-radius: 4px;
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
   padding: 4px;
   border:none;
  
@@ -550,7 +556,8 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   background: transparent;
   border: none;
   border: none;
-   box-shadow: 0px 0px 12px 2px rgb(0,0,0);
+  color:lightgray;
+   box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
 }
 .color-picker-popup {
   background: lightgray;
@@ -562,38 +569,63 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   font-size: 14px;
 }
 
+
+#closeButton:hover {
+    background: rgb(210,0,0);
+}
+
+#closeButton:active {
+    background: rgb(155,155,155);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4)
+}
+
+
 .customize-add-shadow, .customize-remove-shadow {
-  border-radius: 4px;
+   color:white;
+  width:40px;
   border:none;
-   box-shadow: 0px 0px 12px 2px rgb(0,0,0);
-  width:30px;
-  height:30px;
+  outline:none;
+  background: rgb(130,0,0);
+  text-align: center;
+  padding:0;
+ 
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+  font-size: 16px;
+  height:20px;
   cursor:pointer;
+  display:inline-block;
 }
 .customize-add-shadow {
-  background: green;
-  width:55px;
-  height:35px;
+  background: rgb(0,130,0);
+ 
 }
-.customize-remove-shadow {
-  background: red;
+
+.customize-add-shadow:hover{
+  background: rgb(0,150,0);   
 }
-.customize-add-shadow:hover, .customize-remove-shadow:hover{
-   box-shadow:  0px 0px 12px 2px rgb(0,0,0),inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+
+.customize-remove-shadow:hover{
+  background: rgb(150,0,0);
+   
+}
+
+.customize-add-shadow:active, .customize-remove-shadow:active{
+  background: rgb(155,155,155);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4)
 }
 
 #stat-toolbar {
   display: inline-block;
   vertical-align: top;
   padding: 4px;
-   box-shadow: 0px 0px 12px 2px rgb(0,0,0);
+   box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   background: rgba(0, 0, 0, 0.4);
   overflow-y: auto;
   height: 272px;
 }
 #stat-toolbar input[type=text] {
   border-radius: 4px;
-  box-shadow:  0px 0px 12px 2px rgb(0,0,0),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
+  box-shadow:  0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4);
   padding: 4px;
   border:none;
   border:2px solid black;
@@ -624,7 +656,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
 
 #stat-style-strokeWidth{
   width:110px;
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
   border:none;
   float:right;
 }
@@ -639,7 +671,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   left: 320px;
   z-index: 11;
   background-color: rgba(35, 35, 35, .8);
-  box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
   
 
 }
@@ -667,23 +699,25 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
     text-align: center;
     width: 150px;
     height: 50px;
-    color: white;
-    background: rgb(0,170,0);
-    box-shadow: 0px 0px 12px 2px rgb(0,0,0);
     border-radius: 7px;
     font-size: 36px;
+    margin-top:5px;
+    color: white;
+    background: rgb(0,170,0);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
     text-decoration: none;
     cursor: pointer;
-    display:block;
-    position:relative;
+    position: :relative;
+    outline:none;
     margin:0 auto;
+    margin-left:275px;
 
 
 }
 
 #authButton:hover {
-    background: rgb(0,210,0);
-    box-shadow: 0px 0px 12px 2px rgb(0,0,0), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
+    background: rgb(0,150,0);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 5px 5px 5px rgba(0, 0, 0, .5), inset -5px -5px 5px rgba(90, 111, 120, .4);
 }
 
 #authButton:active {

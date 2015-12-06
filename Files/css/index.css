@@ -16,7 +16,7 @@ html {
   background-color: rgba(35, 35, 35, .8);
  
 
-  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 12px 5px rgb(0,0,0);
+  box-shadow: inset 0px 0px 3px 5px rgba(100,100,100,0.6), 0px 0px 4px 1px rgba(0,0,0,0.75);
 
 }
 #indexWindowTitle {
