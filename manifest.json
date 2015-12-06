@@ -20,14 +20,6 @@
 					"resizable":false,
 					"size":{"width":1450, "height":800},
 					"in_game_only":false,
-					"show_in_taskbar":true
-					},
-				"ProbeWindow":{
-					"file":"Files/probe.html",
-					"transparent":true,
-					"resizable":false,
-					"size":{"width":276, "height":275},
-					"in_game_only":false,
 					"show_in_taskbar":false
 					},
 				"IndexWindow":{
@@ -36,7 +28,7 @@
 					"resizable":false,
 					"size":{"width":2756, "height":275},
 					"in_game_only":false,
-					"show_in_taskbar":true
+					"show_in_taskbar":false
 					},
 				"HelpWindow":{
 				"file":"Files/help.html",

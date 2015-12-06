@@ -272,7 +272,7 @@ $.fn.extend({
 
       var username = localStorage.getItem("username");
       // FOR TESTING PURPOSES
-      if(username){}else{username="Supericy"};
+      //if(username){}else{username="Supericy"};
 
       if ($canvas.getLayer("usernameText") !== undefined) {
         $canvas.setLayer("usernameText", {
@@ -604,7 +604,7 @@ $(document).ready(function() {
 
   var username = localStorage.getItem("username");
   //TESTING PURPOSES
-  if(username){}else{username="Supericy";localStorage.setItem("username","Supericy")};
+  //if(username){}else{username="Supericy";localStorage.setItem("username","Supericy")};
 
   // setup text samples
 
@@ -793,7 +793,13 @@ function openHelpDialog(){
 
 }
 
-
+function closeCurrentWindow() {
+  overwolf.windows.getCurrentWindow(function(result) {
+    if (result.status == "success") {
+      overwolf.windows.close(result.window.id);
+    }
+  });
+};
 
 
 function serializeCanvas() {
@@ -1030,11 +1036,17 @@ function moveLayerUp(layer) {
 
 function authorizeUser() {
 
-  // To:do check if user is has warface open or not and if so store username in local storage
-
-
-  // fetch any signatures they might already have
-  //console.log("fetching server instructions")
+  
+  $('#authWindow').hide('fade', 500);
+  var name = localStorage.getItem('username') ;
+  var running = localStorage.getItem('warfaceRunning');
+  var shouldOpen = name && running;
+  console.log(shouldOpen);
+  if(!shouldOpen)
+  {
+    console.log("the if was true");
+    console.log(localStorage.getItem('username') );
+  console.log(localStorage.getItem('warfaceRunning'));
     var unserializedCanvas = null;
 
     $.ajax({
@@ -1092,12 +1104,12 @@ function authorizeUser() {
           audioElement.pause()
           $('#leftDoor, #rightDoor').hide();
         });
+        }, 400);
+    }, 900);
 
-
-
-      }, 400);
-
-  }, 900);
+  } else {
+    $('#authWindow').show('fade', 500);
+  }
 
 
 }
