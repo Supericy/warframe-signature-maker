@@ -1108,7 +1108,7 @@ function unserializeLayer(sLayer) {
     type: sLayer.type,
     name: sLayer.name,
     draggable: sLayer.draggable,
-    source: sLayer.source,
+    source: sLayer.source.replace(/^.*?(?=images\/)/i, ''),
     x: sLayer.x,
     y: sLayer.y,
     width: sLayer.width,
@@ -1279,6 +1279,8 @@ function unserializeLayer(sLayer) {
   if(sLayer.style){
     layer.style = sLayer.style;
   }
+
+
 
   return layer;
 }
