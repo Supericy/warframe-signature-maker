@@ -723,3 +723,32 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
 #authButton:active {
     background: rgb(155,155,155);
 }
+
+
+
+#authCloseButton {
+  color:white;
+  width:40px;
+  border:none;
+  outline:none;
+  background: rgb(130,0,0);
+  text-align: center;
+  padding:0;
+  float:right;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+  font-size: 16px;
+  height:20px;
+  cursor:pointer;
+  margin-right:-115px;
+  margin-top: -15px;
+  display:inline-block;
+}
+
+#authCloseButton:hover {
+    background: rgb(210,0,0);
+}
+
+#authCloseButton:active {
+    background: rgb(155,155,155);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75),inset 2px 2px 2px rgba(0, 0, 0, .5), inset -2px -2px 2px rgba(90, 111, 120, .4)
+}
