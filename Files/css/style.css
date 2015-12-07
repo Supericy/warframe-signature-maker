@@ -100,7 +100,7 @@ display:inline-block;
     width: 200px;
     height: 50px;
     color: white;
-    margin-left: 55px;
+    margin-left: 5px;
     margin-top:6px;
     background: rgb(0,130,0);
     box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
@@ -112,11 +112,12 @@ display:inline-block;
 
 #saveSignatureButton:hover {
     background: rgb(0,150,0);
-    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
+    
 }
 
 #saveSignatureButton:active {
     background: rgb(0,150,30);
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
 }
 
 
@@ -145,18 +146,19 @@ display:inline-block;
 
 .Round_Green_Button:hover {
     background: rgb(0,190,0);
-    box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
+   
 
 }
 
 .Round_Green_Button:active {
     background: rgb(0,150,30);
+     box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75), inset 3px 3px 3px rgba(0, 0, 0, .5), inset -3px -3px 3px rgba(90, 111, 120, .4);
 }
 
 
  .signatureCopy
 {
-    margin-left: 55px;
+    margin-left: 5px;
     width: 100%;
  
 }
@@ -255,7 +257,7 @@ display:inline-block;
   
   background: rgba(0, 0, 0, 0.4);
   box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
-  margin-left:5px;
+  margin-left:2px;
   margin-bottom:20px;
 }
 
@@ -451,7 +453,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
 
 }
 #stat-list {
-  margin-left:55px;
+  margin-left:5px;
   margin-top:10px;
 }
 #name-list td, #stat-list td {
@@ -479,7 +481,7 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
 
 
 #statPageInfoText {
-  margin-left:55px;
+  margin-left:5px;
   margin-top:4px;
   margin-bottom:14px;
   color:#A4ADA7;
