@@ -7,7 +7,8 @@ start_script() {
         echo -e "\033[0;33mAttempting to start Warface-Signatures Bootstrap...\033[0m"
 
         # start our node server
-        node ~/warface-signature-maker/app/Files/node/warsigs-bootstrap.js > /var/log/warsigs.log 2>&1 &
+        cd ~/warface-signature-maker/app/Files/node
+        node warsigs-bootstrap.js > /var/log/warsigs.log 2>&1 &
     fi
 
     echo -e "\033[0;32mWarface-Signatures is now running.\033[0m\n"
