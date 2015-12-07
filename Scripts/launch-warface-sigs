@@ -1,0 +1,27 @@
+#!/bin/bash
+start_script() {
+    if ps aux | grep "[w]arsigs-bootstrap" > /dev/null
+    then
+        : #noop
+    else
+        echo -e "\033[0;33mAttempting to start Warface-Signatures Bootstrap...\033[0m"
+        node ~/warface-signature-maker/Files/node/warsigs-bootstrap.js > /var/log/warsigs.log 2>&1 &
+    fi
+
+    echo -e "\033[0;32mWarface-Signatures is now running.\033[0m\n"
+}
+
+stop_script() {
+    echo -e "\033[0;33mStopping Warface-Signatures Bootstrap..."
+    kill $(ps aux | grep "[w]arsigs-bootstrap" | awk '{print $2}') > 2&>1 > /dev/null
+    echo -e "\033[0;31mWarface-Signatures is now stopped.\033[0m\n"
+}
+
+case "$1" in
+    start)   start_script ;;
+    stop)    stop_script ;;
+    restart) stop_script; start_script ;;
+    *) echo "usage: $0 start|stop|restart" >&2
+       exit 1
+       ;;
+esac
