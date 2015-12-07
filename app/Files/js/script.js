@@ -186,11 +186,11 @@ $.fn.extend({
         mousedown: function(layer) {
           var previouslySelectedLayer = $canvas.selectedLayer;
 
-          console.log("You selected " + layer.name);
-          console.log(layer);
+          //console.log("You selected " + layer.name);
+          //console.log(layer);
           $canvas.selectedLayer = layer;
-          console.log("after I set it:");
-          console.log($canvas.selectedLayer);
+          //console.log("after I set it:");
+          //console.log($canvas.selectedLayer);
           //clear previous "selection"
           if (previouslySelectedLayer) {
             $canvas.enableLayerHandles(previouslySelectedLayer, false);
@@ -1049,15 +1049,15 @@ function authorizeUser() {
   var running = localStorage.getItem('warfaceRunning');
 
   var shouldOpen = name && running;
-  console.log(name);
-  console.log(running);
-  console.log(shouldOpen);
+ // console.log(name);
+ // console.log(running);
+ // console.log(shouldOpen);
   if(shouldOpen || true)  //to do remove this true
   {
     authorizationAttempts = 0;
-    console.log("the if was true");
-    console.log(localStorage.getItem('username') );
-  console.log(localStorage.getItem('warfaceRunning'));
+    //console.log("the if was true");
+    //console.log(localStorage.getItem('username') );
+  //console.log(localStorage.getItem('warfaceRunning'));
     var unserializedCanvas = null;
 
     $.ajax({

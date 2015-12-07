@@ -72,7 +72,7 @@ function getStatStyleFromElements() {
       family: $('#stat-style-font-family').val()
     }
   };
-
+  console.log("style from elements:");
   console.log(style);
 
   return style;
@@ -104,10 +104,10 @@ $(function() {
 
 function updateStatToolbar() {
 
-  var layer = $canvas.getLayer($canvas.selectedLayer);
+  var layer = $canvas.selectedLayer;
   var style = layer.style;
-  console.log("updating toolbar for layer" + layer.name);
-  console.log(style);
+  //console.log("updating toolbar for layer" + layer.name);
+  //console.log(style);
 
   $('#stat-style-color').spectrum('set', style.iconColor);
   $('#stat-style-fillStyle').spectrum('set', style.fillStyle);
@@ -121,12 +121,13 @@ function updateStatToolbar() {
 function updateStatLayer() {
   // use the specified style, or create it from the elements
   console.log("updating stat layer");
-  var layer = $canvas.getLayer($canvas.selectedLayer);
+  var layer = $canvas.selectedLayer;
   var style = getStatStyleFromElements();
   layer.style = style;
   var type = STAT_TYPES[layer.name];
   var $element = $('.stat-icon-preset');
   var value = 10;
+
   for(var i = 0; i <$element.length; i++){
     var $test = $($element[i]);
     if($test.data('stat-type') === layer.name){
@@ -137,6 +138,7 @@ function updateStatLayer() {
     layer.source = dataURL;
     $canvas.drawLayers();
     //console.log("after update draw");
+    //console.log(layer.style);
   });
   
 }

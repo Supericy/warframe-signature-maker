@@ -47,12 +47,17 @@ function createStatIconImage(type, value, style, callback) {
 
         img.src = changeStatIconColor(img, newColor);
 
-        var fontSize = 42;
+        
        
         var numDigits = value.toString().length;
-        var padding = 15 * numDigits; // function of the # digits
+        var padding = 15 * numDigits + 10; // function of the # digits
+        var vTextOffset = fontSize/15;
+
+
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
+
+        var fontSize = imgHeight - 7;//42;
        
         // to do get this stuff from a temp canvas as its not going to work after all
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
@@ -74,7 +79,7 @@ function createStatIconImage(type, value, style, callback) {
             fillStyle: style.fillStyle || 'orange',
             strokeStyle: style.strokeStyle || 'black',
             strokeWidth: style.strokeWidth || 2,
-            x: imgWidth+padding, y: $statCanvas[0].height/2,
+            x: imgWidth+padding, y: imgHeight/2 -vTextOffset,
             fontSize: fontSize,
             fontFamily: style.font.family || 'Impact',
             text: value.toString()

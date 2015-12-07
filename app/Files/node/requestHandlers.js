@@ -451,7 +451,7 @@ function drawLayerManually($c, lay, stats, $) {
         
       	var vTextOffset = fontSize/15;
 
-      	var padding = 15 * numDigits;
+      	var padding = 15 * numDigits + 10;
 
         // FIXING THINGS
         lay.height =  imgHeight;
@@ -461,7 +461,7 @@ function drawLayerManually($c, lay, stats, $) {
         $statCanvas[0].height = imgHeight;
     
      	if(numDigits > 2){
-     		lay.x = lay.x + padding/2;
+     		//lay.x = lay.x + padding/2;
      	}
      	
 
@@ -484,7 +484,7 @@ function drawLayerManually($c, lay, stats, $) {
             text: value
         });
 
-		img.src = changeStatIconColor(img, style.iconColor, $);
+		img.src = changeStatIconColor(img, newColor, $);
 		
         $statCanvas.drawImage({
             source: img,
