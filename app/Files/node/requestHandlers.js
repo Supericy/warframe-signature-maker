@@ -451,7 +451,11 @@ function drawLayerManually($c, lay, stats, $) {
         
       	var vTextOffset = fontSize/15;
 
-      	var padding = 15 * numDigits + 10;
+      	var spaceWidth = Math.min(imgWidth, imgHeight);
+      
+      	var padding = (  (spaceWidth/4) * numDigits) + spaceWidth/2;
+
+      
 
         // FIXING THINGS
         lay.height =  imgHeight;

@@ -50,12 +50,15 @@ function createStatIconImage(type, value, style, callback) {
         
        
         var numDigits = value.toString().length;
-        var padding = 15 * numDigits + 10; // function of the # digits
+        //var padding = (10 * numDigits) + 10; // function of the # digits
         
 
 
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
+
+        var spaceWidth = Math.min(imgWidth, imgHeight);
+        var padding = (  (spaceWidth/4) * numDigits-1) + spaceWidth/2;
 
         var fontSize = imgHeight - 7;//42;
 
@@ -101,7 +104,7 @@ function createStatIconImage(type, value, style, callback) {
     };
 }
 
-
+/*
 function updateIntermediateStatIcon(lay, callback){
        
         var img = new Image();
@@ -172,7 +175,7 @@ function updateIntermediateStatIcon(lay, callback){
         }
 
 }
-
+*/
 
 function tinyToRGB(tiny)
 {

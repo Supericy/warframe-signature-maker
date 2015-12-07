@@ -112,7 +112,7 @@ $.fn.extend({
           var oldx = layer.oldx;
           var oldy = layer.oldy;
           //console.log(newwidth, newheight);
-
+          /*
           if(statsRecording.indexOf(layer.name)>=0){
             console.log(layer.source);
             console.log("beautifying");
@@ -124,8 +124,9 @@ $.fn.extend({
 
 
 
-          }
 
+          }
+    */
 
           $canvas.undoManager.add({
             undo: function() {
@@ -1039,7 +1040,7 @@ function moveLayerUp(layer) {
 }
 
 authorizationAttempts = 0;
-
+localStorage.setItem('username', 'Raif');
 function authorizeUser() {
 
   
