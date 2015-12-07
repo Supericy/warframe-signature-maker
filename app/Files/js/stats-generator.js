@@ -57,10 +57,12 @@ function createStatIconImage(type, value, style, callback) {
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
 
-        var spaceWidth = Math.min(imgWidth, imgHeight);
-        var padding = (  (spaceWidth/4) * numDigits-1) + spaceWidth/2;
-
         var fontSize = imgHeight - 7;//42;
+
+        var spaceWidth = Math.min(imgWidth, imgHeight);
+        var padding = fontSize;//(  (spaceWidth/4) * numDigits-1) + spaceWidth/2;
+
+        
 
         var vTextOffset = fontSize/15;
        
