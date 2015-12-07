@@ -30,7 +30,11 @@
 					"resizable":false,
 					"size":{"width":2756, "height":275},
 					"in_game_only":false,
-					"show_in_taskbar":false
+					"show_in_taskbar":false,
+					"start_position":{
+						"top":100,
+						"left":300
+					}
 					},
 				"HelpWindow":{
 				"file":"Files/help.html",

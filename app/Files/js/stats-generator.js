@@ -46,18 +46,20 @@ function createStatIconImage(type, value, style, callback) {
         var newColor = style.iconColor || tinycolor('gray');
 
         img.src = changeStatIconColor(img, newColor);
-
+        console.log("value is:", value);
         
        
         var numDigits = value.toString().length;
         var padding = 15 * numDigits + 10; // function of the # digits
-        var vTextOffset = fontSize/15;
+        
 
 
         var imgWidth = img.width*0.5;
         var imgHeight = img.height*0.5;
 
         var fontSize = imgHeight - 7;//42;
+
+        var vTextOffset = fontSize/15;
        
         // to do get this stuff from a temp canvas as its not going to work after all
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
