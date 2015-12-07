@@ -46,7 +46,7 @@ function createStatIconImage(type, value, style, callback) {
         var newColor = style.iconColor || tinycolor('gray');
 
         img.src = changeStatIconColor(img, newColor);
-        console.log("value is:", value);
+        //console.log("value is:", value);
         
        
         var numDigits = value.toString().length;

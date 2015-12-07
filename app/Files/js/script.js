@@ -1039,6 +1039,7 @@ function moveLayerUp(layer) {
 }
 
 authorizationAttempts = 0;
+
 function authorizeUser() {
 
   
@@ -1096,7 +1097,7 @@ function authorizeUser() {
 
   // open doors
   $("#authWindow").hide('fade', 500);
-
+  
   setTimeout(function() {
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/doorSound.mp3');
