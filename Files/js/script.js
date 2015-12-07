@@ -726,8 +726,8 @@ function uploadSignatureAndShowLinks(){
       }
     },
     error: function(data) {
-      //showFailedToUploadSignature();
-      showMySignatureLinks(); // FOR TESTING PURPOSES
+      showFailedToUploadSignature();
+      //showMySignatureLinks(); // FOR TESTING PURPOSES
       return console.log("ERROR Connection");
     }
   });
