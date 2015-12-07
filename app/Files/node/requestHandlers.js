@@ -453,7 +453,7 @@ function drawLayerManually($c, lay, stats, $) {
 
       	var spaceWidth = Math.min(imgWidth, imgHeight);
 
-      	var padding = (fontSize);//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
+      	var padding = spaceWidth;//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
 
 
 
