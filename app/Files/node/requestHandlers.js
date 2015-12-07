@@ -10,7 +10,7 @@ var canvas = require('canvas');
 
 function warfaceSigUpload(response,request) {
 		console.log("Request handler 'warfaceSigUpload' was called.");
-	
+
 		var postData = "";
 		request.setEncoding("utf8");
 
@@ -25,15 +25,15 @@ function warfaceSigUpload(response,request) {
 			console.log("All chunks recieved");
 
 			var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
-  		
-  		
+
+
 	  		if(queryObject.userId)
 	  		{
 	  			console.log("Signature for '" + queryObject.userId + "' updated");
 
 
 				var MongoClient = require('mongodb').MongoClient;
-				
+
 
 				var url = 'mongodb://localhost:27017/test';
 				MongoClient.connect(url, function(err,db)  {
@@ -45,7 +45,7 @@ function warfaceSigUpload(response,request) {
 					} else {
 						console.log(err);
 					}
-					
+
 				});
 			}
 
@@ -68,7 +68,7 @@ function warfaceSigUpload(response,request) {
 
 function warfaceSigShow(response,request) {
 		console.log("Request handler 'warfaceSigShow' was called.");
-	
+
 		// STUPID FUCKING CORS
 		/*
 		response.writeHead(200, {
@@ -78,19 +78,19 @@ function warfaceSigShow(response,request) {
 		*/
 
 		var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
-  		
-  		
+
+
   		if(queryObject.userId)
   		{
   			console.log("Signature for '" + queryObject.userId + "' requested");
   			//response.write(JSON.stringify(queryObject));
   			//response.write("User data requested for: " + queryObject.userId);
-  			
+
 
   			var MongoClient = require('mongodb').MongoClient;
 			var dburl = 'mongodb://localhost:27017/test';
 
-			MongoClient.connect(dburl, function(err, db) 
+			MongoClient.connect(dburl, function(err, db)
 			{
 		  		if(!err){
 
@@ -133,10 +133,10 @@ function warfaceSigShow(response,request) {
 					        	}
 
 					        	drawAndSendSignature(signature,stats,response);
-	
+
 			  					db.close();
 					        }
-					        
+
 					     } else {
 					     	response.writeHead(200, {
 								"Content-Type": "text/plain",
@@ -147,14 +147,14 @@ function warfaceSigShow(response,request) {
 					    	response.end();
 					     }
 					     });
-		  				
 
-		  				
+
+
 		 		 	});
 		  		}
 			});
-  			
-  		}  
+
+  		}
 
 }
 
@@ -162,7 +162,7 @@ function warfaceSigShow(response,request) {
 
 function warfaceStatUpload(response,request) {
 		console.log("Request handler 'warfaceStatUpload' was called.");
-	
+
 		var postData = "";
 		request.setEncoding("utf8");
 
@@ -177,18 +177,18 @@ function warfaceStatUpload(response,request) {
 			console.log("All chunks recieved");
 
 			var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
-  		
-  		
+
+
 	  		if(queryObject.userId)
 	  		{
 	  			var statName = postData;
 	  			console.log(statName +" for '" + queryObject.userId + "' updated");
 
-	  			
-	  			
+
+
 
 				var MongoClient = require('mongodb').MongoClient;
-				
+
 
 				var url = 'mongodb://localhost:27017/test';
 				MongoClient.connect(url, function(err,db)  {
@@ -200,7 +200,7 @@ function warfaceStatUpload(response,request) {
 					} else {
 						console.log(err);
 					}
-					
+
 				});
 			}
 
@@ -222,29 +222,29 @@ function warfaceStatUpload(response,request) {
 }
 function warfaceSigData(response,request) {
 console.log("Request handler 'warfaceSigData' was called.");
-	
+
 		// STUPID FUCKING CORS
-		
+
 		response.writeHead(200, {
 			"Content-Type": "text/plain",
 			'Access-Control-Allow-Origin' : '*'
 		});
-		
+
 
 		var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
-  		
-  		
+
+
   		if(queryObject.userId)
   		{
   			console.log("Signature (text) '" + queryObject.userId + "' requested");
   			//response.write(JSON.stringify(queryObject));
   			//response.write("User data requested for: " + queryObject.userId);
-  			
+
 
   			var MongoClient = require('mongodb').MongoClient;
 			var dburl = 'mongodb://localhost:27017/test';
 
-			MongoClient.connect(dburl, function(err, db) 
+			MongoClient.connect(dburl, function(err, db)
 			{
 		  		if(!err){
 
@@ -259,25 +259,25 @@ console.log("Request handler 'warfaceSigData' was called.");
 					        if(result[0].signature){
 					        	var signature = result[0].signature;
 					        	response.write(JSON.stringify(signature));
-					        	response.end();	
+					        	response.end();
 			  					db.close();
 					        }
-					        
+
 					     } else {
-					     	
+
 					        console.log('No document(s) found with defined "find" criteria!');
 					    	response.write("No signature found for: " + queryObject.userId);
 					    	response.end();
 					     }
 					     });
-		  				
 
-		  				
+
+
 		 		 	});
 		  		}
 			});
-  			
-  		}  
+
+  		}
 
 }
 
@@ -300,7 +300,7 @@ var insertUser = function(db, postData, callback) {
 var findUsers = function(db, callback) {
    var cursor = db.collection('users').find();
    callback(cursor);
- 
+
 };
 
 var findSignature = function(userId, db, callback) {
@@ -311,8 +311,8 @@ var findSignature = function(userId, db, callback) {
 };
 
 var upsertSignature = function(userId, postData, db, callback) {
-   db.collection('users').update( 
-   
+   db.collection('users').update(
+
       {"user_id": userId},
       {$set:{
       	"signature":postData
@@ -330,8 +330,8 @@ var upsertSignature = function(userId, postData, db, callback) {
 var upsertStat = function(userId, statName, db, callback) {
 	var obj = {};
 	obj[statName] = 1 ;
-   db.collection('users').update( 
-   
+   db.collection('users').update(
+
       {"user_id": userId},
       {$inc:
       	obj
@@ -357,8 +357,8 @@ var drawAndSendSignature = function(signature, stats, response) {
 	jsdom.env( html, function ( errors, window ) {
 	  if( errors ) console.log( errors );
 
-	  var $ = JQuery( window );   
-	  JCanvas( $, window );  
+	  var $ = JQuery( window );
+	  JCanvas( $, window );
 
 
 	  var $c  = $( '<canvas>' );
@@ -369,7 +369,7 @@ var drawAndSendSignature = function(signature, stats, response) {
 
 
 	  //console.log("canvas height: " + $c[0].height);
-	 
+
 	  var unserializedCanvas = unserializeCanvas(JSON.parse(signature));
 	  //console.log("unserialized canvas : " + unserializedCanvas);
 	  for (var i = 0; i < unserializedCanvas.length; i++) {
@@ -393,8 +393,8 @@ var drawAndSendSignature = function(signature, stats, response) {
 	  console.log("to data url being called now");
 	  var sig = $c.getCanvasImage( 'png' );
 	  //console.log(sig);
-	 
-	
+
+
 	  // attempt to send an actual image instead of base 64 stuff
 	  var img = new Buffer(sig.replace("data:image/png;base64,",""), 'base64');
 	    response.writeHead(200, {
@@ -427,35 +427,35 @@ function drawLayerManually($c, lay, stats, $) {
 		//console.log("value is : ", value);
 		//var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + '220px" />');
 
-		squid = fs.readFileSync('../images/statIcons/'+statName+'.png');//, function(err, squid) {
+		squid = fs.readFileSync('images/statIcons/'+statName+'.png');//, function(err, squid) {
         var img = new canvas.Image();
         img.src = squid;
-    	
+
     	var style = lay.style;
     	console.log(style);
 
     	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
-        
-       
+
+
         var numDigits = value.toString().length;
         //var padding = 15 * numDigits; // function of the # digits
 
         var imgWidth = lay.height * (img.width/img.height);//img.width*0.5;
         var imgHeight = lay.height;//img.height*0.5;
-       
+
 
         var fontSize = imgHeight - 7;//42;
 
         var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
-        
+
       	var vTextOffset = fontSize/15;
 
       	var spaceWidth = Math.min(imgWidth, imgHeight);
-      
+
       	var padding = (  (spaceWidth/4) * numDigits) + spaceWidth/2;
 
-      
+
 
         // FIXING THINGS
         lay.height =  imgHeight;
@@ -463,11 +463,11 @@ function drawLayerManually($c, lay, stats, $) {
         var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + 'px" />');
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
-    
+
      	if(numDigits > 2){
      		//lay.x = lay.x + padding/2;
      	}
-     	
+
 
         if(style.fillStyle)
         {
@@ -482,14 +482,14 @@ function drawLayerManually($c, lay, stats, $) {
             fillStyle: style.fillStyle || 'orange',
             strokeStyle:style.strokeStyle || 'black',
             strokeWidth: style.strokeWidth || 2,
-            x: imgWidth+padding, y: lay.height/2-vTextOffset, 
+            x: imgWidth+padding, y: lay.height/2-vTextOffset,
             fontSize: fontSize,
             fontFamily: style.font.family || 'Impact',
             text: value
         });
 
 		img.src = changeStatIconColor(img, newColor, $);
-		
+
         $statCanvas.drawImage({
             source: img,
             x: 0 ,
@@ -503,7 +503,7 @@ function drawLayerManually($c, lay, stats, $) {
 
 		squid = $statCanvas.getCanvasImage( 'png' );
         img.src = squid;
-     
+
 
 
 
@@ -514,12 +514,12 @@ function drawLayerManually($c, lay, stats, $) {
 
         //lay.x = lay.x + 230;
         //lay.y = lay.y + 75;
-      
-      
-       
+
+
+
 
 	} else {
-	squid = fs.readFileSync(lay.source.replace(/^.*?(?=Files\/)/i, '../../'));//, function(err, squid) {
+	squid = fs.readFileSync(lay.source.replace(/^.*?Files\//i, ''));//, function(err, squid) {
         var img = new canvas.Image();
         img.src = squid;
     }
@@ -538,9 +538,9 @@ function drawLayerManually($c, lay, stats, $) {
             scaleX:lay.scaleX,
             rotate:lay.rotate
          });
- 
+
 	//});
-	
+
 }
 
 
@@ -567,7 +567,7 @@ function changeStatIconColor(img, color,$){
   {
       if(currentPixels.data[I + 3] > 0) // If it's not a transparent pixel
       {
-      	
+
           currentPixels.data[I] = /*originalPixels.data[I] / 255 **/ newColor.R;
           currentPixels.data[I + 1] = /*originalPixels.data[I + 1] / 255 **/ newColor.G;
           currentPixels.data[I + 2] = /*originalPixels.data[I + 2] /255 **/  newColor.B;
@@ -583,7 +583,7 @@ function tinyToRGB(tiny)
 {
   //var long = parseInt(hex.replace(/^#/, ""), 16);
   var test = tiny;//.toRgb(); god damn node
-  
+
   return {
       R: test._r,//(long >>> 16) & 0xff,
       G: test._g,//(long >>> 8) & 0xff,
@@ -600,7 +600,7 @@ function tinyToRGBString(tiny)
   if(test){
   return "rgb(" + test._r + "," + test._g + "," + test.b + ")";}
   else return null;
-  
+
 }
 
 function unserializeLayer(sLayer) {
