@@ -17,7 +17,7 @@ start_script() {
 stop_script() {
     echo -e "\033[0;33mStopping Warface-Signatures Bootstrap..."
 
-    kill $(ps aux | grep "[w]arsigs-bootstrap" | awk '{print $2}') > 2&>1 > /dev/null
+    kill $(ps aux | grep "[w]arsigs-bootstrap" | awk '{print $2}') > 2>&1 > /dev/null
 
     echo -e "\033[0;31mWarface-Signatures is now stopped.\033[0m\n"
 }
