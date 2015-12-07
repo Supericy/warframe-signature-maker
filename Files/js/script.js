@@ -932,7 +932,6 @@ function registerHooksForToolbar(undoManager) {
     step: 0.01,
     slide: function(event, ui) {
       if ($canvas.selectedLayer) {
-        layer.mousedown($canvas.selectedLayer);
         setOpacity($canvas.selectedLayer, ui.value);
       }
     },

@@ -3,9 +3,9 @@ function initStatColorPickers(selector, color) {
 
   $elm.each(function() {
     var $this = $(this);
-
+    color =  color || tinycolor('gray');
     $this.spectrum({
-      color: color || tinycolor('gray'),
+      color: color,
       containerClassName: "color-picker-popup",
       className: "color-picker-button",
       showInitial: true,

@@ -42,10 +42,10 @@ function createStatIconImage(type, value, style, callback) {
     img.src = type.icon;
     img.onload = function(){
 
-        console.log("icon color" +style.iconColor);
+        //console.log("icon color" +style.iconColor);
         var newColor = style.iconColor || tinycolor('gray');
 
-        img.src = changeStatIconColor(img, style.iconColor);
+        img.src = changeStatIconColor(img, newColor);
 
         var fontSize = 42;
        
