@@ -747,7 +747,7 @@ function showMySignatureLinks(){
     //$("#SignatureId").show();
 
     $("#SignatureHTML").val('<img alt="Warface Signature" src="http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username") +'"'+'style="border: none;">');
-    $("#SignatureBBCode").val('[img]"http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username")+'"'+'[/img]');
+    $("#SignatureBBCode").val('[img]http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username")+'[/img]');
     $("#SignatureImageLink").val('http://warfacesigs.me/sigs/show?userId=' + localStorage.getItem("username"));
 
 

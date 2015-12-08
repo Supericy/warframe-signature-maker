@@ -7,6 +7,9 @@ function start(route, handle) {
 		var postData ="";
 		var pathname = url.parse(request.url).pathname;
 		console.log("Request for " +pathname + "received.");
+		var userId = pathname.replace(/^.*\//, '');
+		pathname = pathname.replace(userId, '');
+		console.log("pathname: ", pathname);
 
 		/*
 		request.setEncoding("utf8");

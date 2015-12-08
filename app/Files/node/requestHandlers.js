@@ -32,6 +32,7 @@ function warfaceSigUpload(response,request) {
 	  			console.log("Signature for '" + queryObject.userId + "' updated");
 
 
+
 				var MongoClient = require('mongodb').MongoClient;
 
 
@@ -77,12 +78,16 @@ function warfaceSigShow(response,request) {
 		});
 		*/
 
-		var queryObject = querystring.parse(request.url.replace(/^.*\?/, ''));
+		//var queryObject = querystring.parse(request.url.replace(/^.*\//, ''));
+		var userId = request.url.replace(/^.*\//, '').replace('.png', '');
 
-
-  		if(queryObject.userId)
+		console.log(userId);
+		//console.log(queryObject.userId);
+  		//if(queryObject.userId)
+  		if(userId)
   		{
-  			console.log("Signature for '" + queryObject.userId + "' requested");
+  			console.log("Signature for '" + userId + "' requested");
+  			//queryObject.userId = queryObject.userId.replace('.png', '');
   			//response.write(JSON.stringify(queryObject));
   			//response.write("User data requested for: " + queryObject.userId);
 
@@ -94,13 +99,13 @@ function warfaceSigShow(response,request) {
 			{
 		  		if(!err){
 
-		  			findSignature(queryObject.userId, db, function(cursor) {
+		  			findSignature(userId, db, function(cursor) {
 
 		  				var array = cursor.toArray(function (err, result) {
 					     if (err) {
 					        console.log(err);
 					     } else if (result.length) {
-					        console.log('Found signature for', queryObject.userId);
+					        console.log('Found signature for', userId);
 					        //console.log(result[0].signature);
 					        if(result[0].signature){
 					        	var signature = result[0].signature;
@@ -143,7 +148,7 @@ function warfaceSigShow(response,request) {
 								'Access-Control-Allow-Origin' : '*'
 							});
 					        console.log('No document(s) found with defined "find" criteria!');
-					    	response.write("No signature found for: " + queryObject.userId);
+					    	response.write("No signature found for: " + userId);
 					    	response.end();
 					     }
 					     });
@@ -398,7 +403,7 @@ var drawAndSendSignature = function(signature, stats, response) {
 	  // attempt to send an actual image instead of base 64 stuff
 	  var img = new Buffer(sig.replace("data:image/png;base64,",""), 'base64');
 	    response.writeHead(200, {
-	      //'Content-Type': 'image/png',
+	      'Content-Type': 'image/png',
 	      'Access-Control-Allow-Origin' : '*',
 	      //'Content-Length': img.length
 	    });
@@ -436,7 +441,8 @@ function drawLayerManually($c, lay, stats, $) {
 
     	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
-
+    	var oriWidth = lay.width;
+    	var oriHeight = lay.height;
 
         var numDigits = value.toString().length;
         //var padding = 15 * numDigits; // function of the # digits
@@ -459,14 +465,14 @@ function drawLayerManually($c, lay, stats, $) {
       	{
       		padding = padding*1.5;
       	}
-      	console.log("num digits:", numDigits);
-      	console.log("Layer x: ", lay.x);
-      	console.log("Img width, height", imgWidth, imgHeight);
-      	console.log("text width, padding", textWidth, padding);
+      	//console.log("num digits:", numDigits);
+      	//console.log("Layer x: ", lay.x);
+      	//console.log("Img width, height", imgWidth, imgHeight);
+      	//console.log("text width, padding", textWidth, padding);
         // FIXING THINGS
         lay.height =  imgHeight;
         lay.width = textWidth + imgWidth + padding;
-        console.log("final width ,height", lay.width, lay.height);
+        //console.log("final width ,height", lay.width, lay.height);
         var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + 'px" />');
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
@@ -531,8 +537,8 @@ function drawLayerManually($c, lay, stats, $) {
         img.src = squid;
 
 
-        lay.y = lay.y - imgHeight/2;
-        lay.x = lay.x - imgWidth;
+        lay.y = lay.y - oriHeight/2;
+        lay.x = lay.x - oriWidth/2;
 
 
 
