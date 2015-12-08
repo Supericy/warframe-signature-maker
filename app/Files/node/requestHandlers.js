@@ -449,12 +449,16 @@ function drawLayerManually($c, lay, stats, $) {
 
         var textWidth = fontSize/2 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
 
-      	var vTextOffset = fontSize/5;
+      	var vTextOffset = fontSize/7;
 
       	var spaceWidth = Math.min(imgWidth, imgHeight);
 
-      	var padding = spaceWidth;//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
+      	var padding = spaceWidth/2;//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
 
+      	if(imgWidth > imgHeight)
+      	{
+      		padding = padding*1.5;
+      	}
       	console.log("num digits:", numDigits);
       	console.log("Layer x: ", lay.x);
       	console.log("Img width, height", imgWidth, imgHeight);
