@@ -60,14 +60,14 @@ function createStatIconImage(type, value, style, callback) {
         var fontSize = imgHeight - 7;//42;
 
         var spaceWidth = Math.min(imgWidth, imgHeight);
-        var padding = imgHeight;//(  (spaceWidth/4) * numDigits-1) + spaceWidth/2;
+        var padding = spaceWidth;//(  (spaceWidth/4) * numDigits-1) + spaceWidth/2;
 
         
 
-        var vTextOffset = fontSize/15;
+        var vTextOffset = fontSize/5;
        
         // to do get this stuff from a temp canvas as its not going to work after all
-        var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
+        var textWidth = fontSize/2 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
         
 
         //console.log("textwidth: for ", value + " is " , textWidth);
@@ -86,10 +86,11 @@ function createStatIconImage(type, value, style, callback) {
             fillStyle: style.fillStyle || 'orange',
             strokeStyle: style.strokeStyle || 'black',
             strokeWidth: style.strokeWidth || 2,
-            x: imgWidth+padding, y: imgHeight/2 -vTextOffset,
+            x: (imgWidth/2)+padding, y: (imgHeight/2 -vTextOffset*3)/2,
             fontSize: fontSize,
             fontFamily: style.font.family || 'Impact',
-            text: value.toString()
+            text: value.toString(),
+            fromCenter:false
         });
 
         $statCanvas.drawImage({

@@ -16,8 +16,8 @@ function warfaceSigUpload(response,request) {
 
 		request.addListener("data", function(postDataChunk) {
 			postData += postDataChunk;
-			console.log("Received POST data chunk '"+
-			postDataChunk + "'.");
+			//console.log("Received POST data chunk '"+
+			//postDataChunk + "'.");
 		});
 
 		request.addListener("end", function() {
@@ -419,8 +419,8 @@ function drawLayerManually($c, lay, stats, $) {
 		img.src = lay.source;
 	} else if (statsRecording.indexOf(lay.name)>=0) {
 		var statName = lay.name;
-		console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats[statName]);
-		console.log("stats are: ", stats);
+		//console.log("creating stat icon image thing for stat: ", statName, "whos value is:", stats[statName]);
+		//console.log("stats are: ", stats);
 		//console.log("the length of ", statName.length);
 		var statValue = stats[statName];
 		var value = statValue ? statValue : 0;
@@ -432,7 +432,7 @@ function drawLayerManually($c, lay, stats, $) {
         img.src = squid;
 
     	var style = lay.style;
-    	console.log(style);
+    	//console.log(style);
 
     	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
 
@@ -447,26 +447,30 @@ function drawLayerManually($c, lay, stats, $) {
 
         var fontSize = imgHeight - 7;//42;
 
-        var textWidth = fontSize/3 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
+        var textWidth = fontSize/2 * numDigits; // guestimate since other methods require using canvas width/height which server can't do
 
-      	var vTextOffset = fontSize/15;
+      	var vTextOffset = fontSize/5;
 
       	var spaceWidth = Math.min(imgWidth, imgHeight);
 
-      	var padding = imgHeight;//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
+      	var padding = spaceWidth;//(  (spaceWidth/4) * numDigits) + spaceWidth/2;
 
-
-
+      	console.log("num digits:", numDigits);
+      	console.log("Layer x: ", lay.x);
+      	console.log("Img width, height", imgWidth, imgHeight);
+      	console.log("text width, padding", textWidth, padding);
         // FIXING THINGS
         lay.height =  imgHeight;
         lay.width = textWidth + imgWidth + padding;
+        console.log("final width ,height", lay.width, lay.height);
         var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + 'px" />');
         $statCanvas[0].width = textWidth + imgWidth + padding;//todo make these relative
         $statCanvas[0].height = imgHeight;
 
      	if(numDigits > 2){
-     		//lay.x = lay.x + padding/2;
+     		//lay.x = lay.x + lay.width -oldwidth;
      	}
+     	//lay.x = lay.x + 
 
 
         if(style.fillStyle)
@@ -477,27 +481,45 @@ function drawLayerManually($c, lay, stats, $) {
         {
             style.strokeStyle = tinyToRGBString(style.strokeStyle);
         }
+
+
+        // for testing purposes
+/*
+        $statCanvas.drawRect({
+		  fillStyle: '#000',
+		  x: 0, y: 0,
+		  width: lay.width,
+		  height: lay.height,
+		  opacity:0.5,
+		  fromCenter:false
+		});
+*/
+
         //console.log(style.strokeStyle);
         $statCanvas.drawText({
             fillStyle: style.fillStyle || 'orange',
             strokeStyle:style.strokeStyle || 'black',
             strokeWidth: style.strokeWidth || 2,
-            x: imgWidth+padding, y: lay.height/2-vTextOffset,
+            x: (imgWidth/2)+padding, y: (lay.height/2-vTextOffset*3)/2,
             fontSize: fontSize,
             fontFamily: style.font.family || 'Impact',
-            text: value
+            text: value,
+		    fromCenter:false
         });
 
 		img.src = changeStatIconColor(img, newColor, $);
 
         $statCanvas.drawImage({
             source: img,
-            x: 0 ,
+            x: 0,
             y: 0,
             width: imgWidth,
             height: imgHeight,
-            fromCenter: false
+		    fromCenter:false
         });
+
+
+        
 
 
 
@@ -505,15 +527,8 @@ function drawLayerManually($c, lay, stats, $) {
         img.src = squid;
 
 
-
-
-
-        // fuck you js dom
-        //lay.width = 600;
-        //lay.height = 200;
-
-        //lay.x = lay.x + 230;
-        //lay.y = lay.y + 75;
+        lay.y = lay.y - imgHeight/2;
+        lay.x = lay.x - imgWidth;
 
 
 
@@ -536,7 +551,8 @@ function drawLayerManually($c, lay, stats, $) {
             translateY:lay.translateY,
             scaleY:lay.scaleY,
             scaleX:lay.scaleX,
-            rotate:lay.rotate
+            rotate:lay.rotate,
+            fromCenter:!(statsRecording.indexOf(lay.name)>=0)
          });
 
 	//});
