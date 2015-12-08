@@ -8,7 +8,7 @@ function start(route, handle) {
 		var pathname = url.parse(request.url).pathname;
 		console.log("Request for " +pathname + "received.");
 		//var userId = pathname.replace(/^.*\//, '');
-		pathname = pathname.replace(/\/[^\/]*\.png/, '').replace(' ', '');
+		pathname = pathname.replace(/\/[^\/]*\.png/, '');
 		console.log('pathname: "', pathname, '"');
 
 		/*
