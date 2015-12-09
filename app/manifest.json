@@ -27,7 +27,7 @@
 					"file":"Files/index.html",
 					"transparent":true,
 					"resizable":false,
-					"size":{"width":2756, "height":275},
+					"size":{"width":275, "height":275},
 					"in_game_only":false,
 					"show_in_taskbar":false,
 					"start_position":{

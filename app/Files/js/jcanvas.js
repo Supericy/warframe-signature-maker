@@ -1372,7 +1372,7 @@ function _setCursor( $canvas, layer, eventType ) {
 		//rotate handle cursor :)
 		if(cursor === 'rotate-right')
 		{
-			$('canvas').awesomeCursor(cursor, {
+			$canvas.awesomeCursor(cursor, {
 				color: 'white'
 			});
 		} else 

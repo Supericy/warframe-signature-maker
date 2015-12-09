@@ -158,9 +158,9 @@ $( document ).ready(function() {
 
     // check if sig maker open first 
     overwolf.windows.getWindowState("SigMakerWindow", function(state){
-      console.log("sig maker is in the state :" + state);
+      console.log("sig maker is in the state :" +  state.window_state);
     
-    if(state !== 'closed') {
+    if(state.window_state !== 'closed') {
       
       minimizeIndexWindow(); 
     } else {
@@ -193,7 +193,7 @@ function indexYesPressed(){
 
 function minimizeIndexWindow() {
   //alert("the subwindow will only be visible inside a game");
-    console.log("opening sig maker window");
+    console.log("minimizing index window");
   overwolf.windows.obtainDeclaredWindow("IndexWindow", function(result) {
     if (result.status == "success") {
       overwolf.windows.minimize(result.window.id, function(result) {
