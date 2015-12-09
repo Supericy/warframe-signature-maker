@@ -128,10 +128,16 @@ function addRotationHandle( $canvas, parent) {
 		dragstop: function ( layer ) {
 			var parent = layer._parent;
 			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
+			$canvas.css( {
+				cursor: cursor
+			} );
 		},
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
 			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
+			$canvas.css( {
+				cursor: cursor
+			} );
 		}
 	} );
 	$canvas.draw( handle );
@@ -247,10 +253,11 @@ function addRectHandle( $canvas, parent, px, py ) {
 		dragstop: function ( layer ) {
 			var parent = layer._parent;
 			$( this ).triggerLayerEvent( parent, 'handlestop' );
+
 		},
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
-			$( this ).triggerLayerEvent( parent, 'handlecancel' );
+			$( this ).triggerLayerEvent( parent, 'handlestop' );
 		}
 	} );
 	$canvas.draw( handle );
@@ -295,7 +302,6 @@ function addRectHandles( $canvas, parent ) {
 		//rotational handle
 		addRotationHandle( $canvas, parent);
 		updateRectHandles(parent);
-		console.log("HMM");
 	}
 }
 
