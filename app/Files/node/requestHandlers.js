@@ -438,8 +438,11 @@ function drawLayerManually($c, lay, stats, $) {
 
     	var style = lay.style;
     	//console.log(style);
-
+    	console.log("fill  color from style is :")
+    	console.log(style.fillStyle);
     	var newColor = style.iconColor || {_r:152, _g:152, _b:152};
+
+
 
     	var oriWidth = lay.width;
     	var oriHeight = lay.height;

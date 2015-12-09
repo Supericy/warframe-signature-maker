@@ -809,7 +809,8 @@ function serializeCanvas() {
 
 function serializeLayer(layer) {
 
-  console.log("style", layer.style);
+  console.log("style of layer I am currently serializing:");
+  console.log(layer.style);
 
   var sLayer = {};
 

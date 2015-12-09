@@ -11,7 +11,7 @@ function initStatColorPickers(selector, color) {
       showInitial: true,
       showPalette: false,
       showSelectionPalette: false,
-      showAlpha: true,
+      showAlpha: false,
       maxSelectionSize: 10,
       chooseText: "Done",
       cancelText: "",

@@ -22,7 +22,6 @@
 					"size":{"width":1450, "height":800},
 					"in_game_only":false,
 					"show_in_taskbar":true,
-					"desktop_only":true
 					},
 				"IndexWindow":{
 					"file":"Files/index.html",

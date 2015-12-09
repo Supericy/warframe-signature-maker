@@ -38,7 +38,7 @@ function checkIfWarfaceRunning(callback){
           } else {
             console.log("Warface is NOT running!");
             localStorage.removeItem("warfaceRunning");
-            localStorage.removeItem("username");
+            //localStorage.removeItem("username");
             callback(false);
           }
         }
@@ -46,7 +46,7 @@ function checkIfWarfaceRunning(callback){
       else {
         console.log("Warface is NOT running!");
         localStorage.removeItem("warfaceRunning");
-        localStorage.removeItem("username");
+        //localStorage.removeItem("username");
         callback(false);
       }
   });
@@ -76,7 +76,7 @@ $( document ).ready(function() {
               console.log("Warface has STOPPED!");
               // close ourselves likely.
               localStorage.removeItem("warfaceRunning");
-              localStorage.removeItem("username");
+              //localStorage.removeItem("username");
             }
           }
         }
@@ -149,17 +149,29 @@ $( document ).ready(function() {
 
 
   localStorage.removeItem("warfaceRunning");
-  localStorage.removeItem("username");
+  //localStorage.removeItem("username");
   $('#indexWindow').show();
   checkIfWarfaceRunning();
   
   overwolf.windows.onMainWindowRestored.addListener(function(){
     console.log('restoring index window');
-    $('#indexWindow').show();
-    checkIfWarfaceRunning();
-    localStorage.removeItem("warfaceRunning");
-    localStorage.removeItem("username");
-  })
+
+    // check if sig maker open first 
+    overwolf.windows.getWindowState("SigMakerWindow", function(state){
+      console.log("sig maker is in the state :" + state);
+    
+    if(state !== 'closed') {
+      
+      minimizeIndexWindow(); 
+    } else {
+      $('#indexWindow').show();
+      checkIfWarfaceRunning();
+      localStorage.removeItem("warfaceRunning");
+      //localStorage.removeItem("username");
+    }
+
+    });
+  });
 });
 
 
