@@ -443,8 +443,7 @@ function noSignatureFound(response){
 
 
     fs.readFile('images/statIcons/nosig.png', function(err, squid) {
-    	var img = new Buffer(squid);
-		response.write(img);
+		response.write(squid, 'binary');
 		response.end();
 	});
 }
