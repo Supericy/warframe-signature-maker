@@ -200,9 +200,7 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-          if(params.style){
-            layer.style = params.style;
-          }
+          
 
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
@@ -222,7 +220,9 @@ $.fn.extend({
 
       };
 
-      
+      if(params.style){
+        layer.style = params.style;
+      }
 
 
       /* test if its background */
