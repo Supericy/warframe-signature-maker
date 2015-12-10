@@ -2,6 +2,7 @@
 var querystring = require("querystring");
 var fs = require("fs");
 var url = require("url");
+var glob = require("glob");
 
 var jsdom = require('jsdom');
 var JQuery = require( 'jquery' );
@@ -143,7 +144,7 @@ function warfaceSigShow(response,request) {
 					        }
 
 					     } else {
-					     	
+
 					    	noSignatureFound(response);
 					     }
 					     });
@@ -282,7 +283,7 @@ console.log("Request handler 'warfaceSigData' was called.");
 					    	response.write("No signature found for: " + queryObject.userId);
 					    	response.end();
 
-					        
+
 					     }
 					     });
 
@@ -434,7 +435,7 @@ function noSignatureFound(response){
 
 
 
-	
+
     response.writeHead(200, {
 	      'Content-Type': 'image/png',
 	      'Access-Control-Allow-Origin' : '*',
@@ -540,6 +541,23 @@ function drawLayerManually($c, lay, stats, $) {
 		  fromCenter:false
 		});
 */
+
+	/*
+impact, georgia, palatino blah blah, arial black blah blah, lucida console, courier new blah blah
+	*/
+
+		var _canvas = $statCanvas[0];
+		var _ctx = _canvas.getContext('2d');
+
+		var fontFiles = glob.sync("node/fonts/*.ttf", {});
+		fontFiles.forEach(function (file) {
+			var matches = file.match(/[^\/]+(?=.ttf)/);
+			var fontName = matches[0];
+			console.log(fontName, file);
+			var _font = new canvas.Font(fontName, file);
+			_ctx.addFont(_font);
+		});
+
 
         //console.log(style.strokeStyle);
         $statCanvas.drawText({
