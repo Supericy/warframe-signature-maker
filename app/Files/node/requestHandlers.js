@@ -143,13 +143,8 @@ function warfaceSigShow(response,request) {
 					        }
 
 					     } else {
-					     	response.writeHead(200, {
-								"Content-Type": "text/plain",
-								'Access-Control-Allow-Origin' : '*'
-							});
-					        console.log('No document(s) found with defined "find" criteria!');
-					    	response.write("No signature found for: " + userId);
-					    	response.end();
+					     	
+					    	noSignatureFound(response);
 					     }
 					     });
 
@@ -279,7 +274,14 @@ console.log("Request handler 'warfaceSigData' was called.");
 
 					        console.log('No document(s) found with defined "find" criteria!');
 
-					        noSignatureFound(response);
+					        response.writeHead(200, {
+								"Content-Type": "text/plain",
+								'Access-Control-Allow-Origin' : '*'
+							});
+					        console.log('No document(s) found with defined "find" criteria!');
+					    	response.write("No signature found for: " + userId);
+					    	response.end();
+
 					        
 					     }
 					     });
