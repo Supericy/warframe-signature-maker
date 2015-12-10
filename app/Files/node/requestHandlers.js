@@ -279,7 +279,7 @@ console.log("Request handler 'warfaceSigData' was called.");
 								'Access-Control-Allow-Origin' : '*'
 							});
 					        console.log('No document(s) found with defined "find" criteria!');
-					    	response.write("No signature found for: " + userId);
+					    	response.write("No signature found for: " + queryObject.userId);
 					    	response.end();
 
 					        

@@ -1041,11 +1041,17 @@ function moveLayerUp(layer) {
 
 authorizationAttempts = 0;
 
+
+ var debug = true;
+
 function authorizeUser() {
 
   
   $('#authWindow').hide('fade', 500);
-  checkIfWarfaceRunning();  
+  if(!debug){
+    checkIfWarfaceRunning();  
+  }
+ 
 
   var name = localStorage.getItem('username') ;
   var running = localStorage.getItem('warfaceRunning');
@@ -1054,7 +1060,7 @@ function authorizeUser() {
   console.log("Username: " + name);
   console.log("warface running? " +running);
  
-  if(shouldOpen )  
+  if(shouldOpen || debug )  
   {
     authorizationAttempts = 0;
     var unserializedCanvas = null;
