@@ -8,7 +8,7 @@ start_script() {
 
         # start our node server
         cd ~/warface-signature-maker/app/Files
-        node node/warsigs-bootstrap.js > /var/log/warsigs.log 2>&1 &
+        node node/warsigs-bootstrap.js 2>&1 >> /var/log/warsigs.log &
     fi
 
     echo -e "\033[0;32mWarface-Signatures is now running.\033[0m\n"
@@ -17,7 +17,7 @@ start_script() {
 stop_script() {
     echo -e "\033[0;33mStopping Warface-Signatures Bootstrap..."
 
-    kill $(ps aux | grep "[w]arsigs-bootstrap" | awk '{print $2}') > 2>&1 > /dev/null
+    kill $(ps aux | grep "[w]arsigs-bootstrap" | awk '{print $2}') > /dev/null
 
     echo -e "\033[0;31mWarface-Signatures is now stopped.\033[0m\n"
 }
