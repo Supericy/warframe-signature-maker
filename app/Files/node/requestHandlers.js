@@ -199,6 +199,12 @@ function warfaceStatUpload(response,request) {
 				MongoClient.connect(url, function(err,db)  {
 					if(!err){
 						console.log("Connected correctly to server.");
+
+						// log all events
+						db.collection('events').insert({
+							'event_type': statName
+						});
+
 						upsertStat(queryObject.userId,statName, db, function() {
 							db.close();
 						})
@@ -483,7 +489,7 @@ function drawLayerManually($c, lay, stats, $) {
      	if(numDigits > 2){
      		//lay.x = lay.x + lay.width -oldwidth;
      	}
-     	//lay.x = lay.x + 
+     	//lay.x = lay.x +
 
 
         if(style.fillStyle)
@@ -532,7 +538,7 @@ function drawLayerManually($c, lay, stats, $) {
         });
 
 
-        
+
 
 
 
