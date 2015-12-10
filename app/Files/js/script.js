@@ -594,10 +594,10 @@ $(document).ready(function() {
 
   registerHooksForToolbar($canvas.undoManager);
   
-
-  var username = localStorage.getItem("username");
-  //TESTING PURPOSES
-  //if(username){}else{username="Supericy";localStorage.setItem("username","Supericy")};
+  setupTextSamples();
+  
+  function setupTextSamples(){
+    var username = localStorage.getItem("username");
 
   // setup text samples
 
@@ -609,6 +609,7 @@ $(document).ready(function() {
       createElementsFromStyle(style);
     });
   });
+  }
 
   $('.stat-icon-preset').each(function () {
       var $this = $(this);
@@ -713,9 +714,7 @@ function uploadSignatureAndShowLinks(){
   //console.log("contacting server");
   $.ajax({
     type: "POST",
-    //url: "http://107.170.105.215/sigs/upload?userId=" + "bill", /* THIS NEEDS TO BE THE USER ID */
-    //url: "http://localhost/sigs/upload?userId=bill", //;+ localStorage.getItem("username"),
-    url: "http://warfacesigs.me/sigs/upload?userId=bill",
+    url: "http://warfacesigs.me/sigs/upload?userId=" + localStorage.getItem('username') ,
     data: JSON.stringify(serializedCanvas),
     success: function(data) {
       console.log(data);
@@ -746,9 +745,9 @@ function showMySignatureLinks(){
     //$("#SignatureId").attr("src", "http://localhost/warface/sigs/show?userId=" + localStorage.getItem("username"));
     //$("#SignatureId").show();
 
-    $("#SignatureHTML").val('<img alt="Warface Signature" src="http://warfacesigs.me/sigs/show/' + localStorage.getItem("username") +'"'+'style="border: none;">');
-    $("#SignatureBBCode").val('[img]http://warfacesigs.me/sigs/show/' + localStorage.getItem("username")+'[/img]');
-    $("#SignatureImageLink").val('http://warfacesigs.me/sigs/show/' + localStorage.getItem("username"));
+    $("#SignatureHTML").val('<img alt="Warface Signature" src="http://warfacesigs.me/sigs/show/' + localStorage.getItem("username") +'.png"'+'style="border: none;">');
+    $("#SignatureBBCode").val('[img]http://warfacesigs.me/sigs/show/' + localStorage.getItem("username")+'.png[/img]');
+    $("#SignatureImageLink").val('http://warfacesigs.me/sigs/show/' + localStorage.getItem("username")+ '.png');
 
 
 
@@ -1041,31 +1040,28 @@ function moveLayerUp(layer) {
 }
 
 authorizationAttempts = 0;
-localStorage.setItem('username', 'Raif');
+
 function authorizeUser() {
 
   
   $('#authWindow').hide('fade', 500);
-  //checkIfWarfaceRunning();  // to do un comment this
+  checkIfWarfaceRunning();  
 
   var name = localStorage.getItem('username') ;
   var running = localStorage.getItem('warfaceRunning');
 
   var shouldOpen = name && running;
- // console.log(name);
- // console.log(running);
- // console.log(shouldOpen);
-  if(shouldOpen || true)  //to do remove this true
+  console.log("Username: " + name);
+  console.log("warface running? " +running);
+ 
+  if(shouldOpen )  
   {
     authorizationAttempts = 0;
-    //console.log("the if was true");
-    //console.log(localStorage.getItem('username') );
-  //console.log(localStorage.getItem('warfaceRunning'));
     var unserializedCanvas = null;
 
     $.ajax({
        type:"GET",
-       url: "http://warfacesigs.me/sigs/data?userId=bill", // to do make username from local storage
+       url: "http://warfacesigs.me/sigs/data?userId=" + localStorage.getItem('username'), 
        success: function (data) {
 
            if(data)
@@ -1074,9 +1070,6 @@ function authorizeUser() {
                var list = JSON.parse(data);
                list = JSON.parse(list);
                unserializedCanvas = unserializeCanvas(list);
-               //console.log("unserialized canvas:", unserializedCanvas);
-
-               //console.log("drawing on canvas");
                 for (var i = 0; i < unserializedCanvas.length; i++) {
                  // console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
                   var layer = unserializedCanvas[i];

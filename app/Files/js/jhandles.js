@@ -128,6 +128,7 @@ function addRotationHandle( $canvas, parent) {
 		dragstop: function ( layer ) {
 			var parent = layer._parent;
 			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
+			cursor = 'default';
 			$canvas.css( {
 				cursor: cursor
 			} );
@@ -135,6 +136,7 @@ function addRotationHandle( $canvas, parent) {
 		dragcancel: function ( layer ) {
 			var parent = layer._parent;
 			$( this ).triggerLayerEvent( parent, 'rotatehandlestop' );
+			cursor = 'default';
 			$canvas.css( {
 				cursor: cursor
 			} );
