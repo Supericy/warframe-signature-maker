@@ -442,7 +442,7 @@ function noSignatureFound(response){
 	    });
 
 
-    fs.readFile('images/statIcons/nosig.png', function(err, squid) {
+    fs.readFile('images/ui/nosig.png', function(err, squid) {
 		response.write(squid, 'binary');
 		response.end();
 	});
