@@ -277,8 +277,9 @@ console.log("Request handler 'warfaceSigData' was called.");
 					     } else {
 
 					        console.log('No document(s) found with defined "find" criteria!');
-					    	response.write("No signature found for: " + queryObject.userId);
-					    	response.end();
+
+					        noSignatureFound(response);
+					        
 					     }
 					     });
 
@@ -361,6 +362,8 @@ var upsertStat = function(userId, statName, db, callback) {
 
 
 
+
+
 var drawAndSendSignature = function(signature, stats, response) {
 
 	var html = '<html><body><canvas id="cx" width="600" height="200"></canvas></body></html>';
@@ -419,6 +422,28 @@ var drawAndSendSignature = function(signature, stats, response) {
 	});
 
 
+}
+
+
+function noSignatureFound(response){
+
+	 // attempt to send an actual image instead of base 64 stuff
+
+
+
+	
+    response.writeHead(200, {
+	      'Content-Type': 'image/png',
+	      'Access-Control-Allow-Origin' : '*',
+	      //'Content-Length': img.length
+	    });
+
+
+    fs.readFile('images/statIcons/nosig.png', function(err, squid) {
+    	var img = new Buffer(squid);
+		response.write(img);
+		response.end();
+	});
 }
 
 function drawLayerManually($c, lay, stats, $) {
