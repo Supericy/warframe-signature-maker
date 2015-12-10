@@ -202,6 +202,7 @@ function warfaceStatUpload(response,request) {
 
 						// log all events
 						db.collection('events').insert({
+							'user_id': queryObject.userId,
 							'event_type': statName
 						});
 
