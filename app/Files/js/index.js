@@ -26,7 +26,8 @@ function checkIfWarfaceRunning(callback){
   callback = callback || function(a){};
   console.log('checking if warface is running');
   overwolf.games.getRunningGameInfo(function(GameInfo){
-    console.log("call back being run with gameinfo:", GameInfo);
+    console.log("call back being run with gameinfo:");
+    console.log(GameInfo);
     if(GameInfo){
         if(GameInfo.id === 77843) // warface
         {
@@ -76,6 +77,7 @@ $( document ).ready(function() {
               console.log("Warface has STOPPED!");
               // close ourselves likely.
               localStorage.removeItem("warfaceRunning");
+              closeIndexWindow();
               //localStorage.removeItem("username");
             }
           }
@@ -86,13 +88,16 @@ $( document ).ready(function() {
 
   // warface actual game events
   overwolf.games.events.onNewEvents.addListener(
+
       function (JSONObject) {
+         console.log("New warface event!");
         if(JSONObject.events)
         {
           var eventArray = JSONObject.events;
           for(var i=0; i<eventArray.length;i++)
           {
             var event = eventArray[i];
+            console.log(event);
             console.log("Event:", event.name);
             console.log($.inArray(event.name, statsRecording));
             if($.inArray(event.name, statsRecording)>=0){
@@ -120,6 +125,7 @@ $( document ).ready(function() {
           
       }
   );  
+
 
   // warface actual game info?
   overwolf.games.events.onInfoUpdates.addListener(
@@ -197,6 +203,16 @@ function minimizeIndexWindow() {
   overwolf.windows.obtainDeclaredWindow("IndexWindow", function(result) {
     if (result.status == "success") {
       overwolf.windows.minimize(result.window.id, function(result) {
+        //console.log(result);
+      });
+    }
+  });
+};
+
+function closeIndexWindow() {
+   overwolf.windows.obtainDeclaredWindow("IndexWindow", function(result) {
+    if (result.status == "success") {
+      overwolf.windows.close(result.window.id, function(result) {
         //console.log(result);
       });
     }
