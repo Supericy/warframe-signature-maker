@@ -30,8 +30,16 @@ function initStatColorPickers(selector, color) {
 
 function initStatFontFamilies() {
   var fontTypes = [
-      '28 Days Later'
-
+      'defused',
+      'dayslater',
+      'ascent2stardom',
+      'blade2',
+      'drifttype',
+      'heavymetal',
+      'infected',
+      'topsecret',
+      'trashco',
+      'Impact'
   ];
   var $statStyleFontFamily = $('#stat-style-font-family');
   for (var n = 0, length = fontTypes.length; n < length; n++) {

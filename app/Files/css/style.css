@@ -11,12 +11,46 @@ body {
 
 
 @font-face {
-    font-family: '28 Days Later'; /*a name to be used later*/
-    src: url('../fonts/28 Days Later.ttf'); /*URL to font*/
+    font-family: 'defused'; /*a name to be used later*/
+    src: url('../fonts/defused.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'dayslater'; /*a name to be used later*/
+    src: url('../fonts/dayslater.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'ascent2stardom'; /*a name to be used later*/
+    src: url('../fonts/ascent2stardom.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'blade2'; /*a name to be used later*/
+    src: url('../fonts/blade2.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'drifttype'; /*a name to be used later*/
+    src: url('../fonts/drifttype.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'heavymetal'; /*a name to be used later*/
+    src: url('../fonts/heavymetal.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'infected'; /*a name to be used later*/
+    src: url('../fonts/infected.ttf'); /*URL to font*/
 }
 
-
-
+@font-face {
+    font-family: 'texas'; /*a name to be used later*/
+    src: url('../fonts/texas.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'topsecret'; /*a name to be used later*/
+    src: url('../fonts/topsecret.ttf'); /*URL to font*/
+}
+@font-face {
+    font-family: 'trashco'; /*a name to be used later*/
+    src: url('../fonts/trashco.ttf'); /*URL to font*/
+}
 
 
 #container {

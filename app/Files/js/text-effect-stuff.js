@@ -30,20 +30,16 @@ function initColorPickers(selector, color) {
 
 function initFontFamilies() {
   var fontTypes = [
-    'Impact',
-    'Georgia, serif',
-    '"Palatino Linotype", "Book Antiqua", Palatino, serif',
-    '"Times New Roman", Times, serif',
-    'Arial, Helvetica, sans-serif',
-    '"Arial Black", Gadget, sans-serif',
-    '"Comic Sans MS", cursive, sans-serif',
-    'Impact, Charcoal, sans-serif',
-    '"Lucida Sans Unicode", "Lucida Grande", sans-serif',
-    'Tahoma, Geneva, sans-serif',
-    '"Trebuchet MS", Helvetica, sans-serif',
-    'Verdana, Geneva, sans-serif',
-    '"Courier New", Courier, monospace',
-    '"Lucida Console", Monaco, monospace',
+      'defused',
+      'dayslater',
+      'ascent2stardom',
+      'blade2',
+      'drifttype',
+      'heavymetal',
+      'infected',
+      'topsecret',
+      'trashco',
+      'Impact'
   ];
   var $textStyleFontFamily = $('#text-style-font-family');
   for (var n = 0, length = fontTypes.length; n < length; n++) {
