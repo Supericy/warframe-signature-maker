@@ -71,13 +71,12 @@ function updateSignature(userId, signatureData, errorCallback){
 			dbManager.upsertSignature(userId,signatureData, db, function(err) {
 				db.close();
 				errorCallback(err);
-			})
+			});
 		} else {
 			console.log(err);
 			db.close();
 			errorCallback(true);
 		}
-
 	});
 }
 
