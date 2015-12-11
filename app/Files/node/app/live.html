@@ -1,20 +1,95 @@
-<!doctype html>
+<!DOCTYPE HTML>
 <html>
 
 <head>
-    <script src="http://warfacesigs.me:8080/socket.io/socket.io.js"></script>
-    <script>
-        var socket = io.connect('http://warfacesigs.me:8080');
+  <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+  <meta content="utf-8" http-equiv="encoding">
+  <title>Graph2d | Streaming data</title>
 
-        socket.on('game-event', function (event) {
-            console.log(event);
-        });
-    </script>
+  <style type="text/css">
+    body, html, select {
+      font: 10pt sans-serif;
+    }
+  </style>
+
+  <script src="http://warfacesigs.me:8080/socket.io/socket.io.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.10.0/vis.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.10.0/vis.min.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
+<div id="visualization"></div>
 
+<script type="text/javascript">
+  var DELAY = 1000; // delay in ms to add new data points
 
+  // create a graph2d with an (currently empty) dataset
+  var container = document.getElementById('visualization');
+  var dataset = new vis.DataSet();
+
+  var options = {
+    start: vis.moment().add(-30, 'seconds'), // changed so its faster
+    end: vis.moment().add(30, 'seconds'),
+    dataAxis: {
+      left: {
+        range: {
+          min:0
+        }
+      }
+    },
+    drawPoints: {
+        size: 3,
+      style: 'square' // square, circle
+    },
+    shaded: {
+      orientation: 'bottom' // top, bottom
+    }
+  };
+  var graph2d = new vis.Graph2d(container, dataset, options);
+
+  function renderStep() {
+    // move the window (you can think of different strategies).
+    var now = vis.moment();
+    var range = graph2d.getWindow();
+    var interval = range.end - range.start;
+    if (now > range.end) {
+      graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
+    }
+    setTimeout(renderStep, DELAY);
+  }
+  renderStep();
+
+  var socket = io.connect('http://warfacesigs.me:8080');
+  // var stats;
+  var kills = 0;
+
+  socket.on('game-event', function (event) {
+      console.log(event);
+      kills++;
+
+    //   stats[event.event_type]++;
+
+      var range = graph2d.getWindow();
+      var interval = range.end - range.start;
+      var oldIds = dataset.getIds({
+        filter: function (item) {
+          return item.x < range.start - interval;
+        }
+      });
+      dataset.remove(oldIds);
+  });
+
+  function updateStep() {
+      dataset.add({
+        x: vis.moment(),
+        y: kills
+      });
+      kills = 0;
+
+      setTimeout(updateStep, DELAY);
+  }
+  updateStep();
+</script>
 </body>
-
 </html>
