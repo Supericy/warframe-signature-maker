@@ -200,7 +200,7 @@ $.fn.extend({
           // "select" new guy
           $canvas.enableLayerHandles(layer, true);
 
-          
+
 
           if(statsRecording.indexOf(layer.name)>=0){
             $("#stat-toolbar").show('fade', 250);
@@ -255,7 +255,7 @@ $.fn.extend({
       $canvas.enableLayerHandles(layer, true);
       $canvas.drawLayers();
       //layer.mousedown(layer);
-     
+
     });
 
   },
@@ -614,23 +614,30 @@ $(document).ready(function() {
 
 
   registerHooksForToolbar($canvas.undoManager);
-  
-  setupTextSamples();
-  
-  function setupTextSamples(){
-    var username = localStorage.getItem("username");
 
-  // setup text samples
-
+  var detective = new Detector();
   $('.text-style-preset').each(function() {
+    var username = localStorage.getItem("username") || 'Supericy';
     var $this = $(this);
     var style = textEffectStyles[$this.data('text-style')];
-    $this.attr('src', createTextEffect(username, style));
-    $this.click(function() {
-      createElementsFromStyle(style);
-    });
+
+    var loaded = function () {
+        $this.attr('src', createTextEffect(username, style));
+        $this.click(function() {
+          createElementsFromStyle(style);
+        });
+    }
+
+    var check = function () {
+        if (detective.detect(style.font.family)) {
+            loaded();
+        } else {
+            setTimeout(check, 500);
+        }
+    }
+
+    check();
   });
-  }
 
   $('.stat-icon-preset').each(function () {
       var $this = $(this);
@@ -1067,12 +1074,12 @@ authorizationAttempts = 0;
 
 function authorizeUser() {
 
-  
+
   $('#authWindow').hide('fade', 500);
   if(!debug){
-    checkIfWarfaceRunning();  
+    checkIfWarfaceRunning();
   }
- 
+
 
   var name = localStorage.getItem('username') ;
   var running = localStorage.getItem('warfaceRunning');
@@ -1080,15 +1087,15 @@ function authorizeUser() {
   var shouldOpen = name && running;
   console.log("Username: " + name);
   console.log("warface running? " +running);
- 
-  if(shouldOpen || debug )  
+
+  if(shouldOpen || debug )
   {
     authorizationAttempts = 0;
     var unserializedCanvas = null;
 
     $.ajax({
        type:"GET",
-       url: "http://warfacesigs.me/sigs/data?userId=" + localStorage.getItem('username'), 
+       url: "http://warfacesigs.me/sigs/data?userId=" + localStorage.getItem('username'),
        success: function (data) {
 
            if(data)
@@ -1119,7 +1126,7 @@ function authorizeUser() {
 
   // open doors
   $("#authWindow").hide('fade', 500);
-  
+
   setTimeout(function() {
     var audioElement = document.createElement('audio');
     audioElement.setAttribute('src', 'audio/doorSound.mp3');
