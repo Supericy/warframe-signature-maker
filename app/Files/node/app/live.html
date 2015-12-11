@@ -23,6 +23,7 @@
 
 <script type="text/javascript">
   var DELAY = 1000; // delay in ms to add new data points
+  var UPDATE_DELAY = 5000;
 
   // create a graph2d with an (currently empty) dataset
   var container = document.getElementById('visualization');
@@ -53,10 +54,15 @@
     var now = vis.moment();
     var range = graph2d.getWindow();
     var interval = range.end - range.start;
-    if (now > range.end) {
-      graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
-    }
-    setTimeout(renderStep, DELAY);
+
+
+    // continuously move the window
+    graph2d.setWindow(now - interval, now, {animation: false});
+    requestAnimationFrame(renderStep);
+    // if (now > range.end) {
+    //   graph2d.setWindow(now - 0.1 * interval, now + 0.9 * interval);
+    // }
+    // setTimeout(renderStep, DELAY);
   }
   renderStep();
 
@@ -67,8 +73,6 @@
   socket.on('game-event', function (event) {
       console.log(event);
       kills++;
-
-    //   stats[event.event_type]++;
 
       var range = graph2d.getWindow();
       var interval = range.end - range.start;
@@ -82,12 +86,12 @@
 
   function updateStep() {
       dataset.add({
-        x: vis.moment(),
+        x: vis.moment().add(5, 'seconds'),
         y: kills
       });
       kills = 0;
 
-      setTimeout(updateStep, DELAY);
+      setTimeout(updateStep, UPDATE_DELAY);
   }
   updateStep();
 </script>
