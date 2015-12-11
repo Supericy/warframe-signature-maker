@@ -615,6 +615,8 @@ $(document).ready(function() {
 
   registerHooksForToolbar($canvas.undoManager);
 
+  //localStorage.removeItem('username');
+  //localStorage.setItem('username', 'Raif');
   var detective = new Detector();
   $('.text-style-preset').each(function() {
     var username = localStorage.getItem("username") || 'Supericy';
@@ -1070,7 +1072,7 @@ function moveLayerUp(layer) {
 authorizationAttempts = 0;
 
 
- var debug = true;
+ var debug = false;
 
 function authorizeUser() {
 

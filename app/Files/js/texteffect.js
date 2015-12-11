@@ -46,7 +46,7 @@ var textEffectStyles = {
       "0 0 150px #ff0000"
     ],
     font: {
-      family: 'drifttype'
+      family: 'heavymetal'
     }
   },
   "Anaglyphic": {
@@ -68,7 +68,7 @@ var textEffectStyles = {
       "0px 0px 180px rgba(255,255,255,0.3)"
     ],
     font: {
-      family: 'heavymetal'
+      family: 'defused'
     }
   },
   "Inset": {
@@ -77,7 +77,7 @@ var textEffectStyles = {
       "0px 1px 1px #777"
     ],
     font: {
-      family: 'infected'
+      family: 'trashco'
     }
   },
   // meinen kopf
@@ -137,7 +137,7 @@ var textEffectStyles = {
       "0px -5px 35px rgba(255,255,255,0.3)"
     ],
     font: {
-      family: 'Impact'
+      family: 'infected'
     }
   },
   "Reflection": {
@@ -146,7 +146,7 @@ var textEffectStyles = {
       "0px -36px 0px #fff"
     ],
     font: {
-      family: 'Impact'
+      family: 'ascent2stardom'
     }
   },
   "Flame2": {
@@ -159,7 +159,7 @@ var textEffectStyles = {
       "2px -18px 18px #f20"
     ],
     font: {
-      family: 'Impact'
+      family: 'heavymetal'
     }
   },
   "Other3D": {
@@ -222,7 +222,7 @@ var textEffectStyles = {
       "2px -18px 18px #eee"
     ],
     font: {
-      family: 'Impact'
+      family: 'infected'
     }
   },
   "Other3D2": {
@@ -237,7 +237,7 @@ var textEffectStyles = {
       "-8px -8px 6px 9px #989881"
     ],
     font: {
-      family: 'Impact'
+      family: 'heavymetal'
     }
   },
   "Chocolate2": {
@@ -256,7 +256,7 @@ var textEffectStyles = {
       "-15px 15px 0px rgba(38,21,13,0.25)"
     ],
     font: {
-      family: 'Impact'
+      family: 'drifttype'
     }
   }
 };
