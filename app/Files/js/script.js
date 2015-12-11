@@ -496,6 +496,27 @@ $(document).ready(function() {
    // $('#authWindow, #leftDoor, #rightDoor').hide();
 
 
+   // attempt to load fonts
+
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+  $("#defusedLoader").css({
+        'font-family': 'defused'
+  });
+
   $canvas = $('#workspaceCanvas');
 
   // undo manager

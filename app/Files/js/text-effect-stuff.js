@@ -135,6 +135,7 @@ function updateTextLayer() {
 
 $(function() {
  
+ 
   initColorPickers('#text-style-color');
   initFontFamilies();
 
