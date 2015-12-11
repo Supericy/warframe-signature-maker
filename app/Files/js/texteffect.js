@@ -13,7 +13,7 @@ var textEffectStyles = {
       "0px -18px 40px red"
     ],
     font: {
-      family: 'Impact'
+      family: 'defused'
     }
   },
   "Real3D": {
@@ -29,7 +29,7 @@ var textEffectStyles = {
       "0px 8px -7px #001135"
     ],
     font: {
-      family: 'Impact'
+      family: 'blade2'
     }
   },
   // http://line25.com/articles/using-css-text-shadow-to-create-cool-text-effects
@@ -46,7 +46,7 @@ var textEffectStyles = {
       "0 0 150px #ff0000"
     ],
     font: {
-      family: 'Impact'
+      family: 'drifttype'
     }
   },
   "Anaglyphic": {
@@ -56,7 +56,7 @@ var textEffectStyles = {
       "1px 1px 1px #00f",
     ],
     font: {
-      family: 'Impact'
+      family: 'dayslater'
     }
   },
   "VintageRadio": {
@@ -68,7 +68,7 @@ var textEffectStyles = {
       "0px 0px 180px rgba(255,255,255,0.3)"
     ],
     font: {
-      family: 'Impact'
+      family: 'heavymetal'
     }
   },
   "Inset": {
@@ -77,7 +77,7 @@ var textEffectStyles = {
       "0px 1px 1px #777"
     ],
     font: {
-      family: 'Impact'
+      family: 'infected'
     }
   },
   // meinen kopf
@@ -87,7 +87,7 @@ var textEffectStyles = {
       "0 0 11px #000"
     ],
     font: {
-      family: 'Impact'
+      family: 'texas'
     }
   },
   "Shadow2": {
@@ -99,7 +99,7 @@ var textEffectStyles = {
       "1px 1px 0 #000"
     ],
     font: {
-      family: 'Impact'
+      family: 'topsecret'
     }
   },
   // http://pgwebdesign.net/blog/3d-css-shadow-text-tutorial
@@ -112,7 +112,7 @@ var textEffectStyles = {
       "4px -4px #444"
     ],
     font: {
-      family: 'Impact'
+      family: 'trashco'
     }
   },
   "Shadow3": {
@@ -127,7 +127,7 @@ var textEffectStyles = {
       "-6px 1px 1px #828181",
     ],
     font: {
-      family: 'Impact'
+      family: 'ascent2stardom'
     }
   },
   "SoftEmboss": {
