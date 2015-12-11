@@ -8,6 +8,17 @@ body {
   user-select: none;
   scroll:none;
 }
+
+
+@font-face {
+    font-family: '28 Days Later'; /*a name to be used later*/
+    src: url('../fonts/28 Days Later.ttf'); /*URL to font*/
+}
+
+
+
+
+
 #container {
   background: url(../images/ui/background.jpg);
   width: 1280px;

@@ -316,6 +316,12 @@ function _setGlobalProps( canvas, ctx, params ) {
 	if ( params.imageSmoothing ) {
 		ctx.imageSmoothingEnabled = ctx.mozImageSmoothingEnabled = params.imageSmoothingEnabled;
 	}
+
+
+	// set custom fonts up
+	//var font = new Font('28 Days Later', '../fonts/28 Days Later.ttf');
+	//ctx.addFont(font);
+
 }
 
 // Optionally enable masking support for this path
