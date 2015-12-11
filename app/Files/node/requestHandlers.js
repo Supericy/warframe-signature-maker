@@ -8,6 +8,18 @@ var jsdom = require('jsdom');
 var JQuery = require( 'jquery' );
 var JCanvas = require( 'jcanvas' );
 var canvas = require('canvas');
+var liveEvents = require('./live-events');
+
+function warfaceLiveEvents(response, request) {
+	fs.readFile(__dirname + "/app/live.html", function (err, html) {
+	    if (err) {
+	        throw err;
+	    }
+		response.writeHeader(200, {"Content-Type": "text/html"});
+		response.write(html);
+		response.end();
+	});
+}
 
 function warfaceSigUpload(response,request) {
 		console.log("Request handler 'warfaceSigUpload' was called.");
@@ -197,10 +209,14 @@ function warfaceStatUpload(response,request) {
 						console.log("Connected correctly to server.");
 
 						// log all events
-						db.collection('events').insert({
+						var event = {
 							'user_id': queryObject.userId,
-							'event_type': statName
-						});
+							'event_type': statName,
+							'timestamp': Math.floor(Date.now() / 1000)
+						}
+
+						liveEvents.emitGameEvent(event);
+						db.collection('events').insert(event);
 
 						upsertStat(queryObject.userId,statName, db, function() {
 							db.close();
@@ -720,11 +736,10 @@ function unserializeCanvas(serializedCanvas) {
     unserialized.push(unserializeLayer(serializedCanvas[n]));
   }
   return unserialized;
-
-
 }
 
 exports.warfaceSigUpload = warfaceSigUpload;
 exports.warfaceSigShow = warfaceSigShow;
 exports.warfaceStatUpload = warfaceStatUpload;
 exports.warfaceSigData = warfaceSigData;
+exports.warfaceLiveEvents = warfaceLiveEvents;
