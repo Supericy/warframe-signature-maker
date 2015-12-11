@@ -1104,7 +1104,7 @@ function authorizeUser() {
            {
 
                var list = JSON.parse(data);
-               list = JSON.parse(list);
+               //list = JSON.parse(list);
                unserializedCanvas = unserializeCanvas(list);
                 for (var i = 0; i < unserializedCanvas.length; i++) {
                  // console.log("adding this layer: " + JSON.stringify(unserializedCanvas[i]));
