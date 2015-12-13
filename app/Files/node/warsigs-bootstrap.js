@@ -10,6 +10,7 @@ handle["/sigs/show"] = requestHandlers.warfaceSigShow;
 handle["/sigs/data"] = requestHandlers.warfaceSigData;
 handle["/stats/upload"] = requestHandlers.warfaceStatUpload;
 handle["/live"] = requestHandlers.warfaceLiveEvents;
+handle["/"] = requestHandlers.warfaceHomepage;
 
 liveEvents.start();
 server.start(router.route, handle);

@@ -2,9 +2,8 @@ var jsdom = require('jsdom');
 var JQuery = require( 'jquery' );
 var JCanvas = require( 'jcanvas' );
 var canvas = require('canvas');
-
-
-
+var fs = require("fs");
+var glob = require("glob");
 
 var drawAndSendSignature = function(signature, stats, response) {
 

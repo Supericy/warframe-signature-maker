@@ -509,8 +509,11 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   padding: 4px;
   margin: 0px;
 }
-
-#name-list img, #stat-list img {
+#name-list img{
+  width:240px;
+  height:65px;
+}
+#stat-list img {
   width: 100%;
 }
 #extras-list td {
@@ -711,7 +714,20 @@ span.ui-slider-handle.ui-state-default.ui-corner-all {
   float:right;
 }
 
+#webfooter{
+  text-align:right;
+  width: 100%;
+  height: 20px;
+  position: absolute;
+  top: 690px;
+  z-index: 10;
+}
 
+#webfooter span {
+  color:white;
+  box-shadow: 0px 0px 4px 1px rgba(0,0,0,0.75);
+  margin-left:15px;
+}
 
 #authWindow {
   width: 640px;

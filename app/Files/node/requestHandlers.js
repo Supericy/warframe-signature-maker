@@ -2,19 +2,41 @@
 var querystring = require("querystring");
 var fs = require("fs");
 var url = require("url");
-var glob = require("glob");
-var canvasManager = require('canvasManager');
-var dbManager = require('databaseManager');
+
+var canvasManager = require('./canvasManager');
+var dbManager = require('./databaseManager');
 var liveEvents = require('./live-events');
+
+
+function warfaceHomepage(response, request) {
+	console.log("homepage");
+	fs.readFile(__dirname + "/app/index.html", function (err, html) {
+	    if (err) {
+	       // throw err;
+	       response.writeHead(404, {"Content-Type": "text/plain"});
+		   response.write("404 Not Found");
+		   response.end();
+	    } else {
+			response.writeHeader(200, {"Content-Type": "text/html"});
+			response.write(html);
+			response.end();
+		}
+	});
+}
+
 
 function warfaceLiveEvents(response, request) {
 	fs.readFile(__dirname + "/app/live.html", function (err, html) {
 	    if (err) {
-	        throw err;
-	    }
-		response.writeHeader(200, {"Content-Type": "text/html"});
-		response.write(html);
-		response.end();
+	        //throw err;
+	        response.writeHead(404, {"Content-Type": "text/plain"});
+			response.write("404 Not Found");
+			response.end();
+	    } else {
+			response.writeHeader(200, {"Content-Type": "text/html"});
+			response.write(html);
+			response.end();
+		}
 	});
 }
 
@@ -126,7 +148,7 @@ function warfaceSigData(response,request) {
 	if(queryObject.userId)
 	{
 		console.log("Signature (data) '" + queryObject.userId + "' requested");
-		dbManager.findSignatureAndStats(userId, function(err, signature, stats){
+		dbManager.findSignatureAndStats(queryObject.userId, function(err, signature, stats){
 			if(!err){
 				if(signature){
 					response.write(signature); // no more double json stringify!
@@ -163,3 +185,4 @@ exports.warfaceSigShow = warfaceSigShow;
 exports.warfaceStatUpload = warfaceStatUpload;
 exports.warfaceSigData = warfaceSigData;
 exports.warfaceLiveEvents = warfaceLiveEvents;
+exports.warfaceHomepage = warfaceHomepage;

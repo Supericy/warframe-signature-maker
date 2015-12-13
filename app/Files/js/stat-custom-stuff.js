@@ -64,9 +64,9 @@ function getStatStyleFromElements() {
     fillStyle: $('#stat-style-fillStyle').spectrum('get'),
     strokeStyle: $('#stat-style-strokeStyle').spectrum('get'),
     strokeWidth:$('#stat-style-strokeWidth').slider("option", "value"),
-    font: {
-      family: $('#stat-style-font-family').val()
-    }
+    //font: {
+   //   family: $('#stat-style-font-family').val()
+    //}
   };
   console.log("style from elements:");
   console.log(style);
@@ -81,7 +81,7 @@ $(function() {
   initStatColorPickers('#stat-style-fillStyle');
   initStatColorPickers('#stat-style-strokeStyle');
   initStatColorPickers('#stat-style-color');
-  initStatFontFamilies();
+  //initStatFontFamilies();
 
 
   var $strokeWidthSlider = $('#stat-style-strokeWidth');
@@ -109,7 +109,7 @@ function updateStatToolbar() {
   $('#stat-style-fillStyle').spectrum('set', style.fillStyle);
   $('#stat-style-strokeStyle').spectrum('set', style.strokeStyle);
   $('#stat-style-strokeWidth').slider("value", style.strokeWidth);
-  $('#stat-style-font-family').val(style.font.family);
+  //$('#stat-style-font-family').val(style.font.family);
     
 
 }

@@ -492,30 +492,9 @@ $.fn.extend({
 });
 var statsRecording = ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
 $(document).ready(function() {
-    // todo: unhide doors n stuff
-   // $('#authWindow, #leftDoor, #rightDoor').hide();
 
-
-   // attempt to load fonts
-
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
-  $("#defusedLoader").css({
-        'font-family': 'defused'
-  });
+  $('#authWindow').hide();
+  authorizeUser();
 
   $canvas = $('#workspaceCanvas');
 
@@ -616,7 +595,7 @@ $(document).ready(function() {
   registerHooksForToolbar($canvas.undoManager);
 
   //localStorage.removeItem('username');
-  //localStorage.setItem('username', 'Raif');
+  localStorage.setItem('username', 'Raif');
   var detective = new Detector();
   $('.text-style-preset').each(function() {
     var username = localStorage.getItem("username") || 'Supericy';
@@ -1072,7 +1051,7 @@ function moveLayerUp(layer) {
 authorizationAttempts = 0;
 
 
- var debug = false;
+ var debug = true;
 
 function authorizeUser() {
 

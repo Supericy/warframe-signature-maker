@@ -53,12 +53,12 @@ var findSignatureAndStats = function(userId, callback) {
 					db.close();
 					callback(true, null, null);
 				}
-			}
+			});
 		} else {
 			db.close();
 			callback(true, null, null);
 		}
-	}
+	});
 };
 
 function updateSignature(userId, signatureData, errorCallback){
@@ -68,7 +68,7 @@ function updateSignature(userId, signatureData, errorCallback){
 	MongoClient.connect(url, function(err,db)  {
 		if(!err){
 			console.log("Connected correctly to server.");
-			dbManager.upsertSignature(userId,signatureData, db, function(err) {
+			upsertSignature(userId,signatureData, db, function(err) {
 				db.close();
 				errorCallback(err);
 			});
@@ -76,7 +76,7 @@ function updateSignature(userId, signatureData, errorCallback){
 			console.log(err);
 			db.close();
 			errorCallback(true);
-		}
+		}  
 	});
 }
 
@@ -134,15 +134,17 @@ var updateStats = function(userId, statName, callback) {
 	});
 };
 
-exports.upsertStat = updateStats;
-exports.upsertSignature = updateSignature;
-exports.findSignature = findSignatureAndStats;
-exports.findUsers = findUsers;
-exports.insertUser = insertUser;
+exports.updateStats = updateStats;
+exports.updateSignature = updateSignature;
+exports.findSignatureAndStats = findSignatureAndStats;
 
 // not used atm
 
 /*
+exports.findUsers = findUsers;
+exports.insertUser = insertUser;
+
+
 var insertUser = function(db, postData, callback) {
    db.collection('users').insertOne( {
       //"username" : "SuperCoolGuy",
