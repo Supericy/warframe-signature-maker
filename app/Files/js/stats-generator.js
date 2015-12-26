@@ -92,7 +92,7 @@ function createStatIconImage(type, value, style, callback) {
             strokeWidth: style.strokeWidth || 2,
             x: (imgWidth/2)+padding, y: (imgHeight/2 -vTextOffset*3)/2,
             fontSize: fontSize,
-            fontFamily: style.font.family || 'Impact',
+            fontFamily: 'Impact',
             text: value.toString(),
             fromCenter:false
         });
