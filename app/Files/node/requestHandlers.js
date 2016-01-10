@@ -7,6 +7,9 @@ var canvasManager = require('./canvasManager');
 var dbManager = require('./databaseManager');
 var liveEvents = require('./live-events');
 
+function preloadImages(callback){
+	canvasManager.preloadImages(callback);
+}
 
 function warfaceHomepage(response, request) {
 	console.log("homepage");
@@ -158,7 +161,7 @@ function warfaceSigData(response,request) {
 			    	response.write("No signature found for: " + queryObject.userId);
 			    	response.end();
 				}
-	        	
+
 			} else {
 				console.log("Error finding signature");
 				response.write("No signature found for: " + queryObject.userId);
@@ -186,3 +189,5 @@ exports.warfaceStatUpload = warfaceStatUpload;
 exports.warfaceSigData = warfaceSigData;
 exports.warfaceLiveEvents = warfaceLiveEvents;
 exports.warfaceHomepage = warfaceHomepage;
+
+exports.preloadImages = preloadImages;

@@ -5,6 +5,39 @@ var canvas = require('canvas');
 var fs = require("fs");
 var glob = require("glob");
 
+
+var imageCache = {};
+var preloadImages = function(callback){
+	var statNames =  ["kill","kill_in_slide","kill_headshot","kill_melee","kill_grenade","kill_headshot","defibrillator_kill","two_at_once_kill"];
+	var statIconFolder = ["statIcons"];
+	var imageFolders = ["backgrounds", "extras", "weapons"];
+	var imageCache = {};
+	// preload all stat icons
+	for (var i = 0; i < statNames.length; i++) {
+		var imgPath = 'images/' + statIconFolder + '/' + statNames[i] + '.png';
+		var squid = fs.readFileSync(imgPath);
+		//var img = new canvas.Image();
+		//img.src = squid;
+		imageCache[imgPath] = squid;
+	}
+	// preload everything else
+	for (var i = 0; i < imageFolders.length; i++) {
+		fileNames = fs.readdirSync('images/' + imageFolders[i])
+		for(var j = 0; j < fileNames.length; j++) {
+			var imgPath = 'images/' + imageFolders[i] + '/' + fileNames[i];
+			var squid = fs.readFileSync(imgPath);
+			//var img = new canvas.Image();
+			//img.src = squid;
+			imageCache[imgPath] = squid;
+
+		}
+
+	}
+	console.log("image cache: " + JSON.stringify(imageCache));
+	callback();
+}
+
+
 var drawAndSendSignature = function(signature, stats, response) {
 
 	var html = '<html><body><canvas id="cx" width="600" height="200"></canvas></body></html>';
@@ -83,9 +116,18 @@ function drawLayerManually($c, lay, stats, $) {
 		//console.log("value is : ", value);
 		//var $statCanvas = $('<canvas height=' + lay.height + 'px width=' + lay.width + '220px" />');
 
-		squid = fs.readFileSync('images/statIcons/'+statName+'.png');//, function(err, squid) {
-        var img = new canvas.Image();
-        img.src = squid;
+		//squid = fs.readFileSync('images/statIcons/'+statName+'.png');//, function(err, squid) {
+        //var img = new canvas.Image();
+        //img.src = squid;
+
+		var img = new canvas.Image();
+		squid = imageCache['images/statIcons/'+statName];
+
+		if(squid){
+			img.src = squid;
+		} else {
+			img.src =  fs.readFileSync('images/statIcons/'+statName+'.png');
+		}
 
     	var style = lay.style;
     	//console.log(style);
@@ -215,9 +257,19 @@ impact, georgia, palatino blah blah, arial black blah blah, lucida console, cour
 
 
 	} else {
-	squid = fs.readFileSync(lay.source.replace(/^.*?Files\//i, ''));//, function(err, squid) {
-        var img = new canvas.Image();
-        img.src = squid;
+		//squid = fs.readFileSync(lay.source.replace(/^.*?Files\//i, ''));
+        //var img = new canvas.Image();
+        //img.src = squid;
+		var img = new canvas.Image();
+		squid = imageCache[lay.source.replace(/^.*?Files\//i, '')];
+		console.log("Looking for : " + lay.source.replace(/^.*?Files\//i, ''));
+		console.log("Image from cache is: " + squid);
+		console.log("Full cache is : " + JSON.stringify(imageCache));
+		if(squid){
+			img.src = squid;
+		} else {
+			img.src = fs.readFileSync(lay.source.replace(/^.*?Files\//i, ''));
+		}
     }
         $c.drawImage({
         	name:lay.name,
@@ -341,3 +393,5 @@ function unserializeCanvas(serializedCanvas) {
 
 
 exports.drawAndSendSignature = drawAndSendSignature;
+exports.preloadImages = preloadImages;
+exports.imageCache = imageCache;
