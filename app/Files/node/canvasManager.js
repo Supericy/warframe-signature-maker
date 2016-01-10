@@ -22,18 +22,19 @@ var preloadImages = function(callback){
 	}
 	// preload everything else
 	for (var i = 0; i < imageFolders.length; i++) {
-		fileNames = fs.readdirSync('images/' + imageFolders[i])
+		var fileNames = fs.readdirSync('images/' + imageFolders[i])
+		console.log(fileNames);
 		for(var j = 0; j < fileNames.length; j++) {
-			var imgPath = 'images/' + imageFolders[i] + '/' + fileNames[i];
+			var imgPath = 'images/' + imageFolders[i] + '/' + fileNames[j];
 			var squid = fs.readFileSync(imgPath);
 			//var img = new canvas.Image();
 			//img.src = squid;
 			imageCache[imgPath] = squid;
-
+			console.log(imgPath);
 		}
 
 	}
-	console.log("image cache: " + JSON.stringify(imageCache));
+	//console.log("image cache: " + JSON.stringify(imageCache));
 	callback();
 }
 
